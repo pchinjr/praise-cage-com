@@ -1,3 +1,7 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/8/82/The_Rock_%28movie%29.jpg/220px-The_Rock_%28movie%29.jpg
+---
 ### Project Title: **"Alcatraz Escape: Tactical Training Simulator"**
 
 ### Description:

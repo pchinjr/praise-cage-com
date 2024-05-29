@@ -1,3 +1,7 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/5/58/Guarding_Tess_1994.jpg/220px-Guarding_Tess_1994.jpg
+---
 ### Project Title: **"Secrets Shared: Secure Messaging for VIPs"**
 
 ### Description:

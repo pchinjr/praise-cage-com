@@ -1,3 +1,7 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/c/c2/Christmas_Carol_%282001%29_poster.jpg/220px-Christmas_Carol_%282001%29_poster.jpg
+---
 ### Project Title: **"Spirit Popovers: Interactive Christmas Carol"**
 
 ### Description:

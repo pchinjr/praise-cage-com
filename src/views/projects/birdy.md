@@ -1,3 +1,7 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Birdy_ver1.jpg/220px-Birdy_ver1.jpg
+---
 ### Project Title: **"Birdy's Flight Paths: A Geolocation Journey"**
 
 ### Description
@@ -74,11 +78,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     map.on('locationerror', onLocationError);
 });
-
 ```
 
 ### References
-- For more about **Birdy**, visit [Wikipedia: Birdy (film)](https://en.wikipedia.org/wiki/Birdy_(film)).
+- **Film**: [Wikipedia: Birdy (film)](https://en.wikipedia.org/wiki/Birdy_(film)).
 - Learn more about the **Geolocation API** and how to implement it from the [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API).
 
 This project marries the narrative of personal and physical journeys in "Birdy" with the capabilities of the Geolocation API, providing a unique and insightful exploration of both the film's themes and the natural world.

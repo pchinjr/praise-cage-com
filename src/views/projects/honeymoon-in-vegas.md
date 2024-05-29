@@ -1,3 +1,7 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/d/dc/Honeymoon_In_Vegas.jpg/220px-Honeymoon_In_Vegas.jpg
+---
 Certainly! Let's develop a fresh project concept that combines themes from "Honeymoon in Vegas" with a new standard Web API. Given the nature of the film, which involves high-stakes poker games and chaotic wedding plans, we can create an application that captures both the gambling and romantic elements of the storyline.
 
 ### Project Title: **"Vegas Love Odds: Matchmaker Roulette"**

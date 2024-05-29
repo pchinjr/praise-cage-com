@@ -1,3 +1,7 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/5/5d/Theboyinblue.jpg/220px-Theboyinblue.jpg
+---
 ### Project Title: **Rowing Towards Glory: Wakeful Waters**
 
 ### Description:

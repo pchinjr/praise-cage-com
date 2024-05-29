@@ -1,3 +1,6 @@
+---
+imageUrl: 'https://upload.wikimedia.org/wikipedia/en/e/e1/City_Of_Angels.jpg'
+---
 ### Project Title: **"Heavenly Scripts: Angelic Font Styler"**
 
 ### Description:

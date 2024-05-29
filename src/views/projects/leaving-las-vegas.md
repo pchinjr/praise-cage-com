@@ -1,3 +1,7 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/3/39/Leaving_las_vegas_ver1.jpg/220px-Leaving_las_vegas_ver1.jpg
+---
 ### Project Title: **"Echoes of Vegas: Memory Box"**
 
 ### Description:

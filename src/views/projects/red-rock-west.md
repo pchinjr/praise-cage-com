@@ -1,3 +1,7 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Redrockmovieposter.jpg/220px-Redrockmovieposter.jpg
+---
 ### Project Title: **"Twisted Trails: Navigate Your Plot"**
 
 ### Description:

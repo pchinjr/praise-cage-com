@@ -1,3 +1,7 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/8/8d/Deadfall-movie.jpg/220px-Deadfall-movie.jpg
+---
 ### Project Title: **"Synth Heist: Musical Codes"**
 
 ### Description:

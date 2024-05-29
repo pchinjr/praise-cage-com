@@ -1,3 +1,7 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/5/54/Windtalkers_movie.jpg/220px-Windtalkers_movie.jpg
+---
 ### Project Title: **"CodeGuard: Cryptic Counter Tracker"**
 
 ### Description:

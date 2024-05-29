@@ -1,3 +1,7 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/2/2a/Gone_in_sixty_seconds.jpg/220px-Gone_in_sixty_seconds.jpg
+---
 ### Project Title: **"SpeedWatch: Car Heist Surveillance"**
 
 ### Description:

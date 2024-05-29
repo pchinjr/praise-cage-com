@@ -1,3 +1,7 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/3/31/Raising-Arizona-Poster.jpg/220px-Raising-Arizona-Poster.jpg
+---
 ### Project Title: **Desert Data Heist: Indexed Arizona**
 
 ### Description:

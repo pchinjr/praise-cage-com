@@ -1,3 +1,8 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/b/bc/8mm-film-poster.jpg/220px-8mm-film-poster.jpg
+---
+
 ### Project Title: **"Shadow Trace: Digital Footprint Analyzer"**
 
 ### Description:

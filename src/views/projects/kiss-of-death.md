@@ -1,3 +1,7 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Kiss_of_death_ver2.jpg/220px-Kiss_of_death_ver2.jpg
+---
 ### Project Title: **"Criminal Clues: Interactive Crime Scene"**
 
 ### Description:

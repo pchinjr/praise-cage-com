@@ -1,3 +1,7 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/a/a6/Trapped_in_paradise_poster.jpg/220px-Trapped_in_paradise_poster.jpg
+---
 ### Project Title: **"Holiday Hideaway: Stealthy Shopping Guide"**
 
 ### Description:

@@ -1,3 +1,7 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/1/1d/Conairinternational.jpg/220px-Conairinternational.jpg
+---
 ### Project Title: **"Flight Load: Adaptive Content Delivery"**
 
 ### Description:

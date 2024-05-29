@@ -1,3 +1,7 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/6/67/Amos_and_andrew.jpg/220px-Amos_and_andrew.jpg
+---
 ### Project Title: **"Misunderstood Movements: A Sensor-Driven Story"**
 
 ### Description:

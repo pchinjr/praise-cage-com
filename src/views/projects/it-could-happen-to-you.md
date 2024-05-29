@@ -1,3 +1,7 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/9/99/It_could_happen_to_you_ver2.jpg/220px-It_could_happen_to_you_ver2.jpg
+---
 ### Project Title: **"Lucky Break: A Charitable Web Component"**
 
 ### Description:

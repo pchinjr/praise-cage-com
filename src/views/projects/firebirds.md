@@ -1,3 +1,7 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/5/54/Firebirdsposter.jpg/220px-Firebirdsposter.jpg
+---
 ### Project Title: **"Combat Charge: Tactical Energy Management"**
 
 ### Description:

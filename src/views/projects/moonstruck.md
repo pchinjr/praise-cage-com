@@ -1,3 +1,7 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/7/7d/Chermoonstruck.jpg/220px-Chermoonstruck.jpg
+---
 ### Project Title: **"Moonstruck Messages: Love Notes through Channels"**
 
 ### Description:

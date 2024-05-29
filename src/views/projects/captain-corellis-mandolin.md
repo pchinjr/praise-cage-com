@@ -1,3 +1,7 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/f/f1/Mandolinfilm1.jpg/220px-Mandolinfilm1.jpg
+---
 ### Project Title: **"Melodies of War: Interactive Mandolin Composer"**
 
 ### Description:

@@ -1,3 +1,7 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/d/d0/Vampires_kiss.jpg/220px-Vampires_kiss.jpg
+---
 ### Project Title: **"Nightly Narratives: A Vampire's Stream"**
 
 ### Description:

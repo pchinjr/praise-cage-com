@@ -1,3 +1,7 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/f/f7/Bringing_out_the_dead.jpg/220px-Bringing_out_the_dead.jpg
+---
 Absolutely, let's refine the project to focus on the functionalities we can achieve with just the standard Geolocation API and avoid needing any third-party API keys. We'll develop a comprehensive and self-contained solution suitable for training or demonstration purposes.
 
 ### Project Title: **"Night Shift Navigator: Emergency Route Tracker"**

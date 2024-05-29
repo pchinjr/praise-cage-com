@@ -1,3 +1,7 @@
+---
+imageUrl: >-
+  https://upload.wikimedia.org/wikipedia/en/thumb/3/39/Tempo_di_Uccidere.jpg/220px-Tempo_di_Uccidere.jpg
+---
 ### Project Title: **"Measured Moments: Time to Resize"**
 
 ### Description:
