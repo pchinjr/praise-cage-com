@@ -6,6 +6,13 @@
     "start": "npx sandbox"
   },
   "devDependencies": {
-    "@architect/architect": "^11.0.12"
+    "@architect/architect": "^11.0.12",
+    "@architect/functions": "^8.1.6"
+  },
+  "dependencies": {
+    "@architect/plugin-storage-public": "^1.0.2",
+    "@aws-lite/s3": "^0.1.21",
+    "@ticketplushq/arc-plugin-s3rver": "^1.0.3",
+    "arcdown": "^2.3.0"
   }
 }

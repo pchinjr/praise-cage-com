@@ -3,6 +3,7 @@ praise-cage-com
 
 @http
 get /
+get /project/:id
 
 @aws
 profile default
