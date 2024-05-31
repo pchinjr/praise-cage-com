@@ -1,5 +1,5 @@
 ---
-imageUrl:"https://upload.wikimedia.org/wikipedia/en/e/ea/Bangkok_dangerous_2008_poster.jpg"
+imageUrl: "https://upload.wikimedia.org/wikipedia/en/e/ea/Bangkok_dangerous_2008_poster.jpg"
 ---
 ### Project Title: "Bangkok Dangerous: Dynamic Styles with CSS Properties and Values API"
 

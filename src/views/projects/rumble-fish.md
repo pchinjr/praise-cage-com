@@ -1,3 +1,7 @@
+---
+imageUrl: "https://upload.wikimedia.org/wikipedia/en/b/bd/Rumble_Fish.jpg"
+---
+
 ### Project Title: **"Highlighting Rumble Fish: Interactive Style Narratives"**
 
 ### Description

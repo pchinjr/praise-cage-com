@@ -1,5 +1,5 @@
 ---
-imageUrl:"https://upload.wikimedia.org/wikipedia/en/e/e0/Astro_boy_ver7.jpg"
+imageUrl: "https://upload.wikimedia.org/wikipedia/en/e/e0/Astro_boy_ver7.jpg"
 ---
 ### Project Title: "Astro Boy: Secure Data Storage with Storage Access API"
 

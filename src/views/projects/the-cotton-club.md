@@ -1,3 +1,7 @@
+---
+imageUrl: "https://upload.wikimedia.org/wikipedia/en/0/0b/Cotton_club.jpg"
+---
+
 ### Project Title: **"Jazz Push: Live Updates from The Cotton Club"**
 
 ### Description

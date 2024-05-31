@@ -1,3 +1,6 @@
+---
+imageUrl: "https://upload.wikimedia.org/wikipedia/en/d/d4/Peggy_Sue_Got_Married.jpg"
+---
 ### Project Title: **"Nostalgic Notifications: Peggy Sue's Time Alerts"**
 
 ### Description

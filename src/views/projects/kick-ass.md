@@ -1,5 +1,5 @@
 ---
-imageUrl:"https://upload.wikimedia.org/wikipedia/en/3/30/Kick-Ass_film_poster.jpg"
+imageUrl: "https://upload.wikimedia.org/wikipedia/en/3/30/Kick-Ass_film_poster.jpg"
 ---
 ### Project Title: "Kick-Ass: Power-Boosted Experience with Screen Wake Lock API"
 

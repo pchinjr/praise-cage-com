@@ -1,4 +1,6 @@
-The coding project will integrate the themes of "Valley Girl" with the capabilities of the **IndexedDB API**. Here’s how this unique project is structured:
+---
+imageUrl: "https://upload.wikimedia.org/wikipedia/en/c/c8/Valley_girl_poster.jpg"
+---
 
 ### Project Title: 
 **"Memory Lane: Storing Your 80s Memories with Valley Girl"**

@@ -1,3 +1,7 @@
+---
+imageUrl: "https://upload.wikimedia.org/wikipedia/en/f/f7/Racing_with_the_moon.jpg"
+---
+
 ### Project Title: **"Whispers of the Past: Narrated Scenes from Racing with the Moon"**
 
 ### Description
