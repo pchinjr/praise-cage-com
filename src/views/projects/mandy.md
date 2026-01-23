@@ -13,6 +13,14 @@ Inspired by Nicolas Cage's intense and surreal role in *Mandy*, this project use
 
 ### **Starting Code:**
 
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -20,44 +28,8 @@ Inspired by Nicolas Cage's intense and surreal role in *Mandy*, this project use
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vengeful Shadows with Mandy and Pointer Events</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #000;
-            color: #f0f0f0;
-            text-align: center;
-            padding: 50px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #1c1c1c;
-            border: 1px solid #444;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        h1 {
-            margin-bottom: 20px;
-            color: #ff6347;
-        }
-        .shadow-element {
-            width: 100px;
-            height: 100px;
-            background-color: #ff6347;
-            border-radius: 50%;
-            position: absolute;
-            transition: transform 0.1s ease;
-        }
-        .area {
-            width: 100%;
-            height: 400px;
-            border: 2px solid #444;
-            border-radius: 10px;
-            position: relative;
-            overflow: hidden;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -71,36 +43,80 @@ Inspired by Nicolas Cage's intense and surreal role in *Mandy*, this project use
         </div>
     </div>
 
-    <script>
-        const interactiveArea = document.getElementById('interactiveArea');
-        const shadows = document.querySelectorAll('.shadow-element');
-
-        interactiveArea.addEventListener('pointermove', (e) => {
-            const rect = interactiveArea.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            shadows.forEach((shadow, index) => {
-                const offsetX = (Math.random() - 0.5) * 100;
-                const offsetY = (Math.random() - 0.5) * 100;
-                shadow.style.transform = `translate(${x + offsetX}px, ${y + offsetY}px)`;
-            });
-        });
-
-        interactiveArea.addEventListener('pointerdown', (e) => {
-            shadows.forEach(shadow => {
-                shadow.style.backgroundColor = '#900C3F';
-            });
-        });
-
-        interactiveArea.addEventListener('pointerup', (e) => {
-            shadows.forEach(shadow => {
-                shadow.style.backgroundColor = '#ff6347';
-            });
-        });
-    </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
+```
+
+**styles.css**:
+```css
+body {
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    color: #f0f0f0;
+    text-align: center;
+    padding: 50px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #1c1c1c;
+    border: 1px solid #444;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+h1 {
+    margin-bottom: 20px;
+    color: #ff6347;
+}
+.shadow-element {
+    width: 100px;
+    height: 100px;
+    background-color: #ff6347;
+    border-radius: 50%;
+    position: absolute;
+    transition: transform 0.1s ease;
+}
+.area {
+    width: 100%;
+    height: 400px;
+    border: 2px solid #444;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+```
+
+**script.js**:
+```javascript
+const interactiveArea = document.getElementById('interactiveArea');
+const shadows = document.querySelectorAll('.shadow-element');
+
+interactiveArea.addEventListener('pointermove', (e) => {
+    const rect = interactiveArea.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    shadows.forEach((shadow, index) => {
+        const offsetX = (Math.random() - 0.5) * 100;
+        const offsetY = (Math.random() - 0.5) * 100;
+        shadow.style.transform = `translate(${x + offsetX}px, ${y + offsetY}px)`;
+    });
+});
+
+interactiveArea.addEventListener('pointerdown', (e) => {
+    shadows.forEach(shadow => {
+        shadow.style.backgroundColor = '#900C3F';
+    });
+});
+
+interactiveArea.addEventListener('pointerup', (e) => {
+    shadows.forEach(shadow => {
+        shadow.style.backgroundColor = '#ff6347';
+    });
+});
 ```
 
 ### **References:**

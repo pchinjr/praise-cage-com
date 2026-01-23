@@ -2,6 +2,7 @@
 imageUrl: "https://upload.wikimedia.org/wikipedia/en/8/80/Book_of_secrets_post.jpg"
 ---
 ### Project Title: "Treasure Hunt: Unlock Secrets with WebOTP API"
+**Level:** Intermediate (Secure context required: https:// or http://localhost)
 
 #### Description:
 In this project, we combine the adventurous spirit of *National Treasure: Book of Secrets* with the functionality of the WebOTP API. *National Treasure: Book of Secrets* follows Benjamin Franklin Gates as he embarks on a quest to clear his ancestor's name and uncover hidden secrets. Similarly, this project will guide users on a digital treasure hunt, using the WebOTP API to unlock clues and secrets via one-time passwords (OTPs) sent to their phones.
@@ -12,6 +13,14 @@ In this project, we combine the adventurous spirit of *National Treasure: Book o
 3. **Historical Insights**: Provide educational content and historical facts related to each clue, inspired by the treasure hunt in the film.
 
 #### Starting Code:
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Run a local server (for example `python -m http.server`) and open `http://localhost:8000`. Some APIs do not work from `file://`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 Here's a basic setup to get you started. This includes the initial HTML, CSS, and JavaScript to integrate the WebOTP API and create a simple interactive treasure hunt.
 
 **index.html**:

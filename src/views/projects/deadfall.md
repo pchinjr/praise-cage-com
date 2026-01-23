@@ -11,7 +11,15 @@ This app would be ideal for team-building activities, educational purposes in mu
 
 ### Starting Code:
 
-#### HTML:
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
+**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +38,7 @@ This app would be ideal for team-building activities, educational purposes in mu
 </html>
 ```
 
-#### CSS (styles.css):
+**styles.css**:
 ```css
 body {
     font-family: 'Arial', sans-serif;
@@ -57,7 +65,7 @@ body {
 }
 ```
 
-#### JavaScript (script.js):
+**script.js**:
 ```javascript
 navigator.requestMIDIAccess().then(function(midiAccess) {
     const outputs = midiAccess.outputs;

@@ -13,6 +13,14 @@ Inspired by Nicolas Cage's supporting role in *Snowden*, this project uses the C
 
 ### **Starting Code:**
 
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 ### **data-background.js:**
 
 ```javascript
@@ -66,43 +74,8 @@ registerPaint('breach-background', class {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Shadows with Snowden and Houdini API</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
-            text-align: center;
-            padding: 50px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            margin-bottom: 20px;
-        }
-        .secure-data {
-            display: inline-block;
-            margin: 20px;
-            padding: 20px;
-            border: 2px solid #007bff;
-            border-radius: 5px;
-            background: paint(data-background);
-        }
-        .breach-data {
-            display: inline-block;
-            margin: 20px;
-            padding: 20px;
-            border: 2px solid #dc3545;
-            border-radius: 5px;
-            background: paint(breach-background);
-        }
-    </style>
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -112,16 +85,59 @@ registerPaint('breach-background', class {
         <div class="breach-data">Data Breach</div>
     </div>
 
-    <script>
-        if ('paintWorklet' in CSS) {
-            CSS.paintWorklet.addModule('data-background.js');
-            CSS.paintWorklet.addModule('breach-background.js');
-        } else {
-            alert('CSS Houdini is not supported in this browser.');
-        }
-    </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
+```
+
+**styles.css**:
+```css
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    text-align: center;
+    padding: 50px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h1 {
+    margin-bottom: 20px;
+}
+.secure-data {
+    display: inline-block;
+    margin: 20px;
+    padding: 20px;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    background: paint(data-background);
+}
+.breach-data {
+    display: inline-block;
+    margin: 20px;
+    padding: 20px;
+    border: 2px solid #dc3545;
+    border-radius: 5px;
+    background: paint(breach-background);
+}
+```
+
+**script.js**:
+```javascript
+if ('paintWorklet' in CSS) {
+    CSS.paintWorklet.addModule('data-background.js');
+    CSS.paintWorklet.addModule('breach-background.js');
+} else {
+    alert('CSS Houdini is not supported in this browser.');
+}
 ```
 
 ### Instructions:

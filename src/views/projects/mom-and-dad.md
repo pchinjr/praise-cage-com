@@ -15,6 +15,14 @@ Inspired by Nicolas Cage's thrilling role in *Mom and Dad*, this project uses In
 
 ### **Starting Code:**
 
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -22,53 +30,8 @@ Inspired by Nicolas Cage's thrilling role in *Mom and Dad*, this project uses In
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Family Frenzy with Mom and Dad and IndexedDB</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
-            text-align: center;
-            padding: 50px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            margin-bottom: 20px;
-        }
-        .form-control {
-            margin: 10px 0;
-            padding: 10px;
-            width: calc(100% - 22px);
-            font-size: 16px;
-        }
-        button {
-            padding: 10px 20px;
-            margin: 10px;
-            border-radius: 5px;
-            border: none;
-            font-size: 16px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .record {
-            margin: 10px 0;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -82,79 +45,132 @@ Inspired by Nicolas Cage's thrilling role in *Mom and Dad*, this project uses In
         <div id="records"></div>
     </div>
 
-    <script>
-        let db;
-
-        window.onload = () => {
-            let request = indexedDB.open('FamilyDB', 1);
-
-            request.onerror = (event) => {
-                console.log('Error opening IndexedDB:', event);
-            };
-
-            request.onsuccess = (event) => {
-                db = event.target.result;
-                displayRecords();
-            };
-
-            request.onupgradeneeded = (event) => {
-                db = event.target.result;
-                db.createObjectStore('family', { keyPath: 'id', autoIncrement: true });
-            };
-        };
-
-        function addRecord() {
-            let name = document.getElementById('name').value;
-            let age = document.getElementById('age').value;
-
-            let transaction = db.transaction(['family'], 'readwrite');
-            let store = transaction.objectStore('family');
-            let record = { name, age };
-
-            store.add(record);
-
-            transaction.oncomplete = () => {
-                displayRecords();
-                document.getElementById('name').value = '';
-                document.getElementById('age').value = '';
-            };
-        }
-
-        function displayRecords() {
-            let transaction = db.transaction(['family'], 'readonly');
-            let store = transaction.objectStore('family');
-            let request = store.getAll();
-
-            request.onsuccess = (event) => {
-                let records = event.target.result;
-                let recordsDiv = document.getElementById('records');
-                recordsDiv.innerHTML = '';
-
-                records.forEach(record => {
-                    let recordDiv = document.createElement('div');
-                    recordDiv.className = 'record';
-                    recordDiv.innerHTML = `
-                        <strong>Name:</strong> ${record.name} <br>
-                        <strong>Age:</strong> ${record.age} <br>
-                        <button onclick="deleteRecord(${record.id})">Delete</button>
-                    `;
-                    recordsDiv.appendChild(recordDiv);
-                });
-            };
-        }
-
-        function deleteRecord(id) {
-            let transaction = db.transaction(['family'], 'readwrite');
-            let store = transaction.objectStore('family');
-            store.delete(id);
-
-            transaction.oncomplete = () => {
-                displayRecords();
-            };
-        }
-    </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
+```
+
+**styles.css**:
+```css
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    text-align: center;
+    padding: 50px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h1 {
+    margin-bottom: 20px;
+}
+.form-control {
+    margin: 10px 0;
+    padding: 10px;
+    width: calc(100% - 22px);
+    font-size: 16px;
+}
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
+}
+.record {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+```
+
+**script.js**:
+```javascript
+let db;
+
+window.onload = () => {
+    let request = indexedDB.open('FamilyDB', 1);
+
+    request.onerror = (event) => {
+        console.log('Error opening IndexedDB:', event);
+    };
+
+    request.onsuccess = (event) => {
+        db = event.target.result;
+        displayRecords();
+    };
+
+    request.onupgradeneeded = (event) => {
+        db = event.target.result;
+        db.createObjectStore('family', { keyPath: 'id', autoIncrement: true });
+    };
+};
+
+function addRecord() {
+    let name = document.getElementById('name').value;
+    let age = document.getElementById('age').value;
+
+    let transaction = db.transaction(['family'], 'readwrite');
+    let store = transaction.objectStore('family');
+    let record = { name, age };
+
+    store.add(record);
+
+    transaction.oncomplete = () => {
+        displayRecords();
+        document.getElementById('name').value = '';
+        document.getElementById('age').value = '';
+    };
+}
+
+function displayRecords() {
+    let transaction = db.transaction(['family'], 'readonly');
+    let store = transaction.objectStore('family');
+    let request = store.getAll();
+
+    request.onsuccess = (event) => {
+        let records = event.target.result;
+        let recordsDiv = document.getElementById('records');
+        recordsDiv.innerHTML = '';
+
+        records.forEach(record => {
+            let recordDiv = document.createElement('div');
+            recordDiv.className = 'record';
+            recordDiv.innerHTML = `
+                <strong>Name:</strong> ${record.name} <br>
+                <strong>Age:</strong> ${record.age} <br>
+                <button onclick="deleteRecord(${record.id})">Delete</button>
+            `;
+            recordsDiv.appendChild(recordDiv);
+        });
+    };
+}
+
+function deleteRecord(id) {
+    let transaction = db.transaction(['family'], 'readwrite');
+    let store = transaction.objectStore('family');
+    store.delete(id);
+
+    transaction.oncomplete = () => {
+        displayRecords();
+    };
+}
 ```
 
 ### **References:**

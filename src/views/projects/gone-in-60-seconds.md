@@ -7,7 +7,15 @@ imageUrl: >-
 ### Description:
 Inspired by "Gone in 60 Seconds," where Nicolas Cage's character leads a high-stakes mission to steal 50 cars in one night, "SpeedWatch: Car Heist Surveillance" is a web application that uses the Intersection Observer API to monitor and manage a virtual garage of high-value cars. This tool is designed for car showroom managers or security personnel to keep a vigilant eye on precious vehicles, using web technology to alert when cars enter or leave the display area, similar to tracking stolen vehicles in the film.
 
-### HTML:
+### Starting Code:
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">

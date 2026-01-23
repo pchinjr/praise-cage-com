@@ -3,6 +3,7 @@ imageUrl: >-
   https://upload.wikimedia.org/wikipedia/en/thumb/d/d0/Vampires_kiss.jpg/220px-Vampires_kiss.jpg
 ---
 ### Project Title: **"Nightly Narratives: A Vampire's Stream"**
+**Level:** Intermediate (Secure context required: https:// or http://localhost)
 
 ### Description:
 "Vampire's Kiss," starring Nicolas Cage as Peter Loew, is a film about a man descending into madness, believing himself to be turning into a vampire. Drawing inspiration from this theme of transformation and illusion, "Nightly Narratives: A Vampire's Stream" is a web application that lets users create and share their own gothic-style narratives through live video streaming, enhanced with real-time video effects that give a supernatural appearance.
@@ -11,7 +12,15 @@ Leveraging the Media Capture and Streams API, this application allows users to c
 
 ### Starting Code:
 
-#### HTML:
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Run a local server (for example `python -m http.server`) and open `http://localhost:8000`. Some APIs do not work from `file://`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
+**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +40,7 @@ Leveraging the Media Capture and Streams API, this application allows users to c
 </html>
 ```
 
-#### CSS (styles.css):
+**styles.css**:
 ```css
 body {
     font-family: 'Gothic A1', sans-serif;
@@ -59,7 +68,7 @@ button {
 }
 ```
 
-#### JavaScript (stream.js):
+**stream.js**:
 ```javascript
 document.getElementById('startButton').addEventListener('click', async function() {
     const video = document.getElementById('video');

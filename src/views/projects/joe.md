@@ -13,6 +13,14 @@ Inspired by Nicolas Cage's heartfelt role in *Joe*, this project harnesses the p
 
 ### **Starting Code:**
 
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -20,30 +28,8 @@ Inspired by Nicolas Cage's heartfelt role in *Joe*, this project harnesses the p
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geometric Justice with Joe</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            text-align: center;
-            padding: 20px;
-        }
-        #canvas-container {
-            position: relative;
-            width: 80%;
-            margin: 0 auto;
-            background-color: #fff;
-            border: 1px solid #ccc;
-        }
-        canvas {
-            border: 1px solid #000;
-        }
-        input, button {
-            margin: 10px;
-            padding: 10px;
-            font-size: 16px;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>Geometric Justice with Joe</h1>
@@ -67,53 +53,83 @@ Inspired by Nicolas Cage's heartfelt role in *Joe*, this project harnesses the p
         <canvas id="geometryCanvas" width="800" height="400"></canvas>
     </div>
 
-    <script>
-        const canvas = document.getElementById('geometryCanvas');
-        const ctx = canvas.getContext('2d');
-
-        function clearCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-
-        function drawCircle() {
-            const radius = document.getElementById('radius').value;
-            if (radius) {
-                clearCanvas();
-                ctx.beginPath();
-                ctx.arc(400, 200, radius, 0, 2 * Math.PI);
-                ctx.stroke();
-            } else {
-                alert('Please enter a valid radius.');
-            }
-        }
-
-        function drawSquare() {
-            const side = document.getElementById('side').value;
-            if (side) {
-                clearCanvas();
-                ctx.beginPath();
-                ctx.rect(400 - side / 2, 200 - side / 2, side, side);
-                ctx.stroke();
-            } else {
-                alert('Please enter a valid side length.');
-            }
-        }
-
-        function drawRectangle() {
-            const width = document.getElementById('width').value;
-            const height = document.getElementById('height').value;
-            if (width && height) {
-                clearCanvas();
-                ctx.beginPath();
-                ctx.rect(400 - width / 2, 200 - height / 2, width, height);
-                ctx.stroke();
-            } else {
-                alert('Please enter valid dimensions.');
-            }
-        }
-    </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
+```
+
+**styles.css**:
+```css
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+}
+#canvas-container {
+    position: relative;
+    width: 80%;
+    margin: 0 auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+canvas {
+    border: 1px solid #000;
+}
+input, button {
+    margin: 10px;
+    padding: 10px;
+    font-size: 16px;
+}
+```
+
+**script.js**:
+```javascript
+const canvas = document.getElementById('geometryCanvas');
+const ctx = canvas.getContext('2d');
+
+function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function drawCircle() {
+    const radius = document.getElementById('radius').value;
+    if (radius) {
+        clearCanvas();
+        ctx.beginPath();
+        ctx.arc(400, 200, radius, 0, 2 * Math.PI);
+        ctx.stroke();
+    } else {
+        alert('Please enter a valid radius.');
+    }
+}
+
+function drawSquare() {
+    const side = document.getElementById('side').value;
+    if (side) {
+        clearCanvas();
+        ctx.beginPath();
+        ctx.rect(400 - side / 2, 200 - side / 2, side, side);
+        ctx.stroke();
+    } else {
+        alert('Please enter a valid side length.');
+    }
+}
+
+function drawRectangle() {
+    const width = document.getElementById('width').value;
+    const height = document.getElementById('height').value;
+    if (width && height) {
+        clearCanvas();
+        ctx.beginPath();
+        ctx.rect(400 - width / 2, 200 - height / 2, width, height);
+        ctx.stroke();
+    } else {
+        alert('Please enter valid dimensions.');
+    }
+}
 ```
 
 ### **References:**

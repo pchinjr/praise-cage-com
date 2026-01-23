@@ -2,16 +2,25 @@
 imageUrl: "https://upload.wikimedia.org/wikipedia/en/1/1c/Sorcerers_apprentice_poster.jpg"
 ---
 ### Project Title: "The Sorcerer's Apprentice: Magical File Management with File System API"
+**Level:** Intermediate (Secure context required: https:// or http://localhost)
 
 #### Description:
 In this project, we blend the magical and adventurous elements of *The Sorcerer's Apprentice* with the capabilities of the File System API. *The Sorcerer's Apprentice* follows a young man who becomes an apprentice to a powerful sorcerer and learns to harness magical powers. Similarly, this project will allow users to manage files and directories with magical ease, leveraging the power of the File System API to read, write, and manipulate files.
 
 #### Features:
-1. **File Management**: Use the File System API to create, read, write, and delete files and directories.
+1. **File Management**: Use the File System API to create, read, write, and clear file contents.
 2. **Interactive Interface**: Provide an interactive interface for users to manage files as if they were performing magical tasks.
 3. **Thematic Design**: Implement a mystical and magical design reflecting the themes of *The Sorcerer's Apprentice*.
 
 #### Starting Code:
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Run a local server (for example `python -m http.server`) and open `http://localhost:8000`. Some APIs do not work from `file://`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 Here's a basic setup to get you started. This includes the initial HTML, CSS, and JavaScript to integrate the File System API and create a magical file management experience.
 
 **index.html**:
@@ -30,7 +39,7 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
     <button id="createFileBtn">Create File</button>
     <button id="readFileBtn">Read File</button>
     <button id="writeFileBtn">Write to File</button>
-    <button id="deleteFileBtn">Delete File</button>
+    <button id="deleteFileBtn">Clear File</button>
     <div id="output"></div>
 
     <script src="main.js"></script>
@@ -121,9 +130,10 @@ document.getElementById('writeFileBtn').addEventListener('click', async () => {
 document.getElementById('deleteFileBtn').addEventListener('click', async () => {
     try {
         fileHandle = await getFileHandle();
-        await fileHandle.remove();
-        fileHandle = null;
-        document.getElementById('output').innerText = 'File deleted successfully!';
+        const writable = await fileHandle.createWritable();
+        await writable.write('');
+        await writable.close();
+        document.getElementById('output').innerText = 'File cleared successfully!';
     } catch (error) {
         document.getElementById('output').innerText = `Error: ${error.message}`;
     }

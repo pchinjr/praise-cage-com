@@ -10,6 +10,14 @@ In the 1983 film "Rumble Fish," directed by Francis Ford Coppola, Nicolas Cage p
 The application will feature a dynamic web page where users can interactively highlight quotes or dialogues from "Rumble Fish," which then applies thematic styles reflecting the emotions or underlying themes of the selected text. For instance, selecting a quote about isolation might highlight the text in a cold, blue tone, while a passionate dialogue could be highlighted in fiery red. This project not only brings a new interactive layer to appreciating film dialogue but also leverages modern web standards to enhance textual interpretation.
 
 ### Starting Code
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 Here’s the HTML and JavaScript code snippets to get started with the "Highlighting Rumble Fish" project:
 
 #### HTML (index.html)
@@ -31,7 +39,7 @@ Here’s the HTML and JavaScript code snippets to get started with the "Highligh
 </html>
 ```
 
-#### CSS (styles.css)
+**styles.css**:
 ```css
 ::selection {
     background-color: #ffb7b7; /* Light red for passion */
@@ -49,7 +57,7 @@ Here’s the HTML and JavaScript code snippets to get started with the "Highligh
 }
 ```
 
-#### JavaScript (script.js)
+**script.js**:
 ```javascript
 document.getElementById('quote').addEventListener('mouseup', function() {
     const selectedText = window.getSelection().toString();

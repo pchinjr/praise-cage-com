@@ -12,6 +12,14 @@ In this project, we merge the thrilling and predictive elements of Nicolas Cage'
 3. **User-Friendly Interface**: Create an intuitive interface where users can start and stop screen capture, view captured data, and receive insights.
 
 #### Starting Code:
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 Here's a basic setup to get you started. This includes the initial HTML, CSS, and JavaScript to integrate the Screen Capture API and create a simple screen capture application.
 
 **index.html**:

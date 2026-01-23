@@ -12,7 +12,15 @@ The application features a live interaction tracker that records and displays va
 
 ### Starting Code:
 
-#### HTML:
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
+**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -32,10 +40,9 @@ The application features a live interaction tracker that records and displays va
     <script src="script.js"></script>
 </body>
 </html>
-
 ```
 
-#### CSS (styles.css):
+**styles.css**:
 ```css
 body {
     font-family: 'Arial', sans-serif;
@@ -59,10 +66,9 @@ input, button {
     padding: 10px;
     font-size: 16px;
 }
-
 ```
 
-#### JavaScript (script.js):
+**script.js**:
 ```javascript
 const activityLog = document.getElementById('activityLog');
 

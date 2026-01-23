@@ -11,7 +11,15 @@ Utilizing the Channel Messaging API, this application enables users to send digi
 
 ### Starting Code:
 
-#### HTML:
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
+**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +40,7 @@ Utilizing the Channel Messaging API, this application enables users to send digi
 </html>
 ```
 
-#### CSS (styles.css):
+**styles.css**:
 ```css
 body {
     font-family: 'Arial', sans-serif;
@@ -72,7 +80,7 @@ button {
 }
 ```
 
-#### JavaScript (messaging.js):
+**messaging.js**:
 ```javascript
 const channel = new MessageChannel();
 const port1 = channel.port1;

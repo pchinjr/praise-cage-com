@@ -11,7 +11,15 @@ The application serves as an educational tool for understanding code encryption 
 
 ### Starting Code:
 
-#### HTML:
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
+**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +39,7 @@ The application serves as an educational tool for understanding code encryption 
 </html>
 ```
 
-#### CSS (styles.css):
+**styles.css**:
 ```css
 body {
     font-family: 'Arial', sans-serif;
@@ -55,7 +63,7 @@ textarea {
 }
 ```
 
-#### JavaScript (script.js):
+**script.js**:
 ```javascript
 document.getElementById('messageInput').addEventListener('input', function() {
     const inputText = this.value;

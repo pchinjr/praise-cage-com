@@ -12,6 +12,14 @@ In this project, we combine the action-packed and atmospheric elements of *Bangk
 3. **Thematic Design**: Implement a dark and edgy design that reflects the mood and atmosphere of *Bangkok Dangerous*.
 
 #### Starting Code:
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 Here's a basic setup to get you started. This includes the initial HTML, CSS, and JavaScript to integrate the CSS Properties and Values API and create a dynamic styling experience.
 
 **index.html**:

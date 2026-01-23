@@ -2,6 +2,7 @@
 imageUrl: "https://upload.wikimedia.org/wikipedia/en/f/fa/Wicker-man-poster.jpg"
 ---
 ### Project Title: "The Wicker Worker: A Service Workers API Mystery"
+**Level:** Intermediate (Secure context required: https:// or http://localhost)
 
 #### Description:
 In this unique project, we blend the eerie and mysterious atmosphere of Nicolas Cage's 2006 film *The Wicker Man* with the powerful capabilities of the Service Workers API. Your task is to create a web application that emulates the unsettling experience of the film while leveraging the offline capabilities, caching, and background processes of the Service Workers API.
@@ -14,6 +15,14 @@ In this unique project, we blend the eerie and mysterious atmosphere of Nicolas 
 3. **Push Notifications**: Keep users engaged with push notifications that provide hints or eerie messages as they navigate the mystery.
 
 #### Starting Code:
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Run a local server (for example `python -m http.server`) and open `http://localhost:8000`. Some APIs do not work from `file://`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 Here's a basic setup to get you started. This includes the initial HTML, CSS, and JavaScript to register a Service Worker and enable offline functionality.
 
 **index.html**:

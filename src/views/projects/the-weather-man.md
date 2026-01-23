@@ -2,6 +2,7 @@
 imageUrl: "https://upload.wikimedia.org/wikipedia/en/c/cb/Weather_man.jpg"
 ---
 ### Project Title: "The Weather Man's Interactive Forecast with Insertable Streams API"
+**Level:** Advanced (Secure context required: https:// or http://localhost)
 
 #### Description
 "The Weather Man" (2005) stars Nicolas Cage as David Spritz, a weather forecaster who struggles with his professional and personal life. This project, "The Weather Man's Interactive Forecast," utilizes the **Insertable Streams for MediaStreamTrack API** to create an interactive weather forecast application where users can add real-time audio commentary to the forecast. This reflects David Spritz's role as a weatherman, making the weather report more dynamic and engaging.
@@ -9,6 +10,14 @@ imageUrl: "https://upload.wikimedia.org/wikipedia/en/c/cb/Weather_man.jpg"
 "Interactive Forecast" allows users to record their weather commentary, process it using insertable streams, and then stream it in real-time, demonstrating the power of the Insertable Streams API for enhancing web applications with media streams.
 
 #### Starting Code
+
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Run a local server (for example `python -m http.server`) and open `http://localhost:8000`. Some APIs do not work from `file://`.
+- Open DevTools Console to spot errors and typos quickly.
+
 
 **HTML:**
 ```html
@@ -33,7 +42,7 @@ imageUrl: "https://upload.wikimedia.org/wikipedia/en/c/cb/Weather_man.jpg"
 </html>
 ```
 
-**CSS (styles.css):**
+**styles.css**:
 ```css
 body {
     font-family: Arial, sans-serif;
@@ -80,7 +89,7 @@ button:hover:not(:disabled) {
 }
 ```
 
-**JavaScript (script.js):**
+**script.js**:
 ```javascript
 let mediaRecorder;
 let recordedChunks = [];
@@ -92,8 +101,13 @@ const recordingsList = document.getElementById('recordingsList');
 startButton.addEventListener('click', async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
+    if (!('MediaStreamTrackProcessor' in window) || !('MediaStreamTrackGenerator' in window)) {
+        alert('Insertable Streams API not supported in this browser.');
+        return;
+    }
+
     const audioTrack = stream.getAudioTracks()[0];
-    const processor = new MediaStreamTrackProcessor(audioTrack);
+    const processor = new MediaStreamTrackProcessor({ track: audioTrack });
     const generator = new MediaStreamTrackGenerator({ kind: 'audio' });
 
     const source = processor.readable;

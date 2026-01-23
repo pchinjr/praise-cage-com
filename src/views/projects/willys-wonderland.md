@@ -13,6 +13,14 @@ Inspired by Nicolas Cage's intense and action-packed role in *Willy's Wonderland
 
 ### **Starting Code:**
 
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -20,44 +28,8 @@ Inspired by Nicolas Cage's intense and action-packed role in *Willy's Wonderland
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Animatronic Battle Logs with Willy's Wonderland and Console API</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #1c1c1c;
-            color: #f0f0f0;
-            text-align: center;
-            padding: 50px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #2e2e2e;
-            border: 1px solid #444;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        h1 {
-            margin-bottom: 20px;
-            color: #ff6347;
-        }
-        .controls {
-            margin-top: 20px;
-        }
-        button {
-            padding: 10px 20px;
-            margin: 10px;
-            border-radius: 5px;
-            border: none;
-            font-size: 16px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -72,25 +44,69 @@ Inspired by Nicolas Cage's intense and action-packed role in *Willy's Wonderland
         </div>
     </div>
 
-    <script>
-        const events = [];
-
-        function logEvent(message) {
-            const timestamp = new Date().toLocaleTimeString();
-            const logMessage = `${timestamp}: ${message}`;
-            events.push(logMessage);
-            console.log(logMessage);
-            alert(`Logged: ${message}`);
-        }
-
-        function viewLogs() {
-            console.clear();
-            console.log('Battle Logs:');
-            events.forEach(event => console.log(event));
-        }
-    </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
+```
+
+**styles.css**:
+```css
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1c1c1c;
+    color: #f0f0f0;
+    text-align: center;
+    padding: 50px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #2e2e2e;
+    border: 1px solid #444;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+h1 {
+    margin-bottom: 20px;
+    color: #ff6347;
+}
+.controls {
+    margin-top: 20px;
+}
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
+}
+```
+
+**script.js**:
+```javascript
+const events = [];
+
+function logEvent(message) {
+    const timestamp = new Date().toLocaleTimeString();
+    const logMessage = `${timestamp}: ${message}`;
+    events.push(logMessage);
+    console.log(logMessage);
+    alert(`Logged: ${message}`);
+}
+
+function viewLogs() {
+    console.clear();
+    console.log('Battle Logs:');
+    events.forEach(event => console.log(event));
+}
 ```
 
 ### **References:**

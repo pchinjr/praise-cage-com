@@ -2,6 +2,7 @@
 imageUrl: "https://upload.wikimedia.org/wikipedia/en/d/d5/Butchers_crossing_poster.jpg"
 ---
 ### **Title: Frontier Files with Butcher's Crossing and File System API**
+**Level:** Intermediate (Secure context required: https:// or http://localhost)
 
 ### **Description:**
 Inspired by Nicolas Cage's rugged and transformative role in *Butcher's Crossing*, this project uses the File System API to create a web application that allows users to manage and interact with files, reflecting the film's themes of survival, exploration, and transformation. The application captures the raw and adventurous atmosphere of the film, enabling users to create, read, and write files dynamically. This project showcases the practical use of the File System API to enhance user interaction and file management.
@@ -13,6 +14,14 @@ Inspired by Nicolas Cage's rugged and transformative role in *Butcher's Crossing
 
 ### **Starting Code:**
 
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Run a local server (for example `python -m http.server`) and open `http://localhost:8000`. Some APIs do not work from `file://`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -20,54 +29,8 @@ Inspired by Nicolas Cage's rugged and transformative role in *Butcher's Crossing
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Frontier Files with Butcher's Crossing and File System API</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #2d2d2d;
-            color: #f0f0f0;
-            text-align: center;
-            padding: 50px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #3c3c3c;
-            border: 1px solid #444;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        h1 {
-            margin-bottom: 20px;
-            color: #ff4500;
-        }
-        .controls {
-            margin-top: 20px;
-        }
-        button {
-            padding: 10px 20px;
-            margin: 10px;
-            border-radius: 5px;
-            border: none;
-            font-size: 16px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        textarea {
-            width: 100%;
-            height: 150px;
-            border: 1px solid #555;
-            border-radius: 5px;
-            padding: 10px;
-            margin-top: 10px;
-            background-color: #444;
-            color: #f0f0f0;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -82,50 +45,104 @@ Inspired by Nicolas Cage's rugged and transformative role in *Butcher's Crossing
         </div>
     </div>
 
-    <script>
-        let fileHandle;
-
-        document.getElementById('createButton').addEventListener('click', async () => {
-            const newHandle = await window.showSaveFilePicker({
-                suggestedName: 'new-file.txt',
-                types: [{
-                    description: 'Text Files',
-                    accept: { 'text/plain': ['.txt'] },
-                }],
-            });
-            fileHandle = newHandle;
-            const writableStream = await fileHandle.createWritable();
-            await writableStream.write('');
-            await writableStream.close();
-            alert('File created successfully!');
-        });
-
-        document.getElementById('readButton').addEventListener('click', async () => {
-            [fileHandle] = await window.showOpenFilePicker({
-                types: [{
-                    description: 'Text Files',
-                    accept: { 'text/plain': ['.txt'] },
-                }],
-            });
-            const file = await fileHandle.getFile();
-            const contents = await file.text();
-            document.getElementById('fileContent').value = contents;
-            alert('File read successfully!');
-        });
-
-        document.getElementById('writeButton').addEventListener('click', async () => {
-            if (!fileHandle) {
-                alert('No file is selected.');
-                return;
-            }
-            const writableStream = await fileHandle.createWritable();
-            await writableStream.write(document.getElementById('fileContent').value);
-            await writableStream.close();
-            alert('File written successfully!');
-        });
-    </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
+```
+
+**styles.css**:
+```css
+body {
+    font-family: Arial, sans-serif;
+    background-color: #2d2d2d;
+    color: #f0f0f0;
+    text-align: center;
+    padding: 50px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #3c3c3c;
+    border: 1px solid #444;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+h1 {
+    margin-bottom: 20px;
+    color: #ff4500;
+}
+.controls {
+    margin-top: 20px;
+}
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
+}
+textarea {
+    width: 100%;
+    height: 150px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #444;
+    color: #f0f0f0;
+}
+```
+
+**script.js**:
+```javascript
+let fileHandle;
+
+document.getElementById('createButton').addEventListener('click', async () => {
+    const newHandle = await window.showSaveFilePicker({
+        suggestedName: 'new-file.txt',
+        types: [{
+            description: 'Text Files',
+            accept: { 'text/plain': ['.txt'] },
+        }],
+    });
+    fileHandle = newHandle;
+    const writableStream = await fileHandle.createWritable();
+    await writableStream.write('');
+    await writableStream.close();
+    alert('File created successfully!');
+});
+
+document.getElementById('readButton').addEventListener('click', async () => {
+    [fileHandle] = await window.showOpenFilePicker({
+        types: [{
+            description: 'Text Files',
+            accept: { 'text/plain': ['.txt'] },
+        }],
+    });
+    const file = await fileHandle.getFile();
+    const contents = await file.text();
+    document.getElementById('fileContent').value = contents;
+    alert('File read successfully!');
+});
+
+document.getElementById('writeButton').addEventListener('click', async () => {
+    if (!fileHandle) {
+        alert('No file is selected.');
+        return;
+    }
+    const writableStream = await fileHandle.createWritable();
+    await writableStream.write(document.getElementById('fileContent').value);
+    await writableStream.close();
+    alert('File written successfully!');
+});
 ```
 
 ### **References:**

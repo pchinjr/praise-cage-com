@@ -13,6 +13,14 @@ Inspired by Nicolas Cage's role in *Left Behind*, this project utilizes the Prio
 
 ### **Starting Code:**
 
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -20,36 +28,8 @@ Inspired by Nicolas Cage's role in *Left Behind*, this project utilizes the Prio
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Redemption with Left Behind</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
-            text-align: center;
-            padding: 20px;
-        }
-        #task-container {
-            margin: 20px auto;
-            width: 50%;
-        }
-        .task {
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
-            margin: 10px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        input, button {
-            padding: 10px;
-            margin: 5px;
-        }
-        .high-priority {
-            border-left: 5px solid #e74c3c;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>Task Redemption with Left Behind</h1>
@@ -66,45 +46,81 @@ Inspired by Nicolas Cage's role in *Left Behind*, this project utilizes the Prio
 
     <div id="task-container"></div>
 
-    <script>
-        const taskContainer = document.getElementById('task-container');
-
-        function addTask() {
-            const taskInput = document.getElementById('task-input').value;
-            const priority = document.getElementById('priority-select').value;
-            if (taskInput) {
-                const task = document.createElement('div');
-                task.className = `task ${priority === 'high' ? 'high-priority' : ''}`;
-                task.innerHTML = `<span>${taskInput}</span><button onclick="removeTask(this)">Remove</button>`;
-                taskContainer.appendChild(task);
-                document.getElementById('task-input').value = '';
-                prioritizeTasks();
-            } else {
-                alert('Please enter a task.');
-            }
-        }
-
-        function removeTask(button) {
-            const task = button.parentElement;
-            taskContainer.removeChild(task);
-        }
-
-        function prioritizeTasks() {
-            const tasks = Array.from(taskContainer.children);
-            tasks.sort((a, b) => {
-                if (a.classList.contains('high-priority') && !b.classList.contains('high-priority')) {
-                    return -1;
-                } else if (!a.classList.contains('high-priority') && b.classList.contains('high-priority')) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            });
-            tasks.forEach(task => taskContainer.appendChild(task));
-        }
-    </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
+```
+
+**styles.css**:
+```css
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+}
+#task-container {
+    margin: 20px auto;
+    width: 50%;
+}
+.task {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+input, button {
+    padding: 10px;
+    margin: 5px;
+}
+.high-priority {
+    border-left: 5px solid #e74c3c;
+}
+```
+
+**script.js**:
+```javascript
+const taskContainer = document.getElementById('task-container');
+
+function addTask() {
+    const taskInput = document.getElementById('task-input').value;
+    const priority = document.getElementById('priority-select').value;
+    if (taskInput) {
+        const task = document.createElement('div');
+        task.className = `task ${priority === 'high' ? 'high-priority' : ''}`;
+        task.innerHTML = `<span>${taskInput}</span><button onclick="removeTask(this)">Remove</button>`;
+        taskContainer.appendChild(task);
+        document.getElementById('task-input').value = '';
+        prioritizeTasks();
+    } else {
+        alert('Please enter a task.');
+    }
+}
+
+function removeTask(button) {
+    const task = button.parentElement;
+    taskContainer.removeChild(task);
+}
+
+function prioritizeTasks() {
+    const tasks = Array.from(taskContainer.children);
+    tasks.sort((a, b) => {
+        if (a.classList.contains('high-priority') && !b.classList.contains('high-priority')) {
+            return -1;
+        } else if (!a.classList.contains('high-priority') && b.classList.contains('high-priority')) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+    tasks.forEach(task => taskContainer.appendChild(task));
+}
 ```
 
 ### **References:**

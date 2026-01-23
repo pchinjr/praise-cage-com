@@ -11,7 +11,15 @@ Using Web Components, this project leverages the concept of reusability and enca
 
 ### Starting Code:
 
-#### HTML:
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
+**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -20,6 +28,7 @@ Using Web Components, this project leverages the concept of reusability and enca
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lucky Break Donation Button</title>
     <script src="luckyDonationButton.js"></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>Support a Cause!</h1>
@@ -28,7 +37,16 @@ Using Web Components, this project leverages the concept of reusability and enca
 </html>
 ```
 
-#### JavaScript (luckyDonationButton.js):
+**styles.css**:
+```css
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+```
+
+**luckyDonationButton.js**:
 ```javascript
 class LuckyDonationButton extends HTMLElement {
     constructor() {

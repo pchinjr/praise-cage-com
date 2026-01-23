@@ -13,6 +13,14 @@ Inspired by Nicolas Cage's role in *Color Out of Space*, this project uses the R
 
 ### **Starting Code:**
 
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -20,42 +28,8 @@ Inspired by Nicolas Cage's role in *Color Out of Space*, this project uses the R
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cosmic Transformations with Color Out of Space and Resize Observer API</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #1c1c1c;
-            color: #f0f0f0;
-            text-align: center;
-            padding: 50px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #2e2e2e;
-            border: 1px solid #444;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        h1 {
-            margin-bottom: 20px;
-            color: #ff6347;
-        }
-        .resize-box {
-            width: 200px;
-            height: 200px;
-            background-color: #444;
-            margin: 20px auto;
-            resize: both;
-            overflow: auto;
-            border: 2px solid #555;
-            border-radius: 10px;
-        }
-        .transformations {
-            margin-top: 20px;
-            font-size: 18px;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -70,26 +44,68 @@ Inspired by Nicolas Cage's role in *Color Out of Space*, this project uses the R
         </div>
     </div>
 
-    <script>
-        const resizeBox = document.getElementById('resizeBox');
-        const transformations = document.getElementById('transformations');
-
-        const resizeObserver = new ResizeObserver(entries => {
-            for (let entry of entries) {
-                const width = entry.contentRect.width;
-                const height = entry.contentRect.height;
-                transformations.textContent = `Current size: ${Math.round(width)}px x ${Math.round(height)}px`;
-                
-                const colorValue = Math.min(Math.max(width, height), 255);
-                const color = `rgb(${colorValue}, ${128 + colorValue / 2}, ${255 - colorValue / 2})`;
-                resizeBox.style.backgroundColor = color;
-            }
-        });
-
-        resizeObserver.observe(resizeBox);
-    </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
+```
+
+**styles.css**:
+```css
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1c1c1c;
+    color: #f0f0f0;
+    text-align: center;
+    padding: 50px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #2e2e2e;
+    border: 1px solid #444;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+h1 {
+    margin-bottom: 20px;
+    color: #ff6347;
+}
+.resize-box {
+    width: 200px;
+    height: 200px;
+    background-color: #444;
+    margin: 20px auto;
+    resize: both;
+    overflow: auto;
+    border: 2px solid #555;
+    border-radius: 10px;
+}
+.transformations {
+    margin-top: 20px;
+    font-size: 18px;
+}
+```
+
+**script.js**:
+```javascript
+const resizeBox = document.getElementById('resizeBox');
+const transformations = document.getElementById('transformations');
+
+const resizeObserver = new ResizeObserver(entries => {
+    for (let entry of entries) {
+        const width = entry.contentRect.width;
+        const height = entry.contentRect.height;
+        transformations.textContent = `Current size: ${Math.round(width)}px x ${Math.round(height)}px`;
+
+        const colorValue = Math.min(Math.max(width, height), 255);
+        const color = `rgb(${colorValue}, ${128 + colorValue / 2}, ${255 - colorValue / 2})`;
+        resizeBox.style.backgroundColor = color;
+    }
+});
+
+resizeObserver.observe(resizeBox);
 ```
 
 ### **References:**

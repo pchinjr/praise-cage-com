@@ -12,6 +12,14 @@ In this project, we blend the mystical and adventurous elements of *Season of th
 3. **Thematic Design**: Implement a mystical design inspired by the enchanting atmosphere of *Season of the Witch*.
 
 #### Starting Code:
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 Here's a basic setup to get you started. This includes the initial HTML, CSS, and JavaScript to integrate the Houdini API and create enchanted web animations.
 
 **index.html**:

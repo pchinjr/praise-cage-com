@@ -2,6 +2,7 @@
 imageUrl: "https://upload.wikimedia.org/wikipedia/en/2/25/Running_with_the_Devil_poster.jpg"
 ---
 ### **Title: Criminal Alerts with Running with the Devil and Web Notifications API**
+**Level:** Intermediate (Secure context required: https:// or http://localhost)
 
 ### **Description:**
 Inspired by Nicolas Cage's intense and gritty role in *Running with the Devil*, this project uses the Web Notifications API to create a web application that sends timely alerts and notifications related to criminal activities and operations. The application captures the themes of crime, danger, and constant vigilance, enabling users to receive real-time updates and alerts. This project demonstrates the practical use of the Web Notifications API to enhance user engagement and information dissemination.
@@ -13,6 +14,14 @@ Inspired by Nicolas Cage's intense and gritty role in *Running with the Devil*, 
 
 ### **Starting Code:**
 
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Run a local server (for example `python -m http.server`) and open `http://localhost:8000`. Some APIs do not work from `file://`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -20,44 +29,8 @@ Inspired by Nicolas Cage's intense and gritty role in *Running with the Devil*, 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Criminal Alerts with Running with the Devil and Web Notifications API</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #1c1c1c;
-            color: #f0f0f0;
-            text-align: center;
-            padding: 50px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #2e2e2e;
-            border: 1px solid #444;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        h1 {
-            margin-bottom: 20px;
-            color: #ff6347;
-        }
-        .controls {
-            margin-top: 20px;
-        }
-        button {
-            padding: 10px 20px;
-            margin: 10px;
-            border-radius: 5px;
-            border: none;
-            font-size: 16px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -69,45 +42,89 @@ Inspired by Nicolas Cage's intense and gritty role in *Running with the Devil*, 
         </div>
     </div>
 
-    <script>
-        document.getElementById('notifyButton').addEventListener('click', () => {
-            if (Notification.permission === 'granted') {
-                sendNotification();
-            } else if (Notification.permission !== 'denied') {
-                Notification.requestPermission().then(permission => {
-                    if (permission === 'granted') {
-                        sendNotification();
-                    }
-                });
-            }
-        });
-
-        function sendNotification() {
-            const options = {
-                body: 'A new criminal activity has been reported. Stay alert!',
-                icon: 'https://via.placeholder.com/128', // Example icon URL
-                vibrate: [200, 100, 200],
-                tag: 'criminal-alert',
-                actions: [
-                    { action: 'view', title: 'View Details' }
-                ]
-            };
-
-            navigator.serviceWorker.ready.then(registration => {
-                registration.showNotification('Criminal Alert', options);
-            });
-        }
-
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js').then(registration => {
-                console.log('Service Worker registered with scope:', registration.scope);
-            }).catch(error => {
-                console.error('Service Worker registration failed:', error);
-            });
-        }
-    </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
+```
+
+**styles.css**:
+```css
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1c1c1c;
+    color: #f0f0f0;
+    text-align: center;
+    padding: 50px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #2e2e2e;
+    border: 1px solid #444;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+h1 {
+    margin-bottom: 20px;
+    color: #ff6347;
+}
+.controls {
+    margin-top: 20px;
+}
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
+}
+```
+
+**script.js**:
+```javascript
+document.getElementById('notifyButton').addEventListener('click', () => {
+    if (Notification.permission === 'granted') {
+        sendNotification();
+    } else if (Notification.permission !== 'denied') {
+        Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+                sendNotification();
+            }
+        });
+    }
+});
+
+function sendNotification() {
+    const options = {
+        body: 'A new criminal activity has been reported. Stay alert!',
+        icon: 'https://via.placeholder.com/128', // Example icon URL
+        vibrate: [200, 100, 200],
+        tag: 'criminal-alert',
+        actions: [
+            { action: 'view', title: 'View Details' }
+        ]
+    };
+
+    navigator.serviceWorker.ready.then(registration => {
+        registration.showNotification('Criminal Alert', options);
+    });
+}
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js').then(registration => {
+        console.log('Service Worker registered with scope:', registration.scope);
+    }).catch(error => {
+        console.error('Service Worker registration failed:', error);
+    });
+}
 ```
 
 ### **Service Worker (service-worker.js):**

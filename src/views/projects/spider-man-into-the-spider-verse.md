@@ -13,6 +13,14 @@ Inspired by Nicolas Cage's role as Spider-Man Noir in *Spider-Man: Into the Spid
 
 ### **Starting Code:**
 
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -20,48 +28,8 @@ Inspired by Nicolas Cage's role as Spider-Man Noir in *Spider-Man: Into the Spid
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Multiverse Styling with Spider-Man: Into the Spider-Verse and CSS Properties and Values API</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #f0f0f0;
-            text-align: center;
-            padding: 50px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #1e1e1e;
-            border: 1px solid #333;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        h1 {
-            margin-bottom: 20px;
-            color: #e84545;
-        }
-        .spider-verse-element {
-            margin: 20px;
-            padding: 20px;
-            background-color: var(--bg-color, #2e2e2e);
-            color: var(--text-color, #f0f0f0);
-            border-radius: var(--border-radius, 10px);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s ease;
-        }
-        .controls {
-            margin-top: 20px;
-        }
-        .controls label {
-            display: block;
-            margin: 10px 0 5px;
-        }
-        .controls input {
-            padding: 5px;
-            margin-bottom: 20px;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -84,49 +52,97 @@ Inspired by Nicolas Cage's role as Spider-Man Noir in *Spider-Man: Into the Spid
         </div>
     </div>
 
-    <script>
-        if (CSS.registerProperty) {
-            CSS.registerProperty({
-                name: '--bg-color',
-                syntax: '<color>',
-                inherits: false,
-                initialValue: '#2e2e2e'
-            });
-
-            CSS.registerProperty({
-                name: '--text-color',
-                syntax: '<color>',
-                inherits: false,
-                initialValue: '#f0f0f0'
-            });
-
-            CSS.registerProperty({
-                name: '--border-radius',
-                syntax: '<length>',
-                inherits: false,
-                initialValue: '10px'
-            });
-        }
-
-        const bgColorInput = document.getElementById('bg-color');
-        const textColorInput = document.getElementById('text-color');
-        const borderRadiusInput = document.getElementById('border-radius');
-        const spiderVerseElement = document.querySelector('.spider-verse-element');
-
-        bgColorInput.addEventListener('input', () => {
-            spiderVerseElement.style.setProperty('--bg-color', bgColorInput.value);
-        });
-
-        textColorInput.addEventListener('input', () => {
-            spiderVerseElement.style.setProperty('--text-color', textColorInput.value);
-        });
-
-        borderRadiusInput.addEventListener('input', () => {
-            spiderVerseElement.style.setProperty('--border-radius', borderRadiusInput.value + 'px');
-        });
-    </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
+```
+
+**styles.css**:
+```css
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #f0f0f0;
+    text-align: center;
+    padding: 50px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+h1 {
+    margin-bottom: 20px;
+    color: #e84545;
+}
+.spider-verse-element {
+    margin: 20px;
+    padding: 20px;
+    background-color: var(--bg-color, #2e2e2e);
+    color: var(--text-color, #f0f0f0);
+    border-radius: var(--border-radius, 10px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+.controls {
+    margin-top: 20px;
+}
+.controls label {
+    display: block;
+    margin: 10px 0 5px;
+}
+.controls input {
+    padding: 5px;
+    margin-bottom: 20px;
+}
+```
+
+**script.js**:
+```javascript
+if (CSS.registerProperty) {
+    CSS.registerProperty({
+        name: '--bg-color',
+        syntax: '<color>',
+        inherits: false,
+        initialValue: '#2e2e2e'
+    });
+
+    CSS.registerProperty({
+        name: '--text-color',
+        syntax: '<color>',
+        inherits: false,
+        initialValue: '#f0f0f0'
+    });
+
+    CSS.registerProperty({
+        name: '--border-radius',
+        syntax: '<length>',
+        inherits: false,
+        initialValue: '10px'
+    });
+}
+
+const bgColorInput = document.getElementById('bg-color');
+const textColorInput = document.getElementById('text-color');
+const borderRadiusInput = document.getElementById('border-radius');
+const spiderVerseElement = document.querySelector('.spider-verse-element');
+
+bgColorInput.addEventListener('input', () => {
+    spiderVerseElement.style.setProperty('--bg-color', bgColorInput.value);
+});
+
+textColorInput.addEventListener('input', () => {
+    spiderVerseElement.style.setProperty('--text-color', textColorInput.value);
+});
+
+borderRadiusInput.addEventListener('input', () => {
+    spiderVerseElement.style.setProperty('--border-radius', borderRadiusInput.value + 'px');
+});
 ```
 
 ### **References:**

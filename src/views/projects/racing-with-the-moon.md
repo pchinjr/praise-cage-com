@@ -10,6 +10,14 @@ imageUrl: "https://upload.wikimedia.org/wikipedia/en/f/f7/Racing_with_the_moon.j
 The application will include options to adjust the voice type and speed of narration, allowing users to customize the storytelling experience to their preference. This project not only serves as an educational tool about historical narratives and film study but also provides accessibility for those who prefer auditory learning or are visually impaired.
 
 ### Starting Code
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 Here’s the HTML, JavaScript, and some CSS to kickstart the "Whispers of the Past" project:
 
 #### HTML (index.html)
@@ -32,7 +40,7 @@ Here’s the HTML, JavaScript, and some CSS to kickstart the "Whispers of the Pa
 </html>
 ```
 
-#### CSS (styles.css)
+**styles.css**:
 ```css
 body {
     font-family: 'Arial', sans-serif;
@@ -51,7 +59,7 @@ button {
 }
 ```
 
-#### JavaScript (script.js)
+**script.js**:
 ```javascript
 function speakText(text) {
     if ('speechSynthesis' in window) {

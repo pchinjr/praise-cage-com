@@ -13,6 +13,14 @@ In this project, we combine the adventurous and imaginative world of *The Ant Bu
 3. **Educational Insights**: Provide educational information about ants and their behavior in response to specific voice commands.
 
 #### Starting Code:
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 Here's a basic setup to get you started. This includes the initial HTML, CSS, and JavaScript to integrate the Web Speech API and create a simple ant colony simulation.
 
 **index.html**:

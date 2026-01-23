@@ -9,6 +9,14 @@ imageUrl: "https://upload.wikimedia.org/wikipedia/en/d/d4/Peggy_Sue_Got_Married.
 This web application allows users to enter dates and details of past events, and at the configured time, it sends notifications that mimic Peggy Sue's time travel experience, reflecting on what might have been and appreciating what has changed since then. This could be used as a fun, reflective tool or even as a reminder system for anniversaries and important milestones.
 
 ### Starting Code
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 Here's how you might set up a simple version of "Nostalgic Notifications":
 
 #### HTML (index.html)
@@ -19,6 +27,7 @@ Here's how you might set up a simple version of "Nostalgic Notifications":
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nostalgic Notifications</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>Enter a past event to remember:</h1>
@@ -30,7 +39,16 @@ Here's how you might set up a simple version of "Nostalgic Notifications":
 </html>
 ```
 
-#### JavaScript (script.js)
+**styles.css**:
+```css
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+```
+
+**script.js**:
 ```javascript
 function scheduleNotification() {
     const eventDescription = document.getElementById('event').value;

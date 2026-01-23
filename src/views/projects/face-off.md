@@ -8,7 +8,15 @@ Inspired by the dramatic identity swaps in "Face/Off," where characters assume e
 
 ### Starting Code:
 
-#### HTML:
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
+**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +36,7 @@ Inspired by the dramatic identity swaps in "Face/Off," where characters assume e
 </html>
 ```
 
-#### CSS (styles.css):
+**styles.css**:
 ```css
 body {
     font-family: 'Arial', sans-serif;
@@ -53,7 +61,7 @@ button {
 }
 ```
 
-#### JavaScript (script.js):
+**script.js**:
 ```javascript
 document.getElementById('btnCamera').addEventListener('click', async () => {
     const permissionStatus = await navigator.permissions.query({name: 'camera'});

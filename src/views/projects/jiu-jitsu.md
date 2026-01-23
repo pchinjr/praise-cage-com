@@ -13,6 +13,14 @@ Inspired by Nicolas Cage's action-packed role in *Jiu Jitsu*, this project uses 
 
 ### **Starting Code:**
 
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -20,44 +28,8 @@ Inspired by Nicolas Cage's action-packed role in *Jiu Jitsu*, this project uses 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rhythmic Combat with Jiu Jitsu and Web MIDI API</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #1c1c1c;
-            color: #f0f0f0;
-            text-align: center;
-            padding: 50px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #2e2e2e;
-            border: 1px solid #444;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        h1 {
-            margin-bottom: 20px;
-            color: #ff6347;
-        }
-        .status {
-            margin: 20px 0;
-            font-size: 18px;
-        }
-        .animation {
-            width: 200px;
-            height: 200px;
-            background-color: #444;
-            margin: 20px auto;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: #fff;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -68,64 +40,108 @@ Inspired by Nicolas Cage's action-packed role in *Jiu Jitsu*, this project uses 
         <div class="animation" id="animationBox">Ready</div>
     </div>
 
-    <script>
-        const status = document.getElementById('status');
-        const animationBox = document.getElementById('animationBox');
-
-        function handleMIDIMessage(message) {
-            const [command, note, velocity] = message.data;
-
-            if (command === 144 && velocity > 0) {
-                switch (note) {
-                    case 60:
-                        triggerAnimation('Punch');
-                        break;
-                    case 62:
-                        triggerAnimation('Kick');
-                        break;
-                    case 64:
-                        triggerAnimation('Block');
-                        break;
-                    default:
-                        console.log('Unknown note:', note);
-                }
-            }
-        }
-
-        function triggerAnimation(action) {
-            animationBox.textContent = action;
-            animationBox.style.backgroundColor = getRandomColor();
-
-            setTimeout(() => {
-                animationBox.textContent = 'Ready';
-                animationBox.style.backgroundColor = '#444';
-            }, 500);
-        }
-
-        function getRandomColor() {
-            const letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
-
-        if (navigator.requestMIDIAccess) {
-            navigator.requestMIDIAccess().then(midiAccess => {
-                status.textContent = 'MIDI device connected. Ready to receive inputs.';
-                midiAccess.inputs.forEach(input => {
-                    input.addEventListener('midimessage', handleMIDIMessage);
-                });
-            }).catch(err => {
-                status.textContent = 'Failed to access MIDI devices: ' + err;
-            });
-        } else {
-            status.textContent = 'Web MIDI API is not supported in this browser.';
-        }
-    </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
+```
+
+**styles.css**:
+```css
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1c1c1c;
+    color: #f0f0f0;
+    text-align: center;
+    padding: 50px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #2e2e2e;
+    border: 1px solid #444;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+h1 {
+    margin-bottom: 20px;
+    color: #ff6347;
+}
+.status {
+    margin: 20px 0;
+    font-size: 18px;
+}
+.animation {
+    width: 200px;
+    height: 200px;
+    background-color: #444;
+    margin: 20px auto;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #fff;
+}
+```
+
+**script.js**:
+```javascript
+const status = document.getElementById('status');
+const animationBox = document.getElementById('animationBox');
+
+function handleMIDIMessage(message) {
+    const [command, note, velocity] = message.data;
+
+    if (command === 144 && velocity > 0) {
+        switch (note) {
+            case 60:
+                triggerAnimation('Punch');
+                break;
+            case 62:
+                triggerAnimation('Kick');
+                break;
+            case 64:
+                triggerAnimation('Block');
+                break;
+            default:
+                console.log('Unknown note:', note);
+        }
+    }
+}
+
+function triggerAnimation(action) {
+    animationBox.textContent = action;
+    animationBox.style.backgroundColor = getRandomColor();
+
+    setTimeout(() => {
+        animationBox.textContent = 'Ready';
+        animationBox.style.backgroundColor = '#444';
+    }, 500);
+}
+
+function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+if (navigator.requestMIDIAccess) {
+    navigator.requestMIDIAccess().then(midiAccess => {
+        status.textContent = 'MIDI device connected. Ready to receive inputs.';
+        midiAccess.inputs.forEach(input => {
+            input.addEventListener('midimessage', handleMIDIMessage);
+        });
+    }).catch(err => {
+        status.textContent = 'Failed to access MIDI devices: ' + err;
+    });
+} else {
+    status.textContent = 'Web MIDI API is not supported in this browser.';
+}
 ```
 
 ### **References:**

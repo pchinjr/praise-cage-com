@@ -10,6 +10,14 @@ In "National Treasure" (2004), Nicolas Cage stars as Benjamin Franklin Gates, a 
 
 #### Starting Code
 
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 **HTML:**
 ```html
 <!DOCTYPE html>
@@ -34,7 +42,7 @@ In "National Treasure" (2004), Nicolas Cage stars as Benjamin Franklin Gates, a 
 </html>
 ```
 
-**CSS (styles.css):**
+**styles.css**:
 ```css
 body {
     font-family: Arial, sans-serif;
@@ -72,7 +80,7 @@ h1 {
 }
 ```
 
-**JavaScript (script.js):**
+**script.js**:
 ```javascript
 function revealClue(element) {
     const clue = document.getElementById('clue');

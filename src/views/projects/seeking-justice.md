@@ -12,6 +12,14 @@ In this project, we integrate the thrilling and suspenseful narrative of *Seekin
 3. **Thematic Design**: Implement a design inspired by the tense and suspenseful atmosphere of *Seeking Justice*.
 
 #### Starting Code:
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 Here's a basic setup to get you started. This includes the initial HTML, CSS, and JavaScript to integrate the History API and create an interactive navigation experience.
 
 **index.html**:

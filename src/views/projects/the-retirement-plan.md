@@ -14,6 +14,14 @@ Inspired by Nicolas Cage's strategic and intense role in *The Retirement Plan*, 
 
 ### **Starting Code:**
 
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -21,52 +29,8 @@ Inspired by Nicolas Cage's strategic and intense role in *The Retirement Plan*, 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Locations with The Retirement Plan and Geolocation API</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #1d1d1d;
-            color: #f0f0f0;
-            text-align: center;
-            padding: 50px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #2b2b2b;
-            border: 1px solid #444;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        h1 {
-            margin-bottom: 20px;
-            color: #ff6347;
-        }
-        .controls {
-            margin-top: 20px;
-        }
-        button {
-            padding: 10px 20px;
-            margin: 10px;
-            border-radius: 5px;
-            border: none;
-            font-size: 16px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        #map {
-            width: 100%;
-            height: 400px;
-            margin-top: 20px;
-            background-color: #3c3c3c;
-            border-radius: 10px;
-            border: 1px solid #555;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -81,56 +45,108 @@ Inspired by Nicolas Cage's strategic and intense role in *The Retirement Plan*, 
         <div id="map"></div>
     </div>
 
-    <script>
-        const feedback = document.getElementById('feedback');
-        const getLocationButton = document.getElementById('getLocationButton');
-        const saveLocationButton = document.getElementById('saveLocationButton');
-        const map = document.getElementById('map');
-
-        let currentPos = null;
-
-        getLocationButton.addEventListener('click', () => {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(position => {
-                    currentPos = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude,
-                    };
-                    feedback.textContent = `Latitude: ${currentPos.lat}, Longitude: ${currentPos.lng}`;
-                    displayLocation(currentPos);
-                }, () => {
-                    feedback.textContent = 'Error: The Geolocation service failed.';
-                });
-            } else {
-                feedback.textContent = 'Error: Your browser doesn\'t support geolocation.';
-            }
-        });
-
-        saveLocationButton.addEventListener('click', () => {
-            if (currentPos) {
-                localStorage.setItem('secureLocation', JSON.stringify(currentPos));
-                feedback.textContent = 'Location saved successfully!';
-            } else {
-                feedback.textContent = 'No location to save.';
-            }
-        });
-
-        function displayLocation(pos) {
-            map.innerHTML = `<div style="height: 100%; display: flex; align-items: center; justify-content: center; color: #fff;">
-                Latitude: ${pos.lat.toFixed(4)}, Longitude: ${pos.lng.toFixed(4)}
-            </div>`;
-        }
-
-        window.onload = function() {
-            const savedLocation = JSON.parse(localStorage.getItem('secureLocation'));
-            if (savedLocation) {
-                feedback.textContent = `Saved Latitude: ${savedLocation.lat}, Longitude: ${savedLocation.lng}`;
-                displayLocation(savedLocation);
-            }
-        };
-    </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
+```
+
+**styles.css**:
+```css
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1d1d1d;
+    color: #f0f0f0;
+    text-align: center;
+    padding: 50px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #2b2b2b;
+    border: 1px solid #444;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+h1 {
+    margin-bottom: 20px;
+    color: #ff6347;
+}
+.controls {
+    margin-top: 20px;
+}
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
+}
+#map {
+    width: 100%;
+    height: 400px;
+    margin-top: 20px;
+    background-color: #3c3c3c;
+    border-radius: 10px;
+    border: 1px solid #555;
+}
+```
+
+**script.js**:
+```javascript
+const feedback = document.getElementById('feedback');
+const getLocationButton = document.getElementById('getLocationButton');
+const saveLocationButton = document.getElementById('saveLocationButton');
+const map = document.getElementById('map');
+
+let currentPos = null;
+
+getLocationButton.addEventListener('click', () => {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+            currentPos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+            };
+            feedback.textContent = `Latitude: ${currentPos.lat}, Longitude: ${currentPos.lng}`;
+            displayLocation(currentPos);
+        }, () => {
+            feedback.textContent = 'Error: The Geolocation service failed.';
+        });
+    } else {
+        feedback.textContent = 'Error: Your browser doesn\'t support geolocation.';
+    }
+});
+
+saveLocationButton.addEventListener('click', () => {
+    if (currentPos) {
+        localStorage.setItem('secureLocation', JSON.stringify(currentPos));
+        feedback.textContent = 'Location saved successfully!';
+    } else {
+        feedback.textContent = 'No location to save.';
+    }
+});
+
+function displayLocation(pos) {
+    map.innerHTML = `<div style="height: 100%; display: flex; align-items: center; justify-content: center; color: #fff;">
+        Latitude: ${pos.lat.toFixed(4)}, Longitude: ${pos.lng.toFixed(4)}
+    </div>`;
+}
+
+window.onload = function() {
+    const savedLocation = JSON.parse(localStorage.getItem('secureLocation'));
+    if (savedLocation) {
+        feedback.textContent = `Saved Latitude: ${savedLocation.lat}, Longitude: ${savedLocation.lng}`;
+        displayLocation(savedLocation);
+    }
+};
 ```
 
 ### **References:**

@@ -10,6 +10,14 @@ imageUrl: >-
 This application allows users to explore various bird migration paths overlaid on real-world maps, comparing them with key locations from the film where significant events occur. Users can "fly" alongside different bird species, learning about their migration habits and patterns, while also discovering more about the film's locations and their importance to the narrative. This dual exploration serves as a form of healing and educational journey, much like Birdy's own quest for understanding and liberation.
 
 ### Starting Code
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 Here’s the HTML, JavaScript, and some CSS to start the "Birdy's Flight Paths: A Geolocation Journey" project:
 
 #### HTML (index.html)
@@ -29,10 +37,9 @@ Here’s the HTML, JavaScript, and some CSS to start the "Birdy's Flight Paths: 
     <script src="script.js"></script>
 </body>
 </html>
-
 ```
 
-#### CSS (styles.css)
+**styles.css**:
 ```css
 body, html {
     height: 100%;
@@ -43,10 +50,9 @@ body, html {
 #map {
     height: 100%;
 }
-
 ```
 
-#### JavaScript (script.js)
+**script.js**:
 ```javascript
 document.addEventListener('DOMContentLoaded', function() {
     var map = L.map('map').setView([40.7128, -74.0060], 13); // New York City coordinates and initial zoom level

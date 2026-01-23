@@ -13,6 +13,14 @@ Inspired by Nicolas Cage's intense and gritty role in *Dog Eat Dog*, this projec
 
 ### **Starting Code:**
 
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -20,53 +28,8 @@ Inspired by Nicolas Cage's intense and gritty role in *Dog Eat Dog*, this projec
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eventful Escape with Dog Eat Dog</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #222;
-            color: #fff;
-            text-align: center;
-            padding: 50px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #333;
-            border: 1px solid #444;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        h1 {
-            margin-bottom: 20px;
-        }
-        button, input {
-            padding: 10px 20px;
-            margin: 10px;
-            border-radius: 5px;
-            border: none;
-            font-size: 16px;
-        }
-        button {
-            background-color: #e74c3c;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #c0392b;
-        }
-        input {
-            background-color: #444;
-            color: #fff;
-            border: 1px solid #555;
-        }
-        .event-box {
-            padding: 20px;
-            margin: 20px;
-            background-color: #555;
-            border-radius: 5px;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -80,30 +43,83 @@ Inspired by Nicolas Cage's intense and gritty role in *Dog Eat Dog*, this projec
         <div id="output"></div>
     </div>
 
-    <script>
-        const clickButton = document.getElementById('clickButton');
-        const keypressInput = document.getElementById('keypressInput');
-        const hoverBox = document.getElementById('hoverBox');
-        const output = document.getElementById('output');
-
-        clickButton.addEventListener('click', () => {
-            output.textContent = 'Button clicked!';
-        });
-
-        keypressInput.addEventListener('keypress', (event) => {
-            output.textContent = `Key pressed: ${event.key}`;
-        });
-
-        hoverBox.addEventListener('mouseover', () => {
-            output.textContent = 'Mouse over the box!';
-        });
-
-        hoverBox.addEventListener('mouseout', () => {
-            output.textContent = '';
-        });
-    </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
+```
+
+**styles.css**:
+```css
+body {
+    font-family: Arial, sans-serif;
+    background-color: #222;
+    color: #fff;
+    text-align: center;
+    padding: 50px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #333;
+    border: 1px solid #444;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+h1 {
+    margin-bottom: 20px;
+}
+button, input {
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+}
+button {
+    background-color: #e74c3c;
+    color: white;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #c0392b;
+}
+input {
+    background-color: #444;
+    color: #fff;
+    border: 1px solid #555;
+}
+.event-box {
+    padding: 20px;
+    margin: 20px;
+    background-color: #555;
+    border-radius: 5px;
+}
+```
+
+**script.js**:
+```javascript
+const clickButton = document.getElementById('clickButton');
+const keypressInput = document.getElementById('keypressInput');
+const hoverBox = document.getElementById('hoverBox');
+const output = document.getElementById('output');
+
+clickButton.addEventListener('click', () => {
+    output.textContent = 'Button clicked!';
+});
+
+keypressInput.addEventListener('keypress', (event) => {
+    output.textContent = `Key pressed: ${event.key}`;
+});
+
+hoverBox.addEventListener('mouseover', () => {
+    output.textContent = 'Mouse over the box!';
+});
+
+hoverBox.addEventListener('mouseout', () => {
+    output.textContent = '';
+});
 ```
 
 ### **References:**

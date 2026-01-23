@@ -10,7 +10,15 @@ This tool is ideal for graphic designers, spiritual bloggers, or anyone looking 
 
 ### Starting Code:
 
-#### HTML:
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
+**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +38,7 @@ This tool is ideal for graphic designers, spiritual bloggers, or anyone looking 
 </html>
 ```
 
-#### CSS (styles.css):
+**styles.css**:
 ```css
 body {
     font-family: 'Arial', sans-serif;
@@ -66,7 +74,7 @@ button {
 }
 ```
 
-#### JavaScript (script.js):
+**script.js**:
 ```javascript
 document.fonts.load('10pt "Angelic"').then(function () {
     console.log('Angelic font is ready to use.');

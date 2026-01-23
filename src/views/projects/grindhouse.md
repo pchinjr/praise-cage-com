@@ -12,6 +12,14 @@ In this project, we blend the gritty and intense atmosphere of *Grindhouse* with
 3. **Custom Actions**: Implement custom actions such as play, pause, skip, and seek, allowing users to interact with the media seamlessly.
 
 #### Starting Code:
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 Here's a basic setup to get you started. This includes the initial HTML, CSS, and JavaScript to integrate the Media Session API and create an interactive media control experience.
 
 **index.html**:

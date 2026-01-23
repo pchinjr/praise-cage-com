@@ -13,6 +13,14 @@ Inspired by Nicolas Cage's adventurous role in *The Croods*, this project uses t
 
 ### **Starting Code:**
 
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -20,42 +28,8 @@ Inspired by Nicolas Cage's adventurous role in *The Croods*, this project uses t
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prehistoric Play with The Croods</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #a2d5c6;
-            color: #333;
-            text-align: center;
-            padding: 20px;
-        }
-        #scene {
-            border: 2px solid #333;
-            width: 80%;
-            height: 400px;
-            margin: 0 auto;
-            position: relative;
-            background: #f5f5f5;
-        }
-        .draggable {
-            width: 100px;
-            height: 100px;
-            cursor: grab;
-            position: absolute;
-        }
-        .draggable:active {
-            cursor: grabbing;
-        }
-        #characters, #plants, #animals {
-            display: flex;
-            justify-content: center;
-            margin: 20px;
-        }
-        img {
-            width: 100px;
-            height: 100px;
-            margin: 10px;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>Prehistoric Play with The Croods</h1>
@@ -76,35 +50,77 @@ Inspired by Nicolas Cage's adventurous role in *The Croods*, this project uses t
 
     <div id="scene"></div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const draggables = document.querySelectorAll('.draggable');
-            const scene = document.getElementById('scene');
-
-            draggables.forEach(draggable => {
-                draggable.addEventListener('dragstart', (e) => {
-                    e.dataTransfer.setData('text/plain', draggable.id);
-                });
-            });
-
-            scene.addEventListener('dragover', (e) => {
-                e.preventDefault();
-            });
-
-            scene.addEventListener('drop', (e) => {
-                e.preventDefault();
-                const id = e.dataTransfer.getData('text/plain');
-                const element = document.getElementById(id);
-                const x = e.clientX - scene.getBoundingClientRect().left - element.clientWidth / 2;
-                const y = e.clientY - scene.getBoundingClientRect().top - element.clientHeight / 2;
-                element.style.left = `${x}px`;
-                element.style.top = `${y}px`;
-                scene.appendChild(element);
-            });
-        });
-    </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
+```
+
+**styles.css**:
+```css
+body {
+    font-family: Arial, sans-serif;
+    background-color: #a2d5c6;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+}
+#scene {
+    border: 2px solid #333;
+    width: 80%;
+    height: 400px;
+    margin: 0 auto;
+    position: relative;
+    background: #f5f5f5;
+}
+.draggable {
+    width: 100px;
+    height: 100px;
+    cursor: grab;
+    position: absolute;
+}
+.draggable:active {
+    cursor: grabbing;
+}
+#characters, #plants, #animals {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+img {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+}
+```
+
+**script.js**:
+```javascript
+document.addEventListener('DOMContentLoaded', () => {
+    const draggables = document.querySelectorAll('.draggable');
+    const scene = document.getElementById('scene');
+
+    draggables.forEach(draggable => {
+        draggable.addEventListener('dragstart', (e) => {
+            e.dataTransfer.setData('text/plain', draggable.id);
+        });
+    });
+
+    scene.addEventListener('dragover', (e) => {
+        e.preventDefault();
+    });
+
+    scene.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const id = e.dataTransfer.getData('text/plain');
+        const element = document.getElementById(id);
+        const x = e.clientX - scene.getBoundingClientRect().left - element.clientWidth / 2;
+        const y = e.clientY - scene.getBoundingClientRect().top - element.clientHeight / 2;
+        element.style.left = `${x}px`;
+        element.style.top = `${y}px`;
+        scene.appendChild(element);
+    });
+});
 ```
 
 ### **References:**

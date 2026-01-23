@@ -11,6 +11,14 @@ In the film "Adaptation" (2002), Nicolas Cage portrays Charlie Kaufman, a screen
 
 #### Starting Code
 
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 **HTML:**
 ```html
 <!DOCTYPE html>
@@ -41,7 +49,7 @@ In the film "Adaptation" (2002), Nicolas Cage portrays Charlie Kaufman, a screen
 </html>
 ```
 
-**CSS (styles.css):**
+**styles.css**:
 ```css
 body {
     font-family: Arial, sans-serif;
@@ -100,7 +108,7 @@ button:hover {
 }
 ```
 
-**JavaScript (script.js):**
+**script.js**:
 ```javascript
 async function awardBadge() {
     const wordCount = document.getElementById('wordCount').value;

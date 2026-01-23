@@ -13,6 +13,14 @@ Inspired by Nicolas Cage's role in *Looking Glass*, this project uses the Page V
 
 ### **Starting Code:**
 
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -20,34 +28,8 @@ Inspired by Nicolas Cage's role in *Looking Glass*, this project uses the Page V
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hidden Realities with Looking Glass and Page Visibility API</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #1c1c1c;
-            color: #f0f0f0;
-            text-align: center;
-            padding: 50px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #2e2e2e;
-            border: 1px solid #444;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        h1 {
-            margin-bottom: 20px;
-            color: #ff6347;
-        }
-        .hidden-message {
-            display: none;
-            margin-top: 20px;
-            color: #ff6347;
-            font-size: 20px;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -62,18 +44,52 @@ Inspired by Nicolas Cage's role in *Looking Glass*, this project uses the Page V
         </div>
     </div>
 
-    <script>
-        document.addEventListener('visibilitychange', () => {
-            const hiddenMessage = document.getElementById('hiddenMessage');
-            if (document.hidden) {
-                hiddenMessage.style.display = 'none';
-            } else {
-                hiddenMessage.style.display = 'block';
-            }
-        });
-    </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
+```
+
+**styles.css**:
+```css
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1c1c1c;
+    color: #f0f0f0;
+    text-align: center;
+    padding: 50px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #2e2e2e;
+    border: 1px solid #444;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+h1 {
+    margin-bottom: 20px;
+    color: #ff6347;
+}
+.hidden-message {
+    display: none;
+    margin-top: 20px;
+    color: #ff6347;
+    font-size: 20px;
+}
+```
+
+**script.js**:
+```javascript
+document.addEventListener('visibilitychange', () => {
+    const hiddenMessage = document.getElementById('hiddenMessage');
+    if (document.hidden) {
+        hiddenMessage.style.display = 'none';
+    } else {
+        hiddenMessage.style.display = 'block';
+    }
+});
 ```
 
 ### **References:**

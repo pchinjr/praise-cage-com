@@ -10,6 +10,14 @@ In "Matchstick Men" (2003), Nicolas Cage plays Roy Waller, a con artist struggli
 
 #### Starting Code
 
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 **HTML:**
 ```html
 <!DOCTYPE html>
@@ -38,7 +46,7 @@ In "Matchstick Men" (2003), Nicolas Cage plays Roy Waller, a con artist struggli
 </html>
 ```
 
-**CSS (styles.css):**
+**styles.css**:
 ```css
 body {
     font-family: Arial, sans-serif;
@@ -81,7 +89,7 @@ h1 {
 }
 ```
 
-**JavaScript (script.js):**
+**script.js**:
 ```javascript
 document.addEventListener('DOMContentLoaded', (event) => {
     const result = document.getElementById('result');

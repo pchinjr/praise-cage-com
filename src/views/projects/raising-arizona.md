@@ -11,7 +11,15 @@ Using the IndexedDB API, the game stores various pieces of 'stolen' data locally
 
 ### Starting Code:
 
-#### HTML:
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
+**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +27,7 @@ Using the IndexedDB API, the game stores various pieces of 'stolen' data locally
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Desert Data Heist</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>Desert Data Heist: Indexed Arizona</h1>
@@ -29,7 +38,16 @@ Using the IndexedDB API, the game stores various pieces of 'stolen' data locally
 </html>
 ```
 
-#### JavaScript (game.js):
+**styles.css**:
+```css
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+```
+
+**game.js**:
 ```javascript
 // Opening IndexedDB
 let db;

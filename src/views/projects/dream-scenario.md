@@ -13,6 +13,14 @@ Inspired by Nicolas Cage's surreal and introspective role in *Dream Scenario*, t
 
 ### **Starting Code:**
 
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -20,36 +28,8 @@ Inspired by Nicolas Cage's surreal and introspective role in *Dream Scenario*, t
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visual Narration with Dream Scenario and WebVTT</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #f0f0f0;
-            text-align: center;
-            padding: 50px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #1d1d1d;
-            border: 1px solid #444;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        h1 {
-            margin-bottom: 20px;
-            color: #ff6347;
-        }
-        video {
-            width: 100%;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        .controls {
-            margin-top: 20px;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -70,20 +50,56 @@ Inspired by Nicolas Cage's surreal and introspective role in *Dream Scenario*, t
         </div>
     </div>
 
-    <script>
-        const video = document.getElementById('video');
-        video.addEventListener('play', () => {
-            console.log('Video started playing');
-        });
-        video.addEventListener('pause', () => {
-            console.log('Video paused');
-        });
-        video.addEventListener('seeked', () => {
-            console.log('Video seeked to ' + video.currentTime);
-        });
-    </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
+```
+
+**styles.css**:
+```css
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #f0f0f0;
+    text-align: center;
+    padding: 50px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #1d1d1d;
+    border: 1px solid #444;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+h1 {
+    margin-bottom: 20px;
+    color: #ff6347;
+}
+video {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.controls {
+    margin-top: 20px;
+}
+```
+
+**script.js**:
+```javascript
+const video = document.getElementById('video');
+video.addEventListener('play', () => {
+    console.log('Video started playing');
+});
+video.addEventListener('pause', () => {
+    console.log('Video paused');
+});
+video.addEventListener('seeked', () => {
+    console.log('Video seeked to ' + video.currentTime);
+});
 ```
 
 ### **Sample WebVTT File (subtitles.vtt):**

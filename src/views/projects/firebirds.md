@@ -11,7 +11,15 @@ Using the Battery API, this app monitors the user's device battery status and en
 
 ### Starting Code:
 
-#### HTML:
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
+**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +39,7 @@ Using the Battery API, this app monitors the user's device battery status and en
 </html>
 ```
 
-#### CSS (styles.css):
+**styles.css**:
 ```css
 body {
     font-family: 'Arial', sans-serif;
@@ -53,7 +61,7 @@ body {
 }
 ```
 
-#### JavaScript (energy.js):
+**energy.js**:
 ```javascript
 navigator.getBattery().then(function(battery) {
     function updateBatteryInfo() {

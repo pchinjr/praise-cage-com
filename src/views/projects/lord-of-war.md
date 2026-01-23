@@ -10,6 +10,14 @@ imageUrl: "https://upload.wikimedia.org/wikipedia/en/9/92/Lordofwar.jpg"
 
 #### Starting Code
 
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 **HTML:**
 ```html
 <!DOCTYPE html>
@@ -34,7 +42,7 @@ imageUrl: "https://upload.wikimedia.org/wikipedia/en/9/92/Lordofwar.jpg"
 </html>
 ```
 
-**CSS (styles.css):**
+**styles.css**:
 ```css
 body {
     font-family: Arial, sans-serif;
@@ -64,7 +72,7 @@ h1 {
 }
 ```
 
-**JavaScript (script.js):**
+**script.js**:
 ```javascript
 document.addEventListener('DOMContentLoaded', () => {
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;

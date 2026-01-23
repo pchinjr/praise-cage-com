@@ -7,6 +7,14 @@ imageUrl: "https://upload.wikimedia.org/wikipedia/en/1/1e/Worldtrade.jpg"
 Inspired by Nicolas Cage's heroic portrayal of John McLoughlin in "World Trade Center" (2006), this project creates a tribute by simulating the logging of rescue operations during disaster scenarios. By integrating the Storage API, we aim to store and retrieve information about rescue tasks and operations, representing the continuous efforts of first responders. This project provides a dynamic and heartfelt homage to the dedication and organization required during such critical missions.
 
 ### Starting Code:
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 This project will use HTML, JavaScript, and the Storage API to log and retrieve rescue operations.
 
 **HTML:**
@@ -36,7 +44,7 @@ This project will use HTML, JavaScript, and the Storage API to log and retrieve 
 </html>
 ```
 
-**JavaScript:**
+**script.js**:
 ```javascript
 document.getElementById('rescueForm').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -46,7 +54,7 @@ document.getElementById('rescueForm').addEventListener('submit', function(event)
 function logRescueTask() {
     const taskInput = document.getElementById('rescueTask');
     const task = taskInput.value.trim();
-    
+
     if (task) {
         const tasks = JSON.parse(localStorage.getItem('rescueTasks')) || [];
         tasks.push(task);
@@ -61,7 +69,7 @@ function displayTasks() {
     logContainer.innerHTML = ''; // Clear previous tasks
 
     const tasks = JSON.parse(localStorage.getItem('rescueTasks')) || [];
-    
+
     tasks.forEach((task, index) => {
         const taskDiv = document.createElement('div');
         taskDiv.classList.add('task');
@@ -74,7 +82,7 @@ function displayTasks() {
 document.addEventListener('DOMContentLoaded', displayTasks);
 ```
 
-**CSS (styles.css):**
+**styles.css**:
 ```css
 body {
     font-family: Arial, sans-serif;

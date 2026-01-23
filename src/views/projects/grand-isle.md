@@ -13,6 +13,14 @@ Inspired by Nicolas Cage's suspenseful and thrilling role in *Grand Isle*, this 
 
 ### **Starting Code:**
 
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -20,54 +28,8 @@ Inspired by Nicolas Cage's suspenseful and thrilling role in *Grand Isle*, this 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dark Highlights with Grand Isle and CSS Custom Highlight API</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #1c1c1c;
-            color: #f0f0f0;
-            text-align: center;
-            padding: 50px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #2e2e2e;
-            border: 1px solid #444;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        h1 {
-            margin-bottom: 20px;
-            color: #ff6347;
-        }
-        p {
-            text-align: left;
-            line-height: 1.6;
-        }
-        .controls {
-            margin-top: 20px;
-        }
-        button {
-            padding: 10px 20px;
-            margin: 10px;
-            border-radius: 5px;
-            border: none;
-            font-size: 16px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        mark {
-            background-color: #ff6347;
-            color: #1c1c1c;
-            padding: 0 5px;
-            border-radius: 3px;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -82,57 +44,111 @@ Inspired by Nicolas Cage's suspenseful and thrilling role in *Grand Isle*, this 
         </div>
     </div>
 
-    <script>
-        const textContent = document.getElementById('textContent');
-        const highlightButton = document.getElementById('highlightButton');
-
-        if (CSS.highlights) {
-            const highlight = new Highlight();
-            CSS.highlights.set('darkHighlight', highlight);
-
-            highlightButton.addEventListener('click', () => {
-                const range = new Range();
-                const text = textContent.textContent;
-                const keyPhrases = [
-                    'lure a young man',
-                    'escape a hurricane',
-                    'accused of murder',
-                    'dark truths',
-                    'hidden motives'
-                ];
-
-                keyPhrases.forEach(phrase => {
-                    const startIndex = text.indexOf(phrase);
-                    if (startIndex !== -1) {
-                        range.setStart(textContent.firstChild, startIndex);
-                        range.setEnd(textContent.firstChild, startIndex + phrase.length);
-                        highlight.add(range);
-                    }
-                });
-
-                textContent.setAttribute('style', `color: #f0f0f0; background-color: #2e2e2e;`);
-            });
-        } else {
-            console.warn('CSS Custom Highlight API is not supported in this browser.');
-            highlightButton.addEventListener('click', () => {
-                const text = textContent.innerHTML;
-                const keyPhrases = [
-                    'lure a young man',
-                    'escape a hurricane',
-                    'accused of murder',
-                    'dark truths',
-                    'hidden motives'
-                ];
-
-                keyPhrases.forEach(phrase => {
-                    const regex = new RegExp(`(${phrase})`, 'gi');
-                    textContent.innerHTML = textContent.innerHTML.replace(regex, `<mark>$1</mark>`);
-                });
-            });
-        }
-    </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
+```
+
+**styles.css**:
+```css
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1c1c1c;
+    color: #f0f0f0;
+    text-align: center;
+    padding: 50px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #2e2e2e;
+    border: 1px solid #444;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+h1 {
+    margin-bottom: 20px;
+    color: #ff6347;
+}
+p {
+    text-align: left;
+    line-height: 1.6;
+}
+.controls {
+    margin-top: 20px;
+}
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
+}
+mark {
+    background-color: #ff6347;
+    color: #1c1c1c;
+    padding: 0 5px;
+    border-radius: 3px;
+}
+```
+
+**script.js**:
+```javascript
+const textContent = document.getElementById('textContent');
+const highlightButton = document.getElementById('highlightButton');
+
+if (CSS.highlights) {
+    const highlight = new Highlight();
+    CSS.highlights.set('darkHighlight', highlight);
+
+    highlightButton.addEventListener('click', () => {
+        const range = new Range();
+        const text = textContent.textContent;
+        const keyPhrases = [
+            'lure a young man',
+            'escape a hurricane',
+            'accused of murder',
+            'dark truths',
+            'hidden motives'
+        ];
+
+        keyPhrases.forEach(phrase => {
+            const startIndex = text.indexOf(phrase);
+            if (startIndex !== -1) {
+                range.setStart(textContent.firstChild, startIndex);
+                range.setEnd(textContent.firstChild, startIndex + phrase.length);
+                highlight.add(range);
+            }
+        });
+
+        textContent.setAttribute('style', `color: #f0f0f0; background-color: #2e2e2e;`);
+    });
+} else {
+    console.warn('CSS Custom Highlight API is not supported in this browser.');
+    highlightButton.addEventListener('click', () => {
+        const text = textContent.innerHTML;
+        const keyPhrases = [
+            'lure a young man',
+            'escape a hurricane',
+            'accused of murder',
+            'dark truths',
+            'hidden motives'
+        ];
+
+        keyPhrases.forEach(phrase => {
+            const regex = new RegExp(`(${phrase})`, 'gi');
+            textContent.innerHTML = textContent.innerHTML.replace(regex, `<mark>$1</mark>`);
+        });
+    });
+}
 ```
 
 ### **References:**

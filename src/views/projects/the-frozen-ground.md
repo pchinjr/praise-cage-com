@@ -2,6 +2,7 @@
 imageUrl: "https://upload.wikimedia.org/wikipedia/en/2/24/The_Frozen_Ground_poster.jpg"
 ---
 ### **Title: Frozen Notes with The Frozen Ground and Clipboard API**
+**Level:** Intermediate (Secure context required: https:// or http://localhost)
 
 ### **Description:**
 Inspired by Nicolas Cage's intense role in *The Frozen Ground*, this project uses the Clipboard API to create a web application for managing and organizing text snippets and notes. The application captures the meticulous and investigative spirit of Cage’s character, Jack Halcombe, allowing users to copy, paste, and manage clipboard data efficiently. The project emphasizes security and precision, ensuring users can handle sensitive information with care, much like the investigative process depicted in the film.
@@ -13,6 +14,14 @@ Inspired by Nicolas Cage's intense role in *The Frozen Ground*, this project use
 
 ### **Starting Code:**
 
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Run a local server (for example `python -m http.server`) and open `http://localhost:8000`. Some APIs do not work from `file://`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -20,47 +29,8 @@ Inspired by Nicolas Cage's intense role in *The Frozen Ground*, this project use
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Frozen Notes with The Frozen Ground</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #e0f7fa;
-            color: #333;
-            text-align: center;
-            padding: 20px;
-        }
-        #note-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .note {
-            background-color: #ffffff;
-            border: 1px solid #cccccc;
-            border-radius: 5px;
-            padding: 10px;
-            margin: 10px;
-            width: 300px;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        textarea {
-            width: 80%;
-            height: 100px;
-            margin: 10px 0;
-        }
-        button {
-            background-color: #00796b;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 16px;
-            margin: 5px;
-        }
-        button:hover {
-            background-color: #004d40;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>Frozen Notes with The Frozen Ground</h1>
@@ -77,43 +47,90 @@ Inspired by Nicolas Cage's intense role in *The Frozen Ground*, this project use
 
     <div id="note-container"></div>
 
-    <script>
-        async function copyToClipboard() {
-            const text = document.getElementById('clipboard-input').value;
-            try {
-                await navigator.clipboard.writeText(text);
-                alert('Text copied to clipboard!');
-            } catch (err) {
-                alert('Failed to copy text: ' + err);
-            }
-        }
-
-        async function pasteFromClipboard() {
-            try {
-                const text = await navigator.clipboard.readText();
-                document.getElementById('clipboard-input').value = text;
-                alert('Text pasted from clipboard!');
-            } catch (err) {
-                alert('Failed to read clipboard contents: ' + err);
-            }
-        }
-
-        function saveNote() {
-            const text = document.getElementById('clipboard-input').value;
-            if (text) {
-                const noteContainer = document.getElementById('note-container');
-                const note = document.createElement('div');
-                note.className = 'note';
-                note.textContent = text;
-                noteContainer.appendChild(note);
-                document.getElementById('clipboard-input').value = '';
-            } else {
-                alert('Please enter some text to save.');
-            }
-        }
-    </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
+```
+
+**styles.css**:
+```css
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e0f7fa;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+}
+#note-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.note {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    width: 300px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+textarea {
+    width: 80%;
+    height: 100px;
+    margin: 10px 0;
+}
+button {
+    background-color: #00796b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin: 5px;
+}
+button:hover {
+    background-color: #004d40;
+}
+```
+
+**script.js**:
+```javascript
+async function copyToClipboard() {
+    const text = document.getElementById('clipboard-input').value;
+    try {
+        await navigator.clipboard.writeText(text);
+        alert('Text copied to clipboard!');
+    } catch (err) {
+        alert('Failed to copy text: ' + err);
+    }
+}
+
+async function pasteFromClipboard() {
+    try {
+        const text = await navigator.clipboard.readText();
+        document.getElementById('clipboard-input').value = text;
+        alert('Text pasted from clipboard!');
+    } catch (err) {
+        alert('Failed to read clipboard contents: ' + err);
+    }
+}
+
+function saveNote() {
+    const text = document.getElementById('clipboard-input').value;
+    if (text) {
+        const noteContainer = document.getElementById('note-container');
+        const note = document.createElement('div');
+        note.className = 'note';
+        note.textContent = text;
+        noteContainer.appendChild(note);
+        document.getElementById('clipboard-input').value = '';
+    } else {
+        alert('Please enter some text to save.');
+    }
+}
 ```
 
 ### **References:**

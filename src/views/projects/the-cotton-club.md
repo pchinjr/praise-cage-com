@@ -10,6 +10,14 @@ imageUrl: "https://upload.wikimedia.org/wikipedia/en/0/0b/Cotton_club.jpg"
 Users can receive notifications for live jazz performances, new album releases, or jazz history facts, mirroring the excitement surrounding new acts and music releases of the 1920s. The application serves not only as a tool for jazz enthusiasts to stay informed but also as an educational resource, providing historical insights into the jazz era and its impact on modern music.
 
 ### Starting Code
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 Here’s the HTML, JavaScript, and some CSS to get started with the "Jazz Push: Live Updates from The Cotton Club" project:
 
 #### HTML (index.html)
@@ -32,7 +40,7 @@ Here’s the HTML, JavaScript, and some CSS to get started with the "Jazz Push: 
 </html>
 ```
 
-#### CSS (styles.css)
+**styles.css**:
 ```css
 body {
     font-family: 'Arial', sans-serif;
@@ -56,7 +64,7 @@ button {
 }
 ```
 
-#### JavaScript (script.js)
+**script.js**:
 ```javascript
 document.getElementById('subscribe').addEventListener('click', function() {
     Notification.requestPermission().then(permission => {

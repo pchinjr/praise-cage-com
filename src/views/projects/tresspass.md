@@ -12,6 +12,14 @@ In this project, we integrate the intense and suspenseful atmosphere of *Trespas
 3. **Thematic Design**: Implement a design inspired by the tense and vigilant atmosphere of *Trespass*.
 
 #### Starting Code:
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 Here's a basic setup to get you started. This includes the initial HTML, CSS, and JavaScript to integrate the Visual Viewport API and create an interactive security feature.
 
 **index.html**:
@@ -67,7 +75,7 @@ h1 {
 function updateViewportInfo() {
     const viewportInfo = document.getElementById('viewportInfo');
     const visualViewport = window.visualViewport;
-    
+
     viewportInfo.innerHTML = `
         <p>Width: ${visualViewport.width}px</p>
         <p>Height: ${visualViewport.height}px</p>

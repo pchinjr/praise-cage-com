@@ -13,6 +13,14 @@ Inspired by the visually stunning and serene themes of *Arcadian*, this project 
 
 ### **Starting Code:**
 
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -20,53 +28,8 @@ Inspired by the visually stunning and serene themes of *Arcadian*, this project 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arcadian Landscapes with Canvas API</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
-            text-align: center;
-            padding: 50px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            margin-bottom: 20px;
-            color: #2c3e50;
-        }
-        canvas {
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            cursor: crosshair;
-        }
-        .controls {
-            margin-top: 20px;
-        }
-        .controls input[type="color"],
-        .controls input[type="range"],
-        .controls button {
-            margin: 5px;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-size: 16px;
-        }
-        .controls button {
-            background-color: #2c3e50;
-            color: #fff;
-            cursor: pointer;
-        }
-        .controls button:hover {
-            background-color: #34495e;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -82,47 +45,100 @@ Inspired by the visually stunning and serene themes of *Arcadian*, this project 
         </div>
     </div>
 
-    <script>
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        const colorPicker = document.getElementById('colorPicker');
-        const brushSize = document.getElementById('brushSize');
-        const clearButton = document.getElementById('clearButton');
-
-        let painting = false;
-
-        function startPosition(e) {
-            painting = true;
-            draw(e);
-        }
-
-        function endPosition() {
-            painting = false;
-            ctx.beginPath();
-        }
-
-        function draw(e) {
-            if (!painting) return;
-            ctx.lineWidth = brushSize.value;
-            ctx.lineCap = 'round';
-            ctx.strokeStyle = colorPicker.value;
-
-            ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-        }
-
-        canvas.addEventListener('mousedown', startPosition);
-        canvas.addEventListener('mouseup', endPosition);
-        canvas.addEventListener('mousemove', draw);
-
-        clearButton.addEventListener('click', () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        });
-    </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
+```
+
+**styles.css**:
+```css
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    text-align: center;
+    padding: 50px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h1 {
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+canvas {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    cursor: crosshair;
+}
+.controls {
+    margin-top: 20px;
+}
+.controls input[type="color"],
+.controls input[type="range"],
+.controls button {
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+.controls button {
+    background-color: #2c3e50;
+    color: #fff;
+    cursor: pointer;
+}
+.controls button:hover {
+    background-color: #34495e;
+}
+```
+
+**script.js**:
+```javascript
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const colorPicker = document.getElementById('colorPicker');
+const brushSize = document.getElementById('brushSize');
+const clearButton = document.getElementById('clearButton');
+
+let painting = false;
+
+function startPosition(e) {
+    painting = true;
+    draw(e);
+}
+
+function endPosition() {
+    painting = false;
+    ctx.beginPath();
+}
+
+function draw(e) {
+    if (!painting) return;
+    ctx.lineWidth = brushSize.value;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = colorPicker.value;
+
+    ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+}
+
+canvas.addEventListener('mousedown', startPosition);
+canvas.addEventListener('mouseup', endPosition);
+canvas.addEventListener('mousemove', draw);
+
+clearButton.addEventListener('click', () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
 ```
 
 ### **References:**

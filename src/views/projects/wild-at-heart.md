@@ -10,7 +10,15 @@ Using the Device Memory API, this application adjusts its features and content b
 
 ### Starting Code:
 
-#### HTML:
+
+### Beginner Hints:
+- Create `index.html`, `styles.css`, and `script.js` in the same folder.
+- Copy each code block into the matching file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
+- Open DevTools Console to spot errors and typos quickly.
+
+
+**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +38,7 @@ Using the Device Memory API, this application adjusts its features and content b
 </html>
 ```
 
-#### CSS (styles.css):
+**styles.css**:
 ```css
 body {
     font-family: 'Arial', sans-serif;
@@ -58,7 +66,7 @@ body {
 }
 ```
 
-#### JavaScript (navigation.js):
+**navigation.js**:
 ```javascript
 // Check device memory and adjust map settings accordingly
 const deviceMemory = navigator.deviceMemory || 1;  // Fallback to 1GB if undefined
