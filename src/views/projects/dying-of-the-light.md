@@ -15,8 +15,8 @@ Inspired by Nicolas Cage's intense portrayal of a CIA operative in *Dying of the
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -28,8 +28,42 @@ Inspired by Nicolas Cage's intense portrayal of a CIA operative in *Dying of the
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Illuminate Performance with Dying of the Light</title>
-    
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #333;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 20px;
+    }
+    #dashboard {
+        margin: 0 auto;
+        width: 80%;
+        background-color: #444;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .metric {
+        margin: 20px 0;
+        padding: 10px;
+        border: 1px solid #555;
+        border-radius: 5px;
+        background-color: #555;
+    }
+    button {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+    button:hover {
+        background-color: #c0392b;
+    }
+</style>
 </head>
 <body>
     <h1>Illuminate Performance with Dying of the Light</h1>
@@ -51,69 +85,28 @@ Inspired by Nicolas Cage's intense portrayal of a CIA operative in *Dying of the
     </div>
 
     <button onclick="analyzePerformance()">Analyze Performance</button>
+<script>
+    function analyzePerformance() {
+        const performanceData = window.performance.getEntriesByType('navigation')[0];
 
-    
-    <script src="script.js"></script>
+        if (performanceData) {
+            document.getElementById('load-time').textContent = (performanceData.loadEventEnd - performanceData.startTime).toFixed(2) + ' ms';
+            document.getElementById('response-time').textContent = (performanceData.responseEnd - performanceData.requestStart).toFixed(2) + ' ms';
+        }
+
+        if (window.performance.memory) {
+            const memoryUsage = window.performance.memory.usedJSHeapSize / 1048576;
+            document.getElementById('memory-usage').textContent = memoryUsage.toFixed(2) + ' MB';
+        } else {
+            document.getElementById('memory-usage').textContent = 'Memory API not supported.';
+        }
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #333;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 20px;
-}
-#dashboard {
-    margin: 0 auto;
-    width: 80%;
-    background-color: #444;
-    padding: 20px;
-    border-radius: 10px;
-}
-.metric {
-    margin: 20px 0;
-    padding: 10px;
-    border: 1px solid #555;
-    border-radius: 5px;
-    background-color: #555;
-}
-button {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-    margin-top: 20px;
-}
-button:hover {
-    background-color: #c0392b;
-}
-```
 
-**script.js**:
-```javascript
-function analyzePerformance() {
-    const performanceData = window.performance.getEntriesByType('navigation')[0];
-
-    if (performanceData) {
-        document.getElementById('load-time').textContent = (performanceData.loadEventEnd - performanceData.startTime).toFixed(2) + ' ms';
-        document.getElementById('response-time').textContent = (performanceData.responseEnd - performanceData.requestStart).toFixed(2) + ' ms';
-    }
-
-    if (window.performance.memory) {
-        const memoryUsage = window.performance.memory.usedJSHeapSize / 1048576;
-        document.getElementById('memory-usage').textContent = memoryUsage.toFixed(2) + ' MB';
-    } else {
-        document.getElementById('memory-usage').textContent = 'Memory API not supported.';
-    }
-}
-```
 
 ### **References:**
 - **[Dying of the Light (2014) - Wikipedia](https://en.wikipedia.org/wiki/Dying_of_the_Light_(film))**

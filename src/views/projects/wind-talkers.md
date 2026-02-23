@@ -13,13 +13,12 @@ The application serves as an educational tool for understanding code encryption 
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -27,71 +26,69 @@ The application serves as an educational tool for understanding code encryption 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CodeGuard: Cryptic Counter Tracker</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    textarea {
+        width: 300px;
+        height: 100px;
+        margin-top: 20px;
+    }
+
+    #encodedOutput, #usageStats {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+    }
+</style>
 </head>
 <body>
     <h1>Cryptic Message Encoder</h1>
     <textarea id="messageInput" placeholder="Type your message here..." oninput="updateMessage()"></textarea>
     <div id="encodedOutput">Encoded Message: </div>
     <div id="usageStats">Character Usage:</div>
-    <script src="script.js"></script>
+<script>
+    document.getElementById('messageInput').addEventListener('input', function() {
+        const inputText = this.value;
+        const encodedOutput = document.getElementById('encodedOutput');
+        const usageStats = document.getElementById('usageStats');
+
+        let encodedText = '';
+        let charCount = {};
+
+        for (let char of inputText) {
+            let encodedChar = String.fromCharCode(char.charCodeAt(0) + 2);  // Simple Caesar cipher for example
+            encodedText += encodedChar;
+
+            if (charCount[encodedChar]) {
+                charCount[encodedChar]++;
+            } else {
+                charCount[encodedChar] = 1;
+            }
+        }
+
+        encodedOutput.textContent = `Encoded Message: ${encodedText}`;
+        usageStats.textContent = 'Character Usage:
+';
+
+        for (let key in charCount) {
+            usageStats.textContent += `${key}: ${charCount[key]} times
+`;
+        }
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-textarea {
-    width: 300px;
-    height: 100px;
-    margin-top: 20px;
-}
-
-#encodedOutput, #usageStats {
-    margin-top: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-}
-```
-
-**script.js**:
-```javascript
-document.getElementById('messageInput').addEventListener('input', function() {
-    const inputText = this.value;
-    const encodedOutput = document.getElementById('encodedOutput');
-    const usageStats = document.getElementById('usageStats');
-
-    let encodedText = '';
-    let charCount = {};
-
-    for (let char of inputText) {
-        let encodedChar = String.fromCharCode(char.charCodeAt(0) + 2);  // Simple Caesar cipher for example
-        encodedText += encodedChar;
-
-        if (charCount[encodedChar]) {
-            charCount[encodedChar]++;
-        } else {
-            charCount[encodedChar] = 1;
-        }
-    }
-
-    encodedOutput.textContent = `Encoded Message: ${encodedText}`;
-    usageStats.textContent = 'Character Usage:\n';
-
-    for (let key in charCount) {
-        usageStats.textContent += `${key}: ${charCount[key]} times\n`;
-    }
-});
-```
 
 ### References:
 - **Film**: [Windtalkers (2002)](https://en.wikipedia.org/wiki/Windtalkers)

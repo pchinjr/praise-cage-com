@@ -12,15 +12,14 @@ The application will feature a dynamic web page where users can interactively hi
 ### Starting Code
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
 Here’s the HTML and JavaScript code snippets to get started with the "Highlighting Rumble Fish" project:
 
-#### HTML (index.html)
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -28,48 +27,44 @@ Here’s the HTML and JavaScript code snippets to get started with the "Highligh
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Highlighting Rumble Fish</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    ::selection {
+        background-color: #ffb7b7; /* Light red for passion */
+        color: white;
+    }
+
+    [data-theme="isolation"]::selection {
+        background-color: #add8e6; /* Light blue for isolation */
+        color: white;
+    }
+
+    [data-theme="youth"]::selection {
+        background-color: #90ee90; /* Light green for youth */
+        color: black;
+    }
+</style>
 </head>
 <body>
     <div id="quoteContainer">
         <p id="quote">"Time is a funny thing. Time is a very peculiar item. You see when you're young, you're a kid, you got time, you got nothing but time. Throw away a couple of years here, a couple of years there... it doesn't matter. You know. The older you get you say, 'Jesus, how much I got? I got thirty-five summers left.' Think about it. Thirty-five summers."</p>
     </div>
-    <script src="script.js"></script>
+<script>
+    document.getElementById('quote').addEventListener('mouseup', function() {
+        const selectedText = window.getSelection().toString();
+        if (selectedText.includes("time")) {
+            this.setAttribute('data-theme', 'youth');
+        } else if (selectedText.includes("Jesus")) {
+            this.setAttribute('data-theme', 'isolation');
+        } else {
+            this.removeAttribute('data-theme');
+        }
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-::selection {
-    background-color: #ffb7b7; /* Light red for passion */
-    color: white;
-}
 
-[data-theme="isolation"]::selection {
-    background-color: #add8e6; /* Light blue for isolation */
-    color: white;
-}
-
-[data-theme="youth"]::selection {
-    background-color: #90ee90; /* Light green for youth */
-    color: black;
-}
-```
-
-**script.js**:
-```javascript
-document.getElementById('quote').addEventListener('mouseup', function() {
-    const selectedText = window.getSelection().toString();
-    if (selectedText.includes("time")) {
-        this.setAttribute('data-theme', 'youth');
-    } else if (selectedText.includes("Jesus")) {
-        this.setAttribute('data-theme', 'isolation');
-    } else {
-        this.removeAttribute('data-theme');
-    }
-});
-```
 
 ### References
 - For more about **Rumble Fish**, visit [Wikipedia: Rumble Fish](https://en.wikipedia.org/wiki/Rumble_Fish).

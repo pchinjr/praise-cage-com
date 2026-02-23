@@ -12,15 +12,14 @@ This application allows users to explore various bird migration paths overlaid o
 ### Starting Code
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
 Here’s the HTML, JavaScript, and some CSS to start the "Birdy's Flight Paths: A Geolocation Journey" project:
 
-#### HTML (index.html)
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -29,62 +28,58 @@ Here’s the HTML, JavaScript, and some CSS to start the "Birdy's Flight Paths: 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Birdy's Flight Paths</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    #map {
+        height: 100%;
+    }
+</style>
 </head>
 <body>
     <div id="map" style="width: 100%; height: 100%"></div>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="script.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var map = L.map('map').setView([40.7128, -74.0060], 13); // New York City coordinates and initial zoom level
+
+        // Adding OpenStreetMap tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 18,
+        }).addTo(map);
+
+        // Marker for demonstration purposes
+        var marker = L.marker([40.7128, -74.0060]).addTo(map);
+        marker.bindPopup('<b>Hello World!</b><br>I am a popup.').openPopup();
+
+        // Example of using Geolocation API to set map to user's location
+        map.locate({setView: true, maxZoom: 16});
+        function onLocationFound(e) {
+            var radius = e.accuracy / 2;
+            L.marker(e.latlng).addTo(map)
+                .bindPopup("You are within " + radius + " meters from this point").openPopup();
+            L.circle(e.latlng, radius).addTo(map);
+        }
+
+        map.on('locationfound', onLocationFound);
+
+        function onLocationError(e) {
+            alert(e.message);
+        }
+
+        map.on('locationerror', onLocationError);
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body, html {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
 
-#map {
-    height: 100%;
-}
-```
-
-**script.js**:
-```javascript
-document.addEventListener('DOMContentLoaded', function() {
-    var map = L.map('map').setView([40.7128, -74.0060], 13); // New York City coordinates and initial zoom level
-
-    // Adding OpenStreetMap tile layer
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        maxZoom: 18,
-    }).addTo(map);
-
-    // Marker for demonstration purposes
-    var marker = L.marker([40.7128, -74.0060]).addTo(map);
-    marker.bindPopup('<b>Hello World!</b><br>I am a popup.').openPopup();
-
-    // Example of using Geolocation API to set map to user's location
-    map.locate({setView: true, maxZoom: 16});
-    function onLocationFound(e) {
-        var radius = e.accuracy / 2;
-        L.marker(e.latlng).addTo(map)
-            .bindPopup("You are within " + radius + " meters from this point").openPopup();
-        L.circle(e.latlng, radius).addTo(map);
-    }
-
-    map.on('locationfound', onLocationFound);
-
-    function onLocationError(e) {
-        alert(e.message);
-    }
-
-    map.on('locationerror', onLocationError);
-});
-```
 
 ### References
 - **Film**: [Wikipedia: Birdy (film)](https://en.wikipedia.org/wiki/Birdy_(film)).

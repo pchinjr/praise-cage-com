@@ -13,13 +13,12 @@ Using the IndexedDB API, the game stores various pieces of 'stolen' data locally
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -27,57 +26,53 @@ Using the IndexedDB API, the game stores various pieces of 'stolen' data locally
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Desert Data Heist</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
+</style>
 </head>
 <body>
     <h1>Desert Data Heist: Indexed Arizona</h1>
     <div id="status">Starting the heist...</div>
     <button id="startHeist">Start Heist</button>
-    <script src="game.js"></script>
+<script>
+    // Opening IndexedDB
+    let db;
+    const request = indexedDB.open('HeistDatabase', 1);
+
+    request.onupgradeneeded = function(event) {
+        db = event.target.result;
+        db.createObjectStore('data', { autoIncrement: true });
+    };
+
+    request.onsuccess = function(event) {
+        db = event.target.result;
+        console.log('Database ready for the heist!');
+    };
+
+    request.onerror = function(event) {
+        console.error('Database error: ' + event.target.errorCode);
+    };
+
+    // Function to simulate a data heist
+    function startHeist() {
+        const transaction = db.transaction(['data'], 'readwrite');
+        const store = transaction.objectStore('data');
+        const dataItem = { data: 'Confidential', timestamp: new Date().getTime() };
+        store.add(dataItem);
+        console.log('Data stolen successfully!');
+    }
+
+    document.getElementById('startHeist').addEventListener('click', startHeist);
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-}
-```
 
-**game.js**:
-```javascript
-// Opening IndexedDB
-let db;
-const request = indexedDB.open('HeistDatabase', 1);
-
-request.onupgradeneeded = function(event) {
-    db = event.target.result;
-    db.createObjectStore('data', { autoIncrement: true });
-};
-
-request.onsuccess = function(event) {
-    db = event.target.result;
-    console.log('Database ready for the heist!');
-};
-
-request.onerror = function(event) {
-    console.error('Database error: ' + event.target.errorCode);
-};
-
-// Function to simulate a data heist
-function startHeist() {
-    const transaction = db.transaction(['data'], 'readwrite');
-    const store = transaction.objectStore('data');
-    const dataItem = { data: 'Confidential', timestamp: new Date().getTime() };
-    store.add(dataItem);
-    console.log('Data stolen successfully!');
-}
-
-document.getElementById('startHeist').addEventListener('click', startHeist);
-```
 
 ### References:
 - **Film**: [Raising Arizona (1987)](https://en.wikipedia.org/wiki/Raising_Arizona)

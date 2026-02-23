@@ -15,15 +15,14 @@ In this project, we blend the magical and adventurous elements of *The Sorcerer'
 #### Starting Code:
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
-- Run a local server (for example `python -m http.server`) and open `http://localhost:8000`. Some APIs do not work from `file://`.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
 Here's a basic setup to get you started. This includes the initial HTML, CSS, and JavaScript to integrate the File System API and create a magical file management experience.
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +30,36 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Sorcerer's Apprentice: Magical File Management</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #111;
+        color: #fff;
+        text-align: center;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #ff4500;
+    }
+
+    button {
+        background-color: #ff4500;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 5px;
+    }
+
+    #output {
+        margin-top: 20px;
+        font-size: 18px;
+        white-space: pre-wrap;
+        text-align: left;
+    }
+</style>
 </head>
 <body>
     <h1>The Sorcerer's Apprentice: Magical File Management</h1>
@@ -41,104 +69,70 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
     <button id="writeFileBtn">Write to File</button>
     <button id="deleteFileBtn">Clear File</button>
     <div id="output"></div>
+<script>
+    let fileHandle;
 
-    <script src="main.js"></script>
+    async function getFileHandle() {
+        if (!fileHandle) {
+            [fileHandle] = await window.showOpenFilePicker();
+        }
+        return fileHandle;
+    }
+
+    document.getElementById('createFileBtn').addEventListener('click', async () => {
+        try {
+            const opts = { type: 'save-file', suggestedName: 'magic.txt' };
+            fileHandle = await window.showSaveFilePicker(opts);
+            const writable = await fileHandle.createWritable();
+            await writable.write('This is a magical file created by the sorcerer’s apprentice.');
+            await writable.close();
+            document.getElementById('output').innerText = 'File created successfully!';
+        } catch (error) {
+            document.getElementById('output').innerText = `Error: ${error.message}`;
+        }
+    });
+
+    document.getElementById('readFileBtn').addEventListener('click', async () => {
+        try {
+            fileHandle = await getFileHandle();
+            const file = await fileHandle.getFile();
+            const contents = await file.text();
+            document.getElementById('output').innerText = `File contents: ${contents}`;
+        } catch (error) {
+            document.getElementById('output').innerText = `Error: ${error.message}`;
+        }
+    });
+
+    document.getElementById('writeFileBtn').addEventListener('click', async () => {
+        try {
+            fileHandle = await getFileHandle();
+            const writable = await fileHandle.createWritable();
+            const content = 'Updated content written by the sorcerer’s apprentice.';
+            await writable.write(content);
+            await writable.close();
+            document.getElementById('output').innerText = 'File written successfully!';
+        } catch (error) {
+            document.getElementById('output').innerText = `Error: ${error.message}`;
+        }
+    });
+
+    document.getElementById('deleteFileBtn').addEventListener('click', async () => {
+        try {
+            fileHandle = await getFileHandle();
+            const writable = await fileHandle.createWritable();
+            await writable.write('');
+            await writable.close();
+            document.getElementById('output').innerText = 'File cleared successfully!';
+        } catch (error) {
+            document.getElementById('output').innerText = `Error: ${error.message}`;
+        }
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #111;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
-}
 
-h1 {
-    color: #ff4500;
-}
-
-button {
-    background-color: #ff4500;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    margin: 5px;
-}
-
-#output {
-    margin-top: 20px;
-    font-size: 18px;
-    white-space: pre-wrap;
-    text-align: left;
-}
-```
-
-**main.js**:
-```javascript
-let fileHandle;
-
-async function getFileHandle() {
-    if (!fileHandle) {
-        [fileHandle] = await window.showOpenFilePicker();
-    }
-    return fileHandle;
-}
-
-document.getElementById('createFileBtn').addEventListener('click', async () => {
-    try {
-        const opts = { type: 'save-file', suggestedName: 'magic.txt' };
-        fileHandle = await window.showSaveFilePicker(opts);
-        const writable = await fileHandle.createWritable();
-        await writable.write('This is a magical file created by the sorcerer’s apprentice.');
-        await writable.close();
-        document.getElementById('output').innerText = 'File created successfully!';
-    } catch (error) {
-        document.getElementById('output').innerText = `Error: ${error.message}`;
-    }
-});
-
-document.getElementById('readFileBtn').addEventListener('click', async () => {
-    try {
-        fileHandle = await getFileHandle();
-        const file = await fileHandle.getFile();
-        const contents = await file.text();
-        document.getElementById('output').innerText = `File contents: ${contents}`;
-    } catch (error) {
-        document.getElementById('output').innerText = `Error: ${error.message}`;
-    }
-});
-
-document.getElementById('writeFileBtn').addEventListener('click', async () => {
-    try {
-        fileHandle = await getFileHandle();
-        const writable = await fileHandle.createWritable();
-        const content = 'Updated content written by the sorcerer’s apprentice.';
-        await writable.write(content);
-        await writable.close();
-        document.getElementById('output').innerText = 'File written successfully!';
-    } catch (error) {
-        document.getElementById('output').innerText = `Error: ${error.message}`;
-    }
-});
-
-document.getElementById('deleteFileBtn').addEventListener('click', async () => {
-    try {
-        fileHandle = await getFileHandle();
-        const writable = await fileHandle.createWritable();
-        await writable.write('');
-        await writable.close();
-        document.getElementById('output').innerText = 'File cleared successfully!';
-    } catch (error) {
-        document.getElementById('output').innerText = `Error: ${error.message}`;
-    }
-});
-```
 
 #### References:
 - **The Sorcerer's Apprentice (2010)**:

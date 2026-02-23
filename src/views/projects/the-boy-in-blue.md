@@ -13,13 +13,12 @@ The application will feature a dashboard that provides motivational quotes, trai
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -27,46 +26,42 @@ The application will feature a dashboard that provides motivational quotes, trai
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wakeful Waters</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
+</style>
 </head>
 <body>
     <h1>Welcome to Wakeful Waters</h1>
     <p id="motivation">Stay motivated and row towards your glory!</p>
     <button onclick="lockScreen()">Keep Screen Awake</button>
-    <script src="app.js"></script>
+<script>
+    // Function to request a screen wake lock
+    async function lockScreen() {
+        try {
+            const wakeLock = await navigator.wakeLock.request('screen');
+            console.log('Screen wake lock is active.');
+
+            // Automatically release the wake lock if visibility changes
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'hidden') {
+                    wakeLock.release();
+                    console.log('Screen wake lock released.');
+                }
+            });
+        } catch (err) {
+            console.error(`Failed to activate screen wake lock: ${err}`);
+        }
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-}
-```
 
-**app.js**:
-```javascript
-// Function to request a screen wake lock
-async function lockScreen() {
-    try {
-        const wakeLock = await navigator.wakeLock.request('screen');
-        console.log('Screen wake lock is active.');
-
-        // Automatically release the wake lock if visibility changes
-        document.addEventListener('visibilitychange', () => {
-            if (document.visibilityState === 'hidden') {
-                wakeLock.release();
-                console.log('Screen wake lock released.');
-            }
-        });
-    } catch (err) {
-        console.error(`Failed to activate screen wake lock: ${err}`);
-    }
-}
-```
 
 ### References:
 - **Film**: [The Boy in Blue (1986)](https://en.wikipedia.org/wiki/The_Boy_in_Blue_(1986_film))

@@ -12,15 +12,14 @@ The application will include options to adjust the voice type and speed of narra
 ### Starting Code
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
 Here’s the HTML, JavaScript, and some CSS to kickstart the "Whispers of the Past" project:
 
-#### HTML (index.html)
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -28,57 +27,53 @@ Here’s the HTML, JavaScript, and some CSS to kickstart the "Whispers of the Pa
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Whispers of the Past</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    button {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+</style>
 </head>
 <body>
     <div class="controls">
         <button onclick="speakText('I remember when we raced against the moon, not knowing what the future held.')">Play Scene</button>
         <button onclick="stopSpeaking()">Stop</button>
     </div>
-    <script src="script.js"></script>
+<script>
+    function speakText(text) {
+        if ('speechSynthesis' in window) {
+            const speech = new SpeechSynthesisUtterance(text);
+            speech.voice = speechSynthesis.getVoices().filter(voice => voice.lang === 'en-US')[0]; // Choose an English voice
+            speech.pitch = 1; // Normal pitch
+            speech.rate = 1; // Normal speed
+            window.speechSynthesis.speak(speech);
+        } else {
+            alert('Web Speech API is not supported by your browser.');
+        }
+    }
+
+    function stopSpeaking() {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+        }
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
 
-button {
-    margin: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-}
-```
-
-**script.js**:
-```javascript
-function speakText(text) {
-    if ('speechSynthesis' in window) {
-        const speech = new SpeechSynthesisUtterance(text);
-        speech.voice = speechSynthesis.getVoices().filter(voice => voice.lang === 'en-US')[0]; // Choose an English voice
-        speech.pitch = 1; // Normal pitch
-        speech.rate = 1; // Normal speed
-        window.speechSynthesis.speak(speech);
-    } else {
-        alert('Web Speech API is not supported by your browser.');
-    }
-}
-
-function stopSpeaking() {
-    if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-    }
-}
-```
 
 ### References
 - For more about **Racing with the Moon**, visit [Wikipedia: Racing with the Moon](https://en.wikipedia.org/wiki/Racing_with_the_Moon).

@@ -13,13 +13,12 @@ Using the Device Memory API, this application dynamically adjusts the quality of
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -27,53 +26,49 @@ Using the Device Memory API, this application dynamically adjusts the quality of
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flight Load: Adaptive Content Delivery</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    video {
+        max-width: 90%;
+        height: auto;
+        margin-top: 20px;
+    }
+</style>
 </head>
 <body>
     <h1>Adaptive Content Delivery Based on Your Device</h1>
     <video id="videoPlayer" controls></video>
-    <script src="script.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const video = document.getElementById('videoPlayer');
+        const memory = navigator.deviceMemory || 1; // Fallback to 1GB if undefined
+
+        let videoSource = 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'; // Default video for low-spec devices
+        if (memory >= 4) {
+            videoSource = 'https://www.w3schools.com/html/mov_bbb.mp4'; // High-quality video for high-spec devices
+        } else if (memory >= 2) {
+            videoSource = 'https://media.w3.org/2010/05/sintel/trailer.mp4'; // Medium-quality video for medium-spec devices
+        }
+
+        const source = document.createElement('source');
+        source.src = videoSource;
+        source.type = 'video/mp4';
+        video.appendChild(source);
+        video.load();
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-video {
-    max-width: 90%;
-    height: auto;
-    margin-top: 20px;
-}
-```
-
-**script.js**:
-```javascript
-document.addEventListener('DOMContentLoaded', function() {
-    const video = document.getElementById('videoPlayer');
-    const memory = navigator.deviceMemory || 1; // Fallback to 1GB if undefined
-
-    let videoSource = 'default-video.mp4'; // Default video for low-spec devices
-    if (memory >= 4) {
-        videoSource = 'high-quality-video.mp4'; // High-quality video for high-spec devices
-    } else if (memory >= 2) {
-        videoSource = 'medium-quality-video.mp4'; // Medium-quality video for medium-spec devices
-    }
-
-    const source = document.createElement('source');
-    source.src = videoSource;
-    source.type = 'video/mp4';
-    video.appendChild(source);
-    video.load();
-});
-```
 
 ### References:
 - **Film**: [Con Air (1997)](https://en.wikipedia.org/wiki/Con_Air)

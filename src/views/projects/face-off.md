@@ -10,13 +10,12 @@ Inspired by the dramatic identity swaps in "Face/Off," where characters assume e
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -24,63 +23,59 @@ Inspired by the dramatic identity swaps in "Face/Off," where characters assume e
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Identity Access: Permissions Gateway</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 15px;
+        margin: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    #status {
+        margin-top: 20px;
+    }
+</style>
 </head>
 <body>
     <h1>Permissions Gateway</h1>
     <button id="btnCamera">Access Camera</button>
     <button id="btnMicrophone">Access Microphone</button>
     <div id="status"></div>
-    <script src="script.js"></script>
+<script>
+    document.getElementById('btnCamera').addEventListener('click', async () => {
+        const permissionStatus = await navigator.permissions.query({name: 'camera'});
+        updateStatus(permissionStatus);
+    });
+
+    document.getElementById('btnMicrophone').addEventListener('click', async () => {
+        const permissionStatus = await navigator.permissions.query({name: 'microphone'});
+        updateStatus(permissionStatus);
+    });
+
+    function updateStatus(permissionStatus) {
+        const statusDiv = document.getElementById('status');
+        statusDiv.textContent = `Permission for ${permissionStatus.name}: ${permissionStatus.state}`;
+        permissionStatus.onchange = () => {
+            statusDiv.textContent = `Permission for ${permissionStatus.name} changed to: ${permissionStatus.state}`;
+        };
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 15px;
-    margin: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-#status {
-    margin-top: 20px;
-}
-```
-
-**script.js**:
-```javascript
-document.getElementById('btnCamera').addEventListener('click', async () => {
-    const permissionStatus = await navigator.permissions.query({name: 'camera'});
-    updateStatus(permissionStatus);
-});
-
-document.getElementById('btnMicrophone').addEventListener('click', async () => {
-    const permissionStatus = await navigator.permissions.query({name: 'microphone'});
-    updateStatus(permissionStatus);
-});
-
-function updateStatus(permissionStatus) {
-    const statusDiv = document.getElementById('status');
-    statusDiv.textContent = `Permission for ${permissionStatus.name}: ${permissionStatus.state}`;
-    permissionStatus.onchange = () => {
-        statusDiv.textContent = `Permission for ${permissionStatus.name} changed to: ${permissionStatus.state}`;
-    };
-}
-```
 
 ### References:
 - **Film**: [Face/Off (1997)](https://en.wikipedia.org/wiki/Face/Off)

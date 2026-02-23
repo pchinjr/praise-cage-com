@@ -15,8 +15,8 @@ Inspired by Nicolas Cage's role in *Prisoners of the Ghostland*, this project us
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -28,8 +28,46 @@ Inspired by Nicolas Cage's role in *Prisoners of the Ghostland*, this project us
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ghostland Files with Prisoners of the Ghostland and File API</title>
-    
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #1c1c1c;
+        color: #f0f0f0;
+        text-align: center;
+        padding: 50px;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #2e2e2e;
+        border: 1px solid #444;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+        margin-bottom: 20px;
+        color: #ff6347;
+    }
+    input[type="file"] {
+        margin: 20px 0;
+        padding: 10px;
+        background-color: #444;
+        border: 1px solid #555;
+        border-radius: 5px;
+        color: #f0f0f0;
+    }
+    .file-content {
+        margin-top: 20px;
+        text-align: left;
+        background-color: #444;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #555;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -39,75 +77,30 @@ Inspired by Nicolas Cage's role in *Prisoners of the Ghostland*, this project us
         <input type="file" id="fileInput">
         <div id="fileContent" class="file-content"></div>
     </div>
+<script>
+    const fileInput = document.getElementById('fileInput');
+    const fileContent = document.getElementById('fileContent');
 
-    
-    <script src="script.js"></script>
+    fileInput.addEventListener('change', handleFileSelect);
+
+    function handleFileSelect(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                fileContent.textContent = e.target.result;
+            };
+            reader.readAsText(file);
+        } else {
+            fileContent.textContent = 'No file selected';
+        }
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #1c1c1c;
-    color: #f0f0f0;
-    text-align: center;
-    padding: 50px;
-}
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #2e2e2e;
-    border: 1px solid #444;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-h1 {
-    margin-bottom: 20px;
-    color: #ff6347;
-}
-input[type="file"] {
-    margin: 20px 0;
-    padding: 10px;
-    background-color: #444;
-    border: 1px solid #555;
-    border-radius: 5px;
-    color: #f0f0f0;
-}
-.file-content {
-    margin-top: 20px;
-    text-align: left;
-    background-color: #444;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #555;
-    max-height: 300px;
-    overflow-y: auto;
-}
-```
 
-**script.js**:
-```javascript
-const fileInput = document.getElementById('fileInput');
-const fileContent = document.getElementById('fileContent');
-
-fileInput.addEventListener('change', handleFileSelect);
-
-function handleFileSelect(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            fileContent.textContent = e.target.result;
-        };
-        reader.readAsText(file);
-    } else {
-        fileContent.textContent = 'No file selected';
-    }
-}
-```
 
 ### **References:**
 - **[Prisoners of the Ghostland (2021) - Wikipedia](https://en.wikipedia.org/wiki/Prisoners_of_the_Ghostland)**

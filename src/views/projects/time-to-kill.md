@@ -13,13 +13,12 @@ Utilizing the Resize Observer API, this interactive tool allows users to create 
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +26,33 @@ Utilizing the Resize Observer API, this interactive tool allows users to create 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Measured Moments: Time to Resize</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f8;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    #timelineContainer {
+        width: 80%;
+        border: 1px solid #ccc;
+        padding: 10px;
+        overflow: auto;
+    }
+
+    .timeline {
+        background-color: #e8ecef;
+        margin: 5px;
+        padding: 10px;
+        border-radius: 5px;
+    }
+</style>
 </head>
 <body>
     <div id="timelineContainer">
@@ -35,58 +60,28 @@ Utilizing the Resize Observer API, this interactive tool allows users to create 
         <div class="timeline">1910 - Another Event</div>
         <!-- More timeline items -->
     </div>
-    <script src="timeline.js"></script>
+<script>
+    const resizeObserver = new ResizeObserver(entries => {
+        for (let entry of entries) {
+            console.log('Size changed, new dimensions:', entry.contentRect.width, entry.contentRect.height);
+            // Adjust the visibility or detail level of timeline events based on size
+            document.querySelectorAll('.timeline').forEach(el => {
+                if (entry.contentRect.width < 500) {
+                    el.style.fontSize = '12px';
+                } else {
+                    el.style.fontSize = '16px';
+                }
+            });
+        }
+    });
+
+    resizeObserver.observe(document.getElementById('timelineContainer'));
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f8;
-    color: #333;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
 
-#timelineContainer {
-    width: 80%;
-    border: 1px solid #ccc;
-    padding: 10px;
-    overflow: auto;
-}
-
-.timeline {
-    background-color: #e8ecef;
-    margin: 5px;
-    padding: 10px;
-    border-radius: 5px;
-}
-```
-
-**timeline.js**:
-```javascript
-const resizeObserver = new ResizeObserver(entries => {
-    for (let entry of entries) {
-        console.log('Size changed, new dimensions:', entry.contentRect.width, entry.contentRect.height);
-        // Adjust the visibility or detail level of timeline events based on size
-        document.querySelectorAll('.timeline').forEach(el => {
-            if (entry.contentRect.width < 500) {
-                el.style.fontSize = '12px';
-            } else {
-                el.style.fontSize = '16px';
-            }
-        });
-    }
-});
-
-resizeObserver.observe(document.getElementById('timelineContainer'));
-```
 
 ### References:
 - **Film**: [Time to Kill (1989)](https://en.wikipedia.org/wiki/Time_to_Kill_(1989_film))

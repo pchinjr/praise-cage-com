@@ -15,8 +15,8 @@ Inspired by Nicolas Cage's supernatural thriller *Pay the Ghost*, this project u
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -28,8 +28,35 @@ Inspired by Nicolas Cage's supernatural thriller *Pay the Ghost*, this project u
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Speak to the Spirits with Pay the Ghost</title>
-    
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #2c3e50;
+        color: #ecf0f1;
+        text-align: center;
+        padding: 50px;
+    }
+    #output {
+        margin: 20px;
+        padding: 20px;
+        border: 2px solid #34495e;
+        border-radius: 10px;
+        background-color: #34495e;
+    }
+    button {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+    button:hover {
+        background-color: #c0392b;
+    }
+</style>
 </head>
 <body>
     <h1>Speak to the Spirits with Pay the Ghost</h1>
@@ -37,100 +64,68 @@ Inspired by Nicolas Cage's supernatural thriller *Pay the Ghost*, this project u
 
     <div id="output">Press "Start Listening" to communicate with the spirits...</div>
     <button onclick="startListening()">Start Listening</button>
+<script>
+    const output = document.getElementById('output');
 
-    
-    <script src="script.js"></script>
+    function startListening() {
+        if (!('webkitSpeechRecognition' in window)) {
+            alert('Web Speech API is not supported in this browser.');
+            return;
+        }
+
+        const recognition = new webkitSpeechRecognition();
+        recognition.lang = 'en-US';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        recognition.onstart = function() {
+            output.textContent = 'Listening...';
+        };
+
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            output.textContent = `You said: ${transcript}`;
+            respondToCommand(transcript);
+        };
+
+        recognition.onerror = function(event) {
+            output.textContent = `Error occurred: ${event.error}`;
+        };
+
+        recognition.onend = function() {
+            output.textContent += '
+Listening stopped.';
+        };
+
+        recognition.start();
+    }
+
+    function respondToCommand(command) {
+        const synth = window.speechSynthesis;
+        let responseText = 'I did not understand that.';
+
+        if (command.toLowerCase().includes('hello')) {
+            responseText = 'Hello there! How can I help you?';
+        } else if (command.toLowerCase().includes('ghost')) {
+            responseText = 'Do you feel the presence of a spirit?';
+        } else if (command.toLowerCase().includes('help')) {
+            responseText = 'I am here to assist you. What do you need?';
+        }
+
+        const utterThis = new SpeechSynthesisUtterance(responseText);
+        utterThis.onend = function() {
+            output.textContent += `
+Spirit says: ${responseText}`;
+        };
+
+        synth.speak(utterThis);
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #2c3e50;
-    color: #ecf0f1;
-    text-align: center;
-    padding: 50px;
-}
-#output {
-    margin: 20px;
-    padding: 20px;
-    border: 2px solid #34495e;
-    border-radius: 10px;
-    background-color: #34495e;
-}
-button {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-    margin-top: 20px;
-}
-button:hover {
-    background-color: #c0392b;
-}
-```
 
-**script.js**:
-```javascript
-const output = document.getElementById('output');
-
-function startListening() {
-    if (!('webkitSpeechRecognition' in window)) {
-        alert('Web Speech API is not supported in this browser.');
-        return;
-    }
-
-    const recognition = new webkitSpeechRecognition();
-    recognition.lang = 'en-US';
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-
-    recognition.onstart = function() {
-        output.textContent = 'Listening...';
-    };
-
-    recognition.onresult = function(event) {
-        const transcript = event.results[0][0].transcript;
-        output.textContent = `You said: ${transcript}`;
-        respondToCommand(transcript);
-    };
-
-    recognition.onerror = function(event) {
-        output.textContent = `Error occurred: ${event.error}`;
-    };
-
-    recognition.onend = function() {
-        output.textContent += '\nListening stopped.';
-    };
-
-    recognition.start();
-}
-
-function respondToCommand(command) {
-    const synth = window.speechSynthesis;
-    let responseText = 'I did not understand that.';
-
-    if (command.toLowerCase().includes('hello')) {
-        responseText = 'Hello there! How can I help you?';
-    } else if (command.toLowerCase().includes('ghost')) {
-        responseText = 'Do you feel the presence of a spirit?';
-    } else if (command.toLowerCase().includes('help')) {
-        responseText = 'I am here to assist you. What do you need?';
-    }
-
-    const utterThis = new SpeechSynthesisUtterance(responseText);
-    utterThis.onend = function() {
-        output.textContent += `\nSpirit says: ${responseText}`;
-    };
-
-    synth.speak(utterThis);
-}
-```
 
 ### **References:**
 - **[Pay the Ghost (2015) - Wikipedia](https://en.wikipedia.org/wiki/Pay_the_Ghost)**

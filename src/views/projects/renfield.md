@@ -15,8 +15,8 @@ Inspired by Nicolas Cage's role in *Renfield*, this project uses the Intersectio
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -28,8 +28,38 @@ Inspired by Nicolas Cage's role in *Renfield*, this project uses the Intersectio
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vampiric Views with Renfield and Intersection Observer API</title>
-    
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #121212;
+        color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #1d1d1d;
+        border: 1px solid #444;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+        margin-bottom: 20px;
+        color: #ff6347;
+        text-align: center;
+    }
+    .content {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .content.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -51,70 +81,33 @@ Inspired by Nicolas Cage's role in *Renfield*, this project uses the Intersectio
             <p>Every scroll brings you closer to the hidden truths. Beware, for not all is as it seems.</p>
         </div>
     </div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const options = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
 
-    
-    <script src="script.js"></script>
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, options);
+
+        document.querySelectorAll('.content').forEach(section => {
+            observer.observe(section);
+        });
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #121212;
-    color: #f0f0f0;
-    margin: 0;
-    padding: 0;
-}
-.container {
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #1d1d1d;
-    border: 1px solid #444;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-h1 {
-    margin-bottom: 20px;
-    color: #ff6347;
-    text-align: center;
-}
-.content {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-.content.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-```
 
-**script.js**:
-```javascript
-document.addEventListener('DOMContentLoaded', () => {
-    const options = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, options);
-
-    document.querySelectorAll('.content').forEach(section => {
-        observer.observe(section);
-    });
-});
-```
 
 ### **References:**
 - **[Renfield (2023) - Wikipedia](https://en.wikipedia.org/wiki/Renfield_(film))**

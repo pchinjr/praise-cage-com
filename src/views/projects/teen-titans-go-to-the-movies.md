@@ -15,8 +15,8 @@ Inspired by Nicolas Cage's role as Superman in *Teen Titans Go! To the Movies*, 
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -28,8 +28,60 @@ Inspired by Nicolas Cage's role as Superman in *Teen Titans Go! To the Movies*, 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Heroic Transactions with Teen Titans Go! To the Movies and Payment Request API</title>
-    
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Comic Sans MS', sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        text-align: center;
+        padding: 50px;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        margin-bottom: 20px;
+        color: #ff6347;
+    }
+    .product {
+        margin: 20px 0;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .product img {
+        max-width: 100px;
+        border-radius: 5px;
+    }
+    .product-details {
+        flex-grow: 1;
+        text-align: left;
+        margin-left: 20px;
+    }
+    button {
+        padding: 10px 20px;
+        margin: 10px;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -54,109 +106,50 @@ Inspired by Nicolas Cage's role as Superman in *Teen Titans Go! To the Movies*, 
             <button onclick="buyProduct('Superhero T-Shirt', 20.00)">Buy Now</button>
         </div>
     </div>
+<script>
+    async function buyProduct(productName, productPrice) {
+        if (!window.PaymentRequest) {
+            alert('PaymentRequest API not supported');
+            return;
+        }
 
-    
-    <script src="script.js"></script>
+        const supportedInstruments = [{
+            supportedMethods: 'basic-card',
+            data: {
+                supportedNetworks: ['visa', 'mastercard'],
+                supportedTypes: ['debit', 'credit']
+            }
+        }];
+
+        const details = {
+            displayItems: [
+                {
+                    label: productName,
+                    amount: { currency: 'USD', value: productPrice.toFixed(2) }
+                }
+            ],
+            total: {
+                label: 'Total',
+                amount: { currency: 'USD', value: productPrice.toFixed(2) }
+            }
+        };
+
+        try {
+            const request = new PaymentRequest(supportedInstruments, details);
+            const paymentResponse = await request.show();
+            await paymentResponse.complete('success');
+            alert('Payment successful!');
+        } catch (err) {
+            console.error('Payment failed', err);
+            alert('Payment failed');
+        }
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: 'Comic Sans MS', sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: center;
-    padding: 50px;
-}
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-h1 {
-    margin-bottom: 20px;
-    color: #ff6347;
-}
-.product {
-    margin: 20px 0;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.product img {
-    max-width: 100px;
-    border-radius: 5px;
-}
-.product-details {
-    flex-grow: 1;
-    text-align: left;
-    margin-left: 20px;
-}
-button {
-    padding: 10px 20px;
-    margin: 10px;
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-}
-button:hover {
-    background-color: #0056b3;
-}
-```
 
-**script.js**:
-```javascript
-async function buyProduct(productName, productPrice) {
-    if (!window.PaymentRequest) {
-        alert('PaymentRequest API not supported');
-        return;
-    }
-
-    const supportedInstruments = [{
-        supportedMethods: 'basic-card',
-        data: {
-            supportedNetworks: ['visa', 'mastercard'],
-            supportedTypes: ['debit', 'credit']
-        }
-    }];
-
-    const details = {
-        displayItems: [
-            {
-                label: productName,
-                amount: { currency: 'USD', value: productPrice.toFixed(2) }
-            }
-        ],
-        total: {
-            label: 'Total',
-            amount: { currency: 'USD', value: productPrice.toFixed(2) }
-        }
-    };
-
-    try {
-        const request = new PaymentRequest(supportedInstruments, details);
-        const paymentResponse = await request.show();
-        await paymentResponse.complete('success');
-        alert('Payment successful!');
-    } catch (err) {
-        console.error('Payment failed', err);
-        alert('Payment failed');
-    }
-}
-```
 
 ### **References:**
 - **[Teen Titans Go! To the Movies (2018) - Wikipedia](https://en.wikipedia.org/wiki/Teen_Titans_Go!_To_the_Movies)**

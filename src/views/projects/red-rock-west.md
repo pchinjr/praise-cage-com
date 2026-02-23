@@ -13,13 +13,12 @@ Using the History API, this tool allows users to create, navigate, and modify di
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +26,42 @@ Using the History API, this tool allows users to create, navigate, and modify di
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Twisted Trails: Navigate Your Plot</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f5f5f5;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    #storyBoard {
+        margin: 20px auto;
+        padding: 10px;
+        width: 80%;
+        background-color: #ddd;
+        border-radius: 8px;
+    }
+
+    .node {
+        padding: 8px;
+        margin: 5px;
+        background-color: #bbb;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button {
+        margin: 5px;
+        padding: 8px 16px;
+        font-size: 16px;
+        background-color: #0066cc;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+</style>
 </head>
 <body>
     <h1>Story Plot Navigator</h1>
@@ -37,92 +71,53 @@ Using the History API, this tool allows users to create, navigate, and modify di
     </div>
     <button onclick="goBack()">Go Back</button>
     <button onclick="goForward()">Go Forward</button>
-    <script src="script.js"></script>
+<script>
+    let currentNodeIndex = 0;
+    const nodes = [
+        { id: 0, text: 'Start of Story', links: [1] }, // Links to other nodes
+        { id: 1, text: 'Unexpected Turn', links: [] }
+    ];
+
+    function selectNode(id) {
+        const node = nodes.find(n => n.id === id);
+        currentNodeIndex = nodes.indexOf(node);
+        displayNode(node);
+        window.history.pushState({ nodeIndex: currentNodeIndex }, `Node ${id}`, `?node=${id}`);
+    }
+
+    function displayNode(node) {
+        const storyBoard = document.getElementById('storyBoard');
+        storyBoard.innerHTML = `<div class="node">${node.text}</div>`;
+        node.links.forEach(link => {
+            const linkNode = nodes.find(n => n.id === link);
+            storyBoard.innerHTML += `<div class="node" onclick="selectNode(${linkNode.id})">${linkNode.text}</div>`;
+        });
+    }
+
+    window.onpopstate = function(event) {
+        if (event.state) {
+            const node = nodes[event.state.nodeIndex];
+            displayNode(node);
+        }
+    };
+
+    function goBack() {
+        window.history.back();
+    }
+
+    function goForward() {
+        window.history.forward();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        selectNode(0);
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-#storyBoard {
-    margin: 20px auto;
-    padding: 10px;
-    width: 80%;
-    background-color: #ddd;
-    border-radius: 8px;
-}
-
-.node {
-    padding: 8px;
-    margin: 5px;
-    background-color: #bbb;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button {
-    margin: 5px;
-    padding: 8px 16px;
-    font-size: 16px;
-    background-color: #0066cc;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-```
-
-**script.js**:
-```javascript
-let currentNodeIndex = 0;
-const nodes = [
-    { id: 0, text: 'Start of Story', links: [1] }, // Links to other nodes
-    { id: 1, text: 'Unexpected Turn', links: [] }
-];
-
-function selectNode(id) {
-    const node = nodes.find(n => n.id === id);
-    currentNodeIndex = nodes.indexOf(node);
-    displayNode(node);
-    window.history.pushState({ nodeIndex: currentNodeIndex }, `Node ${id}`, `?node=${id}`);
-}
-
-function displayNode(node) {
-    const storyBoard = document.getElementById('storyBoard');
-    storyBoard.innerHTML = `<div class="node">${node.text}</div>`;
-    node.links.forEach(link => {
-        const linkNode = nodes.find(n => n.id === link);
-        storyBoard.innerHTML += `<div class="node" onclick="selectNode(${linkNode.id})">${linkNode.text}</div>`;
-    });
-}
-
-window.onpopstate = function(event) {
-    if (event.state) {
-        const node = nodes[event.state.nodeIndex];
-        displayNode(node);
-    }
-};
-
-function goBack() {
-    window.history.back();
-}
-
-function goForward() {
-    window.history.forward();
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    selectNode(0);
-});
-```
 
 ### References:
 - **Film**: [Red Rock West (1993)](https://en.wikipedia.org/wiki/Red_Rock_West)

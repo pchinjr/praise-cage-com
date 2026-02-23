@@ -13,13 +13,12 @@ Utilizing the Channel Messaging API, this application enables users to send digi
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +26,44 @@ Utilizing the Channel Messaging API, this application enables users to send digi
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moonstruck Messages</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f2e9e4;
+        color: #222;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    #noteForm {
+        background: #c9ada7;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    textarea {
+        width: 300px;
+        height: 100px;
+        margin-bottom: 10px;
+        border: none;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    button {
+        background-color: #9a8c98;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+</style>
 </head>
 <body>
     <div id="noteForm">
@@ -35,67 +71,26 @@ Utilizing the Channel Messaging API, this application enables users to send digi
         <textarea id="messageContent" placeholder="Write your love note here..."></textarea>
         <button onclick="sendMessage()">Send Love Note</button>
     </div>
-    <script src="messaging.js"></script>
+<script>
+    const channel = new MessageChannel();
+    const port1 = channel.port1;
+    const port2 = channel.port2;
+
+    port1.onmessage = function(event) {
+        console.log('Message received:', event.data);
+    };
+
+    function sendMessage() {
+        const messageContent = document.getElementById('messageContent').value;
+        port2.postMessage(messageContent);
+        console.log('Message sent:', messageContent);
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f2e9e4;
-    color: #222;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
 
-#noteForm {
-    background: #c9ada7;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-textarea {
-    width: 300px;
-    height: 100px;
-    margin-bottom: 10px;
-    border: none;
-    padding: 10px;
-    font-size: 16px;
-}
-
-button {
-    background-color: #9a8c98;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 4px;
-}
-```
-
-**messaging.js**:
-```javascript
-const channel = new MessageChannel();
-const port1 = channel.port1;
-const port2 = channel.port2;
-
-port1.onmessage = function(event) {
-    console.log('Message received:', event.data);
-};
-
-function sendMessage() {
-    const messageContent = document.getElementById('messageContent').value;
-    port2.postMessage(messageContent);
-    console.log('Message sent:', messageContent);
-}
-```
 
 ### References:
 - **Film**: [Moonstruck (1987)](https://en.wikipedia.org/wiki/Moonstruck)

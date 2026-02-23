@@ -15,8 +15,8 @@ Inspired by the adventurous and family-centric themes of *The Croods: A New Age*
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -28,8 +28,54 @@ Inspired by the adventurous and family-centric themes of *The Croods: A New Age*
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prehistoric Selections with The Croods: A New Age and Selection API</title>
-    
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        color: #333;
+        text-align: center;
+        padding: 50px;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        margin-bottom: 20px;
+        color: #ff6347;
+    }
+    p {
+        text-align: left;
+        line-height: 1.6;
+    }
+    .highlight {
+        background-color: #ffeb3b;
+        color: #333;
+        padding: 0 5px;
+        border-radius: 3px;
+    }
+    .controls {
+        margin-top: 20px;
+    }
+    button {
+        padding: 10px 20px;
+        margin: 10px;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -43,83 +89,30 @@ Inspired by the adventurous and family-centric themes of *The Croods: A New Age*
             <button id="highlightButton">Highlight Selection</button>
         </div>
     </div>
+<script>
+    const textContent = document.getElementById('textContent');
+    const highlightButton = document.getElementById('highlightButton');
 
-    
-    <script src="script.js"></script>
+    highlightButton.addEventListener('click', () => {
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+            const range = selection.getRangeAt(0);
+            const selectedText = range.extractContents();
+
+            const span = document.createElement('span');
+            span.className = 'highlight';
+            span.appendChild(selectedText);
+            range.insertNode(span);
+
+            selection.removeAllRanges();
+        }
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
-    text-align: center;
-    padding: 50px;
-}
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-h1 {
-    margin-bottom: 20px;
-    color: #ff6347;
-}
-p {
-    text-align: left;
-    line-height: 1.6;
-}
-.highlight {
-    background-color: #ffeb3b;
-    color: #333;
-    padding: 0 5px;
-    border-radius: 3px;
-}
-.controls {
-    margin-top: 20px;
-}
-button {
-    padding: 10px 20px;
-    margin: 10px;
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-}
-button:hover {
-    background-color: #0056b3;
-}
-```
 
-**script.js**:
-```javascript
-const textContent = document.getElementById('textContent');
-const highlightButton = document.getElementById('highlightButton');
-
-highlightButton.addEventListener('click', () => {
-    const selection = window.getSelection();
-    if (selection.rangeCount > 0) {
-        const range = selection.getRangeAt(0);
-        const selectedText = range.extractContents();
-
-        const span = document.createElement('span');
-        span.className = 'highlight';
-        span.appendChild(selectedText);
-        range.insertNode(span);
-
-        selection.removeAllRanges();
-    }
-});
-```
 
 ### **References:**
 - **[The Croods: A New Age (2020) - Wikipedia](https://en.wikipedia.org/wiki/The_Croods:_A_New_Age)**

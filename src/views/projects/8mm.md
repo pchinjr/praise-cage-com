@@ -14,13 +14,12 @@ The application features a live interaction tracker that records and displays va
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +27,30 @@ The application features a live interaction tracker that records and displays va
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shadow Trace: Digital Footprint Analyzer</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    #activityLog {
+        margin-top: 20px;
+        padding: 15px;
+        border: 1px solid #ccc;
+        height: 300px;
+        overflow-y: scroll;
+        background-color: #fff;
+    }
+
+    input, button {
+        margin: 5px;
+        padding: 10px;
+        font-size: 16px;
+    }
+</style>
 </head>
 <body>
     <h1>Digital Footprint Analyzer</h1>
@@ -37,56 +59,29 @@ The application features a live interaction tracker that records and displays va
         <button id="clickButton">Click Me!</button>
     </div>
     <div id="activityLog">Activity log will be displayed here...</div>
-    <script src="script.js"></script>
+<script>
+    const activityLog = document.getElementById('activityLog');
+
+    document.getElementById('textInput').addEventListener('input', function(event) {
+        logActivity(`User typed: "${event.target.value}"`);
+    });
+
+    document.getElementById('clickButton').addEventListener('click', function() {
+        logActivity('User clicked the button.');
+    });
+
+    function logActivity(action) {
+        const entry = document.createElement('div');
+        entry.textContent = action;
+        activityLog.appendChild(entry);
+        activityLog.scrollTop = activityLog.scrollHeight; // Auto-scroll to the bottom of the log
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-#activityLog {
-    margin-top: 20px;
-    padding: 15px;
-    border: 1px solid #ccc;
-    height: 300px;
-    overflow-y: scroll;
-    background-color: #fff;
-}
-
-input, button {
-    margin: 5px;
-    padding: 10px;
-    font-size: 16px;
-}
-```
-
-**script.js**:
-```javascript
-const activityLog = document.getElementById('activityLog');
-
-document.getElementById('textInput').addEventListener('input', function(event) {
-    logActivity(`User typed: "${event.target.value}"`);
-});
-
-document.getElementById('clickButton').addEventListener('click', function() {
-    logActivity('User clicked the button.');
-});
-
-function logActivity(action) {
-    const entry = document.createElement('div');
-    entry.textContent = action;
-    activityLog.appendChild(entry);
-    activityLog.scrollTop = activityLog.scrollHeight; // Auto-scroll to the bottom of the log
-}
-```
 
 ### References:
 - **Film**: [8MM (1999)](https://en.wikipedia.org/wiki/8mm_(film))

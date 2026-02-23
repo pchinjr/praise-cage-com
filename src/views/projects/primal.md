@@ -15,8 +15,8 @@ Inspired by Nicolas Cage's action-packed and suspenseful role in *Primal*, this 
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -28,8 +28,61 @@ Inspired by Nicolas Cage's action-packed and suspenseful role in *Primal*, this 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Primal Notes with Primal and Web Storage API</title>
-    
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #1c1c1c;
+        color: #f0f0f0;
+        text-align: center;
+        padding: 50px;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #2e2e2e;
+        border: 1px solid #444;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+        margin-bottom: 20px;
+        color: #ff6347;
+    }
+    .note {
+        margin: 20px 0;
+        padding: 10px;
+        background-color: #3e3e3e;
+        border: 1px solid #555;
+        border-radius: 5px;
+    }
+    .controls {
+        margin-top: 20px;
+    }
+    button {
+        padding: 10px 20px;
+        margin: 10px;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    textarea {
+        width: 100%;
+        height: 100px;
+        border: 1px solid #555;
+        border-radius: 5px;
+        padding: 10px;
+        margin-top: 10px;
+        background-color: #3e3e3e;
+        color: #f0f0f0;
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -43,103 +96,43 @@ Inspired by Nicolas Cage's action-packed and suspenseful role in *Primal*, this 
         </div>
         <div class="note" id="noteDisplay">Your saved notes will appear here.</div>
     </div>
+<script>
+    const noteInput = document.getElementById('noteInput');
+    const saveButton = document.getElementById('saveButton');
+    const clearButton = document.getElementById('clearButton');
+    const noteDisplay = document.getElementById('noteDisplay');
 
-    
-    <script src="script.js"></script>
+    function displayNotes() {
+        const notes = JSON.parse(localStorage.getItem('primalNotes')) || [];
+        noteDisplay.innerHTML = '';
+        notes.forEach((note, index) => {
+            const noteElement = document.createElement('div');
+            noteElement.className = 'note';
+            noteElement.textContent = note;
+            noteDisplay.appendChild(noteElement);
+        });
+    }
+
+    saveButton.addEventListener('click', () => {
+        const notes = JSON.parse(localStorage.getItem('primalNotes')) || [];
+        notes.push(noteInput.value);
+        localStorage.setItem('primalNotes', JSON.stringify(notes));
+        noteInput.value = '';
+        displayNotes();
+    });
+
+    clearButton.addEventListener('click', () => {
+        localStorage.removeItem('primalNotes');
+        displayNotes();
+    });
+
+    displayNotes();
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #1c1c1c;
-    color: #f0f0f0;
-    text-align: center;
-    padding: 50px;
-}
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #2e2e2e;
-    border: 1px solid #444;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-h1 {
-    margin-bottom: 20px;
-    color: #ff6347;
-}
-.note {
-    margin: 20px 0;
-    padding: 10px;
-    background-color: #3e3e3e;
-    border: 1px solid #555;
-    border-radius: 5px;
-}
-.controls {
-    margin-top: 20px;
-}
-button {
-    padding: 10px 20px;
-    margin: 10px;
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-}
-button:hover {
-    background-color: #0056b3;
-}
-textarea {
-    width: 100%;
-    height: 100px;
-    border: 1px solid #555;
-    border-radius: 5px;
-    padding: 10px;
-    margin-top: 10px;
-    background-color: #3e3e3e;
-    color: #f0f0f0;
-}
-```
 
-**script.js**:
-```javascript
-const noteInput = document.getElementById('noteInput');
-const saveButton = document.getElementById('saveButton');
-const clearButton = document.getElementById('clearButton');
-const noteDisplay = document.getElementById('noteDisplay');
-
-function displayNotes() {
-    const notes = JSON.parse(localStorage.getItem('primalNotes')) || [];
-    noteDisplay.innerHTML = '';
-    notes.forEach((note, index) => {
-        const noteElement = document.createElement('div');
-        noteElement.className = 'note';
-        noteElement.textContent = note;
-        noteDisplay.appendChild(noteElement);
-    });
-}
-
-saveButton.addEventListener('click', () => {
-    const notes = JSON.parse(localStorage.getItem('primalNotes')) || [];
-    notes.push(noteInput.value);
-    localStorage.setItem('primalNotes', JSON.stringify(notes));
-    noteInput.value = '';
-    displayNotes();
-});
-
-clearButton.addEventListener('click', () => {
-    localStorage.removeItem('primalNotes');
-    displayNotes();
-});
-
-displayNotes();
-```
 
 ### **References:**
 - **[Primal (2019) - Wikipedia](https://en.wikipedia.org/wiki/Primal_(2019_film))**

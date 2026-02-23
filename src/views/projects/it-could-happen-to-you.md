@@ -13,13 +13,12 @@ Using Web Components, this project leverages the concept of reusability and enca
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -27,63 +26,59 @@ Using Web Components, this project leverages the concept of reusability and enca
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lucky Break Donation Button</title>
-    <script src="luckyDonationButton.js"></script>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
+</style>
 </head>
 <body>
     <h1>Support a Cause!</h1>
     <lucky-donation-button label="Donate $5 to Charity" charity-url="https://examplecharity.com/donate"></lucky-donation-button>
+<script>
+    class LuckyDonationButton extends HTMLElement {
+        constructor() {
+            super();
+            this.attachShadow({ mode: 'open' });
+        }
+
+        connectedCallback() {
+            const label = this.getAttribute('label') || 'Donate';
+            const charityUrl = this.getAttribute('charity-url');
+            this.shadowRoot.innerHTML = `
+                <style>
+                    button {
+                        background-color: #4CAF50;
+                        color: white;
+                        padding: 15px 32px;
+                        text-align: center;
+                        text-decoration: none;
+                        display: inline-block;
+                        font-size: 16px;
+                        margin: 4px 2px;
+                        cursor: pointer;
+                        border: none;
+                        border-radius: 8px;
+                    }
+                </style>
+                <button>${label}</button>
+            `;
+
+            this.shadowRoot.querySelector('button').onclick = () => {
+                window.open(charityUrl, '_blank');
+            };
+        }
+    }
+
+    window.customElements.define('lucky-donation-button', LuckyDonationButton);
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-}
-```
 
-**luckyDonationButton.js**:
-```javascript
-class LuckyDonationButton extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-    }
-
-    connectedCallback() {
-        const label = this.getAttribute('label') || 'Donate';
-        const charityUrl = this.getAttribute('charity-url');
-        this.shadowRoot.innerHTML = `
-            <style>
-                button {
-                    background-color: #4CAF50;
-                    color: white;
-                    padding: 15px 32px;
-                    text-align: center;
-                    text-decoration: none;
-                    display: inline-block;
-                    font-size: 16px;
-                    margin: 4px 2px;
-                    cursor: pointer;
-                    border: none;
-                    border-radius: 8px;
-                }
-            </style>
-            <button>${label}</button>
-        `;
-
-        this.shadowRoot.querySelector('button').onclick = () => {
-            window.open(charityUrl, '_blank');
-        };
-    }
-}
-
-window.customElements.define('lucky-donation-button', LuckyDonationButton);
-```
 
 ### References:
 - **Film**: [It Could Happen to You (1994)](https://en.wikipedia.org/wiki/It_Could_Happen_to_You_(1994_film))

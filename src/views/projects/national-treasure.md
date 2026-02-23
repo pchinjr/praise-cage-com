@@ -12,8 +12,8 @@ In "National Treasure" (2004), Nicolas Cage stars as Benjamin Franklin Gates, a 
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -26,7 +26,42 @@ In "National Treasure" (2004), Nicolas Cage stars as Benjamin Franklin Gates, a 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>National Treasure: Animated Clues</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    h1 {
+        font-size: 2em;
+        margin-bottom: 0.5em;
+    }
+
+    .chest {
+        font-size: 3em;
+        cursor: pointer;
+        margin: 10px;
+        display: inline-block;
+    }
+
+    #clue {
+        margin-top: 20px;
+        font-size: 1.2em;
+        display: none;
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -37,73 +72,34 @@ In "National Treasure" (2004), Nicolas Cage stars as Benjamin Franklin Gates, a 
         <div class="chest" onclick="revealClue(this)">💰</div>
         <div id="clue"></div>
     </div>
-    <script src="script.js"></script>
+<script>
+    function revealClue(element) {
+        const clue = document.getElementById('clue');
+        clue.innerText = "You found a clue! The next step in your treasure hunt awaits...";
+        clue.style.display = "block";
+        clue.animate([
+            { opacity: 0, transform: 'translateY(-20px)' },
+            { opacity: 1, transform: 'translateY(0)' }
+        ], {
+            duration: 1000,
+            fill: 'forwards'
+        });
+
+        element.animate([
+            { transform: 'scale(1)' },
+            { transform: 'scale(1.2)', offset: 0.5 },
+            { transform: 'scale(1)' }
+        ], {
+            duration: 500,
+            fill: 'forwards'
+        });
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-.container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-h1 {
-    font-size: 2em;
-    margin-bottom: 0.5em;
-}
-
-.chest {
-    font-size: 3em;
-    cursor: pointer;
-    margin: 10px;
-    display: inline-block;
-}
-
-#clue {
-    margin-top: 20px;
-    font-size: 1.2em;
-    display: none;
-}
-```
-
-**script.js**:
-```javascript
-function revealClue(element) {
-    const clue = document.getElementById('clue');
-    clue.innerText = "You found a clue! The next step in your treasure hunt awaits...";
-    clue.style.display = "block";
-    clue.animate([
-        { opacity: 0, transform: 'translateY(-20px)' },
-        { opacity: 1, transform: 'translateY(0)' }
-    ], {
-        duration: 1000,
-        fill: 'forwards'
-    });
-
-    element.animate([
-        { transform: 'scale(1)' },
-        { transform: 'scale(1.2)', offset: 0.5 },
-        { transform: 'scale(1)' }
-    ], {
-        duration: 500,
-        fill: 'forwards'
-    });
-}
-```
 
 ### References
 - **Film: "National Treasure" (2004)**

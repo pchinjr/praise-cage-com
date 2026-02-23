@@ -15,8 +15,8 @@ Inspired by Nicolas Cage's humorous and determined role in *Army of One*, this p
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -28,8 +28,47 @@ Inspired by Nicolas Cage's humorous and determined role in *Army of One*, this p
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mission Impossible with Army of One and Web Components</title>
-    
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        text-align: center;
+        padding: 50px;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        margin-bottom: 20px;
+    }
+    .mission {
+        margin: 20px 0;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    button {
+        padding: 10px 20px;
+        margin: 10px;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -40,111 +79,65 @@ Inspired by Nicolas Cage's humorous and determined role in *Army of One*, this p
         <mission-component mission-name="Cross the Desert"></mission-component>
         <mission-component mission-name="Capture the Flag"></mission-component>
     </div>
+<script>
+    class MissionComponent extends HTMLElement {
+        constructor() {
+            super();
+            this.attachShadow({ mode: 'open' });
+            const wrapper = document.createElement('div');
+            wrapper.setAttribute('class', 'mission');
 
-    
-    <script src="script.js"></script>
+            const title = this.getAttribute('mission-name');
+            const titleElement = document.createElement('h2');
+            titleElement.textContent = title;
+
+            const button = document.createElement('button');
+            button.textContent = 'Complete Mission';
+            button.addEventListener('click', () => {
+                alert(`${title} mission completed!`);
+            });
+
+            wrapper.appendChild(titleElement);
+            wrapper.appendChild(button);
+            this.shadowRoot.append(wrapper);
+
+            const style = document.createElement('style');
+            style.textContent = `
+                .mission {
+                    padding: 20px;
+                    margin: 20px 0;
+                    background-color: #f9f9f9;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    text-align: center;
+                }
+                h2 {
+                    margin: 0 0 10px 0;
+                }
+                button {
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    border: none;
+                    font-size: 16px;
+                    background-color: #007bff;
+                    color: white;
+                    cursor: pointer;
+                }
+                button:hover {
+                    background-color: #0056b3;
+                }
+            `;
+            this.shadowRoot.appendChild(style);
+        }
+    }
+
+    customElements.define('mission-component', MissionComponent);
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: center;
-    padding: 50px;
-}
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-h1 {
-    margin-bottom: 20px;
-}
-.mission {
-    margin: 20px 0;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-button {
-    padding: 10px 20px;
-    margin: 10px;
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-}
-button:hover {
-    background-color: #0056b3;
-}
-```
 
-**script.js**:
-```javascript
-class MissionComponent extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-        const wrapper = document.createElement('div');
-        wrapper.setAttribute('class', 'mission');
-
-        const title = this.getAttribute('mission-name');
-        const titleElement = document.createElement('h2');
-        titleElement.textContent = title;
-
-        const button = document.createElement('button');
-        button.textContent = 'Complete Mission';
-        button.addEventListener('click', () => {
-            alert(`${title} mission completed!`);
-        });
-
-        wrapper.appendChild(titleElement);
-        wrapper.appendChild(button);
-        this.shadowRoot.append(wrapper);
-
-        const style = document.createElement('style');
-        style.textContent = `
-            .mission {
-                padding: 20px;
-                margin: 20px 0;
-                background-color: #f9f9f9;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-                text-align: center;
-            }
-            h2 {
-                margin: 0 0 10px 0;
-            }
-            button {
-                padding: 10px 20px;
-                border-radius: 5px;
-                border: none;
-                font-size: 16px;
-                background-color: #007bff;
-                color: white;
-                cursor: pointer;
-            }
-            button:hover {
-                background-color: #0056b3;
-            }
-        `;
-        this.shadowRoot.appendChild(style);
-    }
-}
-
-customElements.define('mission-component', MissionComponent);
-```
 
 ### **References:**
 - **[Army of One (2016) - Wikipedia](https://en.wikipedia.org/wiki/Army_of_One_(2016_film))**

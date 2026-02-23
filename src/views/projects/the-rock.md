@@ -11,13 +11,12 @@ The "Alcatraz Escape: Tactical Training Simulator" challenges players to navigat
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -25,89 +24,85 @@ The "Alcatraz Escape: Tactical Training Simulator" challenges players to navigat
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alcatraz Escape</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #e0e0e0;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    #gameArea {
+        width: 800px;
+        height: 600px;
+        border: 3px solid black;
+        margin: 20px auto;
+        position: relative;
+        background: url('https://upload.wikimedia.org/wikipedia/commons/0/0c/Alcatraz_Island_as_seen_from_the_East.jpg') no-repeat center center;
+        background-size: cover;
+        outline: none;  /* Remove default focus outline */
+    }
+</style>
 </head>
 <body>
     <h1>Alcatraz Escape: Tactical Training Simulator</h1>
     <div id="gameArea" tabindex="0"></div>
-    <script src="game.js"></script>
+<script>
+    // Mockup for player object
+    const player = {
+        x: 50, // Starting X position
+        y: 50, // Starting Y position
+        move: function(direction) {
+            switch (direction) {
+                case 'ArrowUp':
+                    this.y -= 10;
+                    break;
+                case 'ArrowDown':
+                    this.y += 10;
+                    break;
+                case 'ArrowLeft':
+                    this.x -= 10;
+                    break;
+                case 'ArrowRight':
+                    this.x += 10;
+                    break;
+            }
+            this.updatePosition();
+        },
+        updatePosition: function() {
+            const playerElement = document.querySelector('.player');
+            playerElement.style.top = `${this.y}px`;
+            playerElement.style.left = `${this.x}px`;
+        }
+    };
+
+    document.getElementById('gameArea').addEventListener('keydown', function(event) {
+        event.preventDefault();  // Prevent default arrow key behavior
+        player.move(event.key);
+    });
+
+    // Initial setup to add player to the game area
+    function setupGame() {
+        const gameArea = document.getElementById('gameArea');
+        const playerElement = document.createElement('div');
+        playerElement.className = 'player';
+        playerElement.style.position = 'absolute';
+        playerElement.style.width = '20px';
+        playerElement.style.height = '20px';
+        playerElement.style.backgroundColor = 'red';
+        gameArea.appendChild(playerElement);
+        player.updatePosition(); // Update to initial position
+        gameArea.focus(); // Focus to capture key events
+    }
+
+    window.onload = setupGame;
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #e0e0e0;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-#gameArea {
-    width: 800px;
-    height: 600px;
-    border: 3px solid black;
-    margin: 20px auto;
-    position: relative;
-    background: url('alcatraz-interior.jpg') no-repeat center center;
-    background-size: cover;
-    outline: none;  /* Remove default focus outline */
-}
-```
-
-**game.js**:
-```javascript
-// Mockup for player object
-const player = {
-    x: 50, // Starting X position
-    y: 50, // Starting Y position
-    move: function(direction) {
-        switch (direction) {
-            case 'ArrowUp':
-                this.y -= 10;
-                break;
-            case 'ArrowDown':
-                this.y += 10;
-                break;
-            case 'ArrowLeft':
-                this.x -= 10;
-                break;
-            case 'ArrowRight':
-                this.x += 10;
-                break;
-        }
-        this.updatePosition();
-    },
-    updatePosition: function() {
-        const playerElement = document.querySelector('.player');
-        playerElement.style.top = `${this.y}px`;
-        playerElement.style.left = `${this.x}px`;
-    }
-};
-
-document.getElementById('gameArea').addEventListener('keydown', function(event) {
-    event.preventDefault();  // Prevent default arrow key behavior
-    player.move(event.key);
-});
-
-// Initial setup to add player to the game area
-function setupGame() {
-    const gameArea = document.getElementById('gameArea');
-    const playerElement = document.createElement('div');
-    playerElement.className = 'player';
-    playerElement.style.position = 'absolute';
-    playerElement.style.width = '20px';
-    playerElement.style.height = '20px';
-    playerElement.style.backgroundColor = 'red';
-    gameArea.appendChild(playerElement);
-    player.updatePosition(); // Update to initial position
-    gameArea.focus(); // Focus to capture key events
-}
-
-window.onload = setupGame;
-```
 
 ### References:
 - **Film**: [The Rock (1996)](https://en.wikipedia.org/wiki/The_Rock_(film))

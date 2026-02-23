@@ -15,8 +15,8 @@ Inspired by Nicolas Cage's role in *The Trust*, this project utilizes the WebOTP
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -28,8 +28,48 @@ Inspired by Nicolas Cage's role in *The Trust*, this project utilizes the WebOTP
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trustworthy Access with The Trust</title>
-    
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        text-align: center;
+        padding: 50px;
+    }
+    .container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        margin-bottom: 20px;
+    }
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+    button {
+        width: 100%;
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -39,85 +79,38 @@ Inspired by Nicolas Cage's role in *The Trust*, this project utilizes the WebOTP
         <button onclick="verifyOTP()">Verify OTP</button>
         <p id="message"></p>
     </div>
+<script>
+    async function verifyOTP() {
+        const otpInput = document.getElementById('otp-input').value;
+        const message = document.getElementById('message');
 
-    
-    <script src="script.js"></script>
+        // Simulate OTP verification
+        if (otpInput === '123456') {
+            message.textContent = 'OTP verified successfully!';
+            message.style.color = 'green';
+        } else {
+            message.textContent = 'Invalid OTP. Please try again.';
+            message.style.color = 'red';
+        }
+    }
+
+    // Automatically receive OTP using WebOTP API
+    if ('OTPCredential' in window) {
+        navigator.credentials.get({ otp: { transport: ['sms'] } })
+            .then(otp => {
+                document.getElementById('otp-input').value = otp.code;
+                verifyOTP();
+            })
+            .catch(err => {
+                console.error('Error receiving OTP:', err);
+            });
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    text-align: center;
-    padding: 50px;
-}
-.container {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-h1 {
-    margin-bottom: 20px;
-}
-input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-}
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-}
-button:hover {
-    background-color: #45a049;
-}
-```
 
-**script.js**:
-```javascript
-async function verifyOTP() {
-    const otpInput = document.getElementById('otp-input').value;
-    const message = document.getElementById('message');
-
-    // Simulate OTP verification
-    if (otpInput === '123456') {
-        message.textContent = 'OTP verified successfully!';
-        message.style.color = 'green';
-    } else {
-        message.textContent = 'Invalid OTP. Please try again.';
-        message.style.color = 'red';
-    }
-}
-
-// Automatically receive OTP using WebOTP API
-if ('OTPCredential' in window) {
-    navigator.credentials.get({ otp: { transport: ['sms'] } })
-        .then(otp => {
-            document.getElementById('otp-input').value = otp.code;
-            verifyOTP();
-        })
-        .catch(err => {
-            console.error('Error receiving OTP:', err);
-        });
-}
-```
 
 ### **References:**
 - **[The Trust (2016) - Wikipedia](https://en.wikipedia.org/wiki/The_Trust_(2016_film))**

@@ -14,15 +14,14 @@ In this project, we integrate the intense and suspenseful atmosphere of *Trespas
 #### Starting Code:
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
 Here's a basic setup to get you started. This includes the initial HTML, CSS, and JavaScript to integrate the Visual Viewport API and create an interactive security feature.
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -30,82 +29,77 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trespass: Interactive Security</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #111;
+        color: #fff;
+        text-align: center;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #ff4500;
+    }
+
+    #viewportInfo {
+        margin-top: 20px;
+        font-size: 18px;
+    }
+
+    #alert {
+        margin-top: 20px;
+        font-size: 18px;
+        color: red;
+        font-weight: bold;
+    }
+</style>
 </head>
 <body>
     <h1>Trespass: Interactive Security</h1>
     <p>Monitor and respond to viewport changes with the Visual Viewport API!</p>
     <div id="viewportInfo"></div>
     <div id="alert"></div>
+<script>
+    function updateViewportInfo() {
+        const viewportInfo = document.getElementById('viewportInfo');
+        const visualViewport = window.visualViewport;
 
-    <script src="main.js"></script>
+        viewportInfo.innerHTML = `
+            <p>Width: ${visualViewport.width}px</p>
+            <p>Height: ${visualViewport.height}px</p>
+            <p>Offset Left: ${visualViewport.offsetLeft}px</p>
+            <p>Offset Top: ${visualViewport.offsetTop}px</p>
+            <p>Scale: ${visualViewport.scale}</p>
+        `;
+
+        if (visualViewport.width < 600) {
+            showAlert('Viewport width is below 600px. Potential security risk!');
+        } else {
+            clearAlert();
+        }
+    }
+
+    function showAlert(message) {
+        const alertDiv = document.getElementById('alert');
+        alertDiv.innerText = message;
+    }
+
+    function clearAlert() {
+        const alertDiv = document.getElementById('alert');
+        alertDiv.innerText = '';
+    }
+
+    window.visualViewport.addEventListener('resize', updateViewportInfo);
+    window.visualViewport.addEventListener('scroll', updateViewportInfo);
+
+    updateViewportInfo();
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #111;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
-}
 
-h1 {
-    color: #ff4500;
-}
-
-#viewportInfo {
-    margin-top: 20px;
-    font-size: 18px;
-}
-
-#alert {
-    margin-top: 20px;
-    font-size: 18px;
-    color: red;
-    font-weight: bold;
-}
-```
-
-**main.js**:
-```javascript
-function updateViewportInfo() {
-    const viewportInfo = document.getElementById('viewportInfo');
-    const visualViewport = window.visualViewport;
-
-    viewportInfo.innerHTML = `
-        <p>Width: ${visualViewport.width}px</p>
-        <p>Height: ${visualViewport.height}px</p>
-        <p>Offset Left: ${visualViewport.offsetLeft}px</p>
-        <p>Offset Top: ${visualViewport.offsetTop}px</p>
-        <p>Scale: ${visualViewport.scale}</p>
-    `;
-
-    if (visualViewport.width < 600) {
-        showAlert('Viewport width is below 600px. Potential security risk!');
-    } else {
-        clearAlert();
-    }
-}
-
-function showAlert(message) {
-    const alertDiv = document.getElementById('alert');
-    alertDiv.innerText = message;
-}
-
-function clearAlert() {
-    const alertDiv = document.getElementById('alert');
-    alertDiv.innerText = '';
-}
-
-window.visualViewport.addEventListener('resize', updateViewportInfo);
-window.visualViewport.addEventListener('scroll', updateViewportInfo);
-
-updateViewportInfo();
-```
 
 #### References:
 - **Trespass (2011)**:

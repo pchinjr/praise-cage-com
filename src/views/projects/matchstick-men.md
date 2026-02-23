@@ -12,8 +12,8 @@ In "Matchstick Men" (2003), Nicolas Cage plays Roy Waller, a con artist struggli
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -26,7 +26,47 @@ In "Matchstick Men" (2003), Nicolas Cage plays Roy Waller, a con artist struggli
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matchstick Men Monitoring</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    h1 {
+        font-size: 2em;
+        margin-bottom: 0.5em;
+    }
+
+    .observed {
+        width: 100%;
+        padding: 50px;
+        margin: 20px 0;
+        background-color: #e0e0e0;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .spacer {
+        height: 400px;
+    }
+
+    #result {
+        margin-top: 20px;
+        font-size: 1.2em;
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -41,83 +81,39 @@ In "Matchstick Men" (2003), Nicolas Cage plays Roy Waller, a con artist struggli
         <div class="observed" id="element4">Element 4</div>
         <div id="result"></div>
     </div>
-    <script src="script.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const result = document.getElementById('result');
+        const observedElements = document.querySelectorAll('.observed');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.5
+        };
+
+        const observerCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    result.innerText = `${entry.target.id} is in the viewport`;
+                } else {
+                    result.innerText = `${entry.target.id} is out of the viewport`;
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+        observedElements.forEach(element => {
+            observer.observe(element);
+        });
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-.container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-h1 {
-    font-size: 2em;
-    margin-bottom: 0.5em;
-}
-
-.observed {
-    width: 100%;
-    padding: 50px;
-    margin: 20px 0;
-    background-color: #e0e0e0;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-}
-
-.spacer {
-    height: 400px;
-}
-
-#result {
-    margin-top: 20px;
-    font-size: 1.2em;
-}
-```
-
-**script.js**:
-```javascript
-document.addEventListener('DOMContentLoaded', (event) => {
-    const result = document.getElementById('result');
-    const observedElements = document.querySelectorAll('.observed');
-
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.5
-    };
-
-    const observerCallback = (entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                result.innerText = `${entry.target.id} is in the viewport`;
-            } else {
-                result.innerText = `${entry.target.id} is out of the viewport`;
-            }
-        });
-    };
-
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-    observedElements.forEach(element => {
-        observer.observe(element);
-    });
-});
-```
 
 ### References
 - **Film: "Matchstick Men" (2003)**

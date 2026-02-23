@@ -13,8 +13,8 @@ In the film "Adaptation" (2002), Nicolas Cage portrays Charlie Kaufman, a screen
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -27,7 +27,63 @@ In the film "Adaptation" (2002), Nicolas Cage portrays Charlie Kaufman, a screen
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adaptation Achievements</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    h1 {
+        font-size: 2em;
+        margin-bottom: 0.5em;
+    }
+
+    .input-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input {
+        width: calc(100% - 22px);
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    #badgeResult {
+        margin-top: 20px;
+        font-size: 1.2em;
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -44,88 +100,28 @@ In the film "Adaptation" (2002), Nicolas Cage portrays Charlie Kaufman, a screen
         <button onclick="awardBadge()">Award Badge</button>
         <div id="badgeResult"></div>
     </div>
-    <script src="script.js"></script>
+<script>
+    async function awardBadge() {
+        const wordCount = document.getElementById('wordCount').value;
+        const timeSpent = document.getElementById('timeSpent').value;
+
+        if (wordCount && timeSpent) {
+            try {
+                await navigator.setAppBadge(parseInt(wordCount));
+                document.getElementById('badgeResult').innerText = `Badge awarded for ${wordCount} words and ${timeSpent} minutes of writing!`;
+            } catch (error) {
+                document.getElementById('badgeResult').innerText = `Error awarding badge: ${error.message}`;
+            }
+        } else {
+            document.getElementById('badgeResult').innerText = 'Please enter both word count and time spent.';
+        }
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-.container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-h1 {
-    font-size: 2em;
-    margin-bottom: 0.5em;
-}
-
-.input-group {
-    margin-bottom: 20px;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-input {
-    width: calc(100% - 22px);
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-#badgeResult {
-    margin-top: 20px;
-    font-size: 1.2em;
-}
-```
-
-**script.js**:
-```javascript
-async function awardBadge() {
-    const wordCount = document.getElementById('wordCount').value;
-    const timeSpent = document.getElementById('timeSpent').value;
-
-    if (wordCount && timeSpent) {
-        try {
-            await navigator.setAppBadge(parseInt(wordCount));
-            document.getElementById('badgeResult').innerText = `Badge awarded for ${wordCount} words and ${timeSpent} minutes of writing!`;
-        } catch (error) {
-            document.getElementById('badgeResult').innerText = `Error awarding badge: ${error.message}`;
-        }
-    } else {
-        document.getElementById('badgeResult').innerText = 'Please enter both word count and time spent.';
-    }
-}
-```
 
 ### References
 - **Film: "Adaptation" (2002)**

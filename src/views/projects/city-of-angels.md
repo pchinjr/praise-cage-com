@@ -12,13 +12,12 @@ This tool is ideal for graphic designers, spiritual bloggers, or anyone looking 
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -26,67 +25,63 @@ This tool is ideal for graphic designers, spiritual bloggers, or anyone looking 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Heavenly Scripts: Angelic Font Styler</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    textarea {
+        width: 60%;
+        height: 100px;
+        margin-bottom: 20px;
+    }
+
+    #styledText {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #fff;
+        border: 2px solid #ccc;
+        min-height: 50px;
+        font-size: 24px;
+        font-family: 'Angelic', serif;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+</style>
 </head>
 <body>
     <h1>Create Your Heavenly Script</h1>
     <textarea id="textInput" placeholder="Type your message here..."></textarea>
     <div id="styledText"></div>
     <button onclick="applyFont()">Style My Text</button>
-    <script src="script.js"></script>
+<script>
+    document.fonts.load('10pt "Angelic"').then(function () {
+        console.log('Angelic font is ready to use.');
+    });
+
+    function applyFont() {
+        const textInput = document.getElementById('textInput').value;
+        const styledText = document.getElementById('styledText');
+        styledText.textContent = textInput;
+        styledText.style.fontFamily = 'Angelic';
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-textarea {
-    width: 60%;
-    height: 100px;
-    margin-bottom: 20px;
-}
-
-#styledText {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #fff;
-    border: 2px solid #ccc;
-    min-height: 50px;
-    font-size: 24px;
-    font-family: 'Angelic', serif;
-}
-
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-```
-
-**script.js**:
-```javascript
-document.fonts.load('10pt "Angelic"').then(function () {
-    console.log('Angelic font is ready to use.');
-});
-
-function applyFont() {
-    const textInput = document.getElementById('textInput').value;
-    const styledText = document.getElementById('styledText');
-    styledText.textContent = textInput;
-    styledText.style.fontFamily = 'Angelic';
-}
-```
 
 ### References:
 - **Film**: [City of Angels (1998)](https://en.wikipedia.org/wiki/City_of_Angels_(film))

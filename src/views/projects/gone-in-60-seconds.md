@@ -10,12 +10,11 @@ Inspired by "Gone in 60 Seconds," where Nicolas Cage's character leads a high-st
 ### Starting Code:
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +22,41 @@ Inspired by "Gone in 60 Seconds," where Nicolas Cage's character leads a high-st
     <meta charset="UTF-8">
     <meta viewport="width=device-width, initial-scale=1.0">
     <title>SpeedWatch: Car Heist Surveillance</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    #garage {
+        position: relative; /* Ensure the garage container can handle absolute positioning */
+        display: flex;
+        justify-content: space-around;
+        margin: 20px 0;
+        padding: 10px;
+        border: 2px solid #000;
+        min-height: 100px; /* Provide enough height to demonstrate the effect */
+    }
+
+    .car {
+        padding: 10px;
+        border: 1px solid #444;
+        background-color: #ddd;
+        cursor: pointer;
+        transition: bottom 2s; /* Smooth transition for moving the car out */
+    }
+
+    #log {
+        margin-top: 20px;
+        height: 100px;
+        overflow-y: auto;
+        background-color: #fff;
+        border: 1px solid #ccc;
+    }
+</style>
 </head>
 <body>
     <h1>Car Surveillance System</h1>
@@ -34,75 +67,39 @@ Inspired by "Gone in 60 Seconds," where Nicolas Cage's character leads a high-st
         <!-- Add more cars as needed -->
     </div>
     <div id="log"></div>
-    <script src="script.js"></script>
+<script>
+    const cars = document.querySelectorAll('.car');
+    const log = document.getElementById('log');
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) {
+                log.textContent += `${entry.target.textContent.trim()} has left the garage!
+`;
+            } else {
+                log.textContent += `${entry.target.textContent.trim()} is secure in the garage.
+`;
+            }
+        });
+    }, {
+        root: document.querySelector('#garage'),
+        threshold: 0.5
+    });
+
+    cars.forEach(car => observer.observe(car));
+
+    // Simulate a car leaving
+    setTimeout(() => {
+        const car1 = document.getElementById('car1');
+        car1.style.position = 'absolute';  // Change position style to absolute
+        car1.style.bottom = '-100px';      // Move it downwards, simulating it leaving the monitored area
+    }, 5000);
+</script>
 </body>
 </html>
 ```
 
-### CSS (styles.css):
-```css
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-#garage {
-    position: relative; /* Ensure the garage container can handle absolute positioning */
-    display: flex;
-    justify-content: space-around;
-    margin: 20px 0;
-    padding: 10px;
-    border: 2px solid #000;
-    min-height: 100px; /* Provide enough height to demonstrate the effect */
-}
-
-.car {
-    padding: 10px;
-    border: 1px solid #444;
-    background-color: #ddd;
-    cursor: pointer;
-    transition: bottom 2s; /* Smooth transition for moving the car out */
-}
-
-#log {
-    margin-top: 20px;
-    height: 100px;
-    overflow-y: auto;
-    background-color: #fff;
-    border: 1px solid #ccc;
-}
-```
-
-### JavaScript (script.js):
-```javascript
-const cars = document.querySelectorAll('.car');
-const log = document.getElementById('log');
-
-const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if (!entry.isIntersecting) {
-            log.textContent += `${entry.target.textContent.trim()} has left the garage!\n`;
-        } else {
-            log.textContent += `${entry.target.textContent.trim()} is secure in the garage.\n`;
-        }
-    });
-}, {
-    root: document.querySelector('#garage'),
-    threshold: 0.5
-});
-
-cars.forEach(car => observer.observe(car));
-
-// Simulate a car leaving
-setTimeout(() => {
-    const car1 = document.getElementById('car1');
-    car1.style.position = 'absolute';  // Change position style to absolute
-    car1.style.bottom = '-100px';      // Move it downwards, simulating it leaving the monitored area
-}, 5000);
-```
 ### References:
 - **Film**: [Gone in 60 Seconds (2000)](https://en.wikipedia.org/wiki/Gone_in_60_Seconds_(2000_film))
 - **API**: [Intersection Observer API Documentation](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)

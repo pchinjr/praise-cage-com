@@ -13,13 +13,12 @@ This web application helps users find the best holiday deals stealthily. When th
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -27,47 +26,43 @@ This web application helps users find the best holiday deals stealthily. When th
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Holiday Hideaway</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #fff0f5; /* Light pink to keep things festive */
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    #dealAlerts {
+        margin-top: 20px;
+        padding: 10px;
+        border: 2px solid #ff69b4; /* Bright pink border */
+        background-color: #fff;
+        display: none; /* Hidden by default, shown only when appropriate */
+    }
+</style>
 </head>
 <body>
     <h1>Stealthy Shopping Guide</h1>
     <div id="dealAlerts">🎁 Amazing Deals Just For You!</div>
-    <script src="script.js"></script>
+<script>
+    document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'hidden') {
+            // Hide deal alerts when the tab is not visible
+            document.getElementById('dealAlerts').style.display = 'none';
+        } else {
+            // Show deal alerts when the user is looking at the tab
+            document.getElementById('dealAlerts').style.display = 'block';
+        }
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #fff0f5; /* Light pink to keep things festive */
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-#dealAlerts {
-    margin-top: 20px;
-    padding: 10px;
-    border: 2px solid #ff69b4; /* Bright pink border */
-    background-color: #fff;
-    display: none; /* Hidden by default, shown only when appropriate */
-}
-```
-
-**script.js**:
-```javascript
-document.addEventListener('visibilitychange', function() {
-    if (document.visibilityState === 'hidden') {
-        // Hide deal alerts when the tab is not visible
-        document.getElementById('dealAlerts').style.display = 'none';
-    } else {
-        // Show deal alerts when the user is looking at the tab
-        document.getElementById('dealAlerts').style.display = 'block';
-    }
-});
-```
 
 ### References:
 - **Film**: [Trapped in Paradise (1994)](https://en.wikipedia.org/wiki/Trapped_in_Paradise)

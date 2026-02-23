@@ -14,15 +14,14 @@ In this project, we merge the thrilling and predictive elements of Nicolas Cage'
 #### Starting Code:
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
 Here's a basic setup to get you started. This includes the initial HTML, CSS, and JavaScript to integrate the Screen Capture API and create a simple screen capture application.
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +29,36 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Future Vision</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #d9534f;
+    }
+
+    button {
+        background-color: #d9534f;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 5px;
+    }
+
+    #screenVideo {
+        margin-top: 20px;
+        border: 1px solid #ccc;
+        width: 80%;
+        height: auto;
+    }
+</style>
 </head>
 <body>
     <h1>Future Vision</h1>
@@ -39,73 +67,39 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
     <button id="stopBtn" disabled>Stop Screen Capture</button>
     <div id="status"></div>
     <video id="screenVideo" autoplay></video>
+<script>
+    let mediaStream = null;
 
-    <script src="main.js"></script>
+    document.getElementById('startBtn').addEventListener('click', async () => {
+        try {
+            mediaStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+            const video = document.getElementById('screenVideo');
+            video.srcObject = mediaStream;
+            document.getElementById('status').innerText = 'Screen capture started';
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('stopBtn').disabled = false;
+        } catch (err) {
+            console.error('Error: ' + err);
+            document.getElementById('status').innerText = 'Error starting screen capture';
+        }
+    });
+
+    document.getElementById('stopBtn').addEventListener('click', () => {
+        if (mediaStream) {
+            const tracks = mediaStream.getTracks();
+            tracks.forEach(track => track.stop());
+            document.getElementById('screenVideo').srcObject = null;
+            document.getElementById('status').innerText = 'Screen capture stopped';
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('stopBtn').disabled = true;
+        }
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-h1 {
-    color: #d9534f;
-}
-
-button {
-    background-color: #d9534f;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    margin: 5px;
-}
-
-#screenVideo {
-    margin-top: 20px;
-    border: 1px solid #ccc;
-    width: 80%;
-    height: auto;
-}
-```
-
-**main.js**:
-```javascript
-let mediaStream = null;
-
-document.getElementById('startBtn').addEventListener('click', async () => {
-    try {
-        mediaStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
-        const video = document.getElementById('screenVideo');
-        video.srcObject = mediaStream;
-        document.getElementById('status').innerText = 'Screen capture started';
-        document.getElementById('startBtn').disabled = true;
-        document.getElementById('stopBtn').disabled = false;
-    } catch (err) {
-        console.error('Error: ' + err);
-        document.getElementById('status').innerText = 'Error starting screen capture';
-    }
-});
-
-document.getElementById('stopBtn').addEventListener('click', () => {
-    if (mediaStream) {
-        const tracks = mediaStream.getTracks();
-        tracks.forEach(track => track.stop());
-        document.getElementById('screenVideo').srcObject = null;
-        document.getElementById('status').innerText = 'Screen capture stopped';
-        document.getElementById('startBtn').disabled = false;
-        document.getElementById('stopBtn').disabled = true;
-    }
-});
-```
 
 #### References:
 - **Next (2007)**:

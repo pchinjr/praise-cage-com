@@ -16,9 +16,9 @@ Inspired by Nicolas Cage's rugged and transformative role in *Butcher's Crossing
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
-- Run a local server (for example `python -m http.server`) and open `http://localhost:8000`. Some APIs do not work from `file://`.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
@@ -29,8 +29,54 @@ Inspired by Nicolas Cage's rugged and transformative role in *Butcher's Crossing
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Frontier Files with Butcher's Crossing and File System API</title>
-    
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #2d2d2d;
+        color: #f0f0f0;
+        text-align: center;
+        padding: 50px;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #3c3c3c;
+        border: 1px solid #444;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+        margin-bottom: 20px;
+        color: #ff4500;
+    }
+    .controls {
+        margin-top: 20px;
+    }
+    button {
+        padding: 10px 20px;
+        margin: 10px;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    textarea {
+        width: 100%;
+        height: 150px;
+        border: 1px solid #555;
+        border-radius: 5px;
+        padding: 10px;
+        margin-top: 10px;
+        background-color: #444;
+        color: #f0f0f0;
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -44,106 +90,53 @@ Inspired by Nicolas Cage's rugged and transformative role in *Butcher's Crossing
             <button id="writeButton">Write File</button>
         </div>
     </div>
+<script>
+    let fileHandle;
 
-    
-    <script src="script.js"></script>
+    document.getElementById('createButton').addEventListener('click', async () => {
+        const newHandle = await window.showSaveFilePicker({
+            suggestedName: 'new-file.txt',
+            types: [{
+                description: 'Text Files',
+                accept: { 'text/plain': ['.txt'] },
+            }],
+        });
+        fileHandle = newHandle;
+        const writableStream = await fileHandle.createWritable();
+        await writableStream.write('');
+        await writableStream.close();
+        alert('File created successfully!');
+    });
+
+    document.getElementById('readButton').addEventListener('click', async () => {
+        [fileHandle] = await window.showOpenFilePicker({
+            types: [{
+                description: 'Text Files',
+                accept: { 'text/plain': ['.txt'] },
+            }],
+        });
+        const file = await fileHandle.getFile();
+        const contents = await file.text();
+        document.getElementById('fileContent').value = contents;
+        alert('File read successfully!');
+    });
+
+    document.getElementById('writeButton').addEventListener('click', async () => {
+        if (!fileHandle) {
+            alert('No file is selected.');
+            return;
+        }
+        const writableStream = await fileHandle.createWritable();
+        await writableStream.write(document.getElementById('fileContent').value);
+        await writableStream.close();
+        alert('File written successfully!');
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #2d2d2d;
-    color: #f0f0f0;
-    text-align: center;
-    padding: 50px;
-}
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #3c3c3c;
-    border: 1px solid #444;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-h1 {
-    margin-bottom: 20px;
-    color: #ff4500;
-}
-.controls {
-    margin-top: 20px;
-}
-button {
-    padding: 10px 20px;
-    margin: 10px;
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-}
-button:hover {
-    background-color: #0056b3;
-}
-textarea {
-    width: 100%;
-    height: 150px;
-    border: 1px solid #555;
-    border-radius: 5px;
-    padding: 10px;
-    margin-top: 10px;
-    background-color: #444;
-    color: #f0f0f0;
-}
-```
 
-**script.js**:
-```javascript
-let fileHandle;
-
-document.getElementById('createButton').addEventListener('click', async () => {
-    const newHandle = await window.showSaveFilePicker({
-        suggestedName: 'new-file.txt',
-        types: [{
-            description: 'Text Files',
-            accept: { 'text/plain': ['.txt'] },
-        }],
-    });
-    fileHandle = newHandle;
-    const writableStream = await fileHandle.createWritable();
-    await writableStream.write('');
-    await writableStream.close();
-    alert('File created successfully!');
-});
-
-document.getElementById('readButton').addEventListener('click', async () => {
-    [fileHandle] = await window.showOpenFilePicker({
-        types: [{
-            description: 'Text Files',
-            accept: { 'text/plain': ['.txt'] },
-        }],
-    });
-    const file = await fileHandle.getFile();
-    const contents = await file.text();
-    document.getElementById('fileContent').value = contents;
-    alert('File read successfully!');
-});
-
-document.getElementById('writeButton').addEventListener('click', async () => {
-    if (!fileHandle) {
-        alert('No file is selected.');
-        return;
-    }
-    const writableStream = await fileHandle.createWritable();
-    await writableStream.write(document.getElementById('fileContent').value);
-    await writableStream.close();
-    alert('File written successfully!');
-});
-```
 
 ### **References:**
 - **[Butcher's Crossing (2021) - Wikipedia](https://en.wikipedia.org/wiki/Butcher%27s_Crossing)**

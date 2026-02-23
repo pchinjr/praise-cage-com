@@ -15,8 +15,8 @@ Inspired by the high-speed and action-packed adventures of *The Flash*, this pro
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -28,8 +28,43 @@ Inspired by the high-speed and action-packed adventures of *The Flash*, this pro
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Speed Force Metrics with The Flash and Performance API</title>
-    
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #121212;
+        color: #f0f0f0;
+        text-align: center;
+        padding: 50px;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #1f1f1f;
+        border: 1px solid #333;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+        margin-bottom: 20px;
+        color: #e84545;
+    }
+    .metric {
+        margin: 20px 0;
+        padding: 10px;
+        border: 1px solid #555;
+        border-radius: 5px;
+        background-color: #2e2e2e;
+    }
+    .metric h2 {
+        margin: 0;
+        font-size: 1.2em;
+        color: #e84545;
+    }
+    .metric p {
+        margin: 5px 0 0;
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -49,94 +84,52 @@ Inspired by the high-speed and action-packed adventures of *The Flash*, this pro
             <p id="navigationTimings">Calculating...</p>
         </div>
     </div>
+<script>
+    function displayLoadTime() {
+        const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
+        document.getElementById('loadTime').textContent = `${loadTime} ms`;
+    }
 
-    
-    <script src="script.js"></script>
+    function displayResourceLoadTimes() {
+        const resources = window.performance.getEntriesByType('resource');
+        const resourceLoadTimesList = document.getElementById('resourceLoadTimes');
+        resourceLoadTimesList.innerHTML = '';
+        resources.forEach(resource => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${resource.name}: ${resource.duration.toFixed(2)} ms`;
+            resourceLoadTimesList.appendChild(listItem);
+        });
+    }
+
+    function displayNavigationTimings() {
+        const navigation = window.performance.getEntriesByType('navigation')[0];
+        const navigationTimings = document.getElementById('navigationTimings');
+        if (navigation) {
+            navigationTimings.innerHTML = `
+                <p>Redirect Time: ${navigation.redirectEnd - navigation.redirectStart} ms</p>
+                <p>App Cache Time: ${navigation.domainLookupStart - navigation.fetchStart} ms</p>
+                <p>DNS Lookup Time: ${navigation.domainLookupEnd - navigation.domainLookupStart} ms</p>
+                <p>TCP Handshake Time: ${navigation.connectEnd - navigation.connectStart} ms</p>
+                <p>Response Time: ${navigation.responseEnd - navigation.requestStart} ms</p>
+                <p>DOM Processing Time: ${navigation.domComplete - navigation.domLoading} ms</p>
+                <p>Load Event Time: ${navigation.loadEventEnd - navigation.loadEventStart} ms</p>
+            `;
+        } else {
+            navigationTimings.textContent = 'Navigation timing data not available.';
+        }
+    }
+
+    window.addEventListener('load', () => {
+        displayLoadTime();
+        displayResourceLoadTimes();
+        displayNavigationTimings();
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #121212;
-    color: #f0f0f0;
-    text-align: center;
-    padding: 50px;
-}
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #1f1f1f;
-    border: 1px solid #333;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-h1 {
-    margin-bottom: 20px;
-    color: #e84545;
-}
-.metric {
-    margin: 20px 0;
-    padding: 10px;
-    border: 1px solid #555;
-    border-radius: 5px;
-    background-color: #2e2e2e;
-}
-.metric h2 {
-    margin: 0;
-    font-size: 1.2em;
-    color: #e84545;
-}
-.metric p {
-    margin: 5px 0 0;
-}
-```
 
-**script.js**:
-```javascript
-function displayLoadTime() {
-    const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
-    document.getElementById('loadTime').textContent = `${loadTime} ms`;
-}
-
-function displayResourceLoadTimes() {
-    const resources = window.performance.getEntriesByType('resource');
-    const resourceLoadTimesList = document.getElementById('resourceLoadTimes');
-    resourceLoadTimesList.innerHTML = '';
-    resources.forEach(resource => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${resource.name}: ${resource.duration.toFixed(2)} ms`;
-        resourceLoadTimesList.appendChild(listItem);
-    });
-}
-
-function displayNavigationTimings() {
-    const navigation = window.performance.getEntriesByType('navigation')[0];
-    const navigationTimings = document.getElementById('navigationTimings');
-    if (navigation) {
-        navigationTimings.innerHTML = `
-            <p>Redirect Time: ${navigation.redirectEnd - navigation.redirectStart} ms</p>
-            <p>App Cache Time: ${navigation.domainLookupStart - navigation.fetchStart} ms</p>
-            <p>DNS Lookup Time: ${navigation.domainLookupEnd - navigation.domainLookupStart} ms</p>
-            <p>TCP Handshake Time: ${navigation.connectEnd - navigation.connectStart} ms</p>
-            <p>Response Time: ${navigation.responseEnd - navigation.requestStart} ms</p>
-            <p>DOM Processing Time: ${navigation.domComplete - navigation.domLoading} ms</p>
-            <p>Load Event Time: ${navigation.loadEventEnd - navigation.loadEventStart} ms</p>
-        `;
-    } else {
-        navigationTimings.textContent = 'Navigation timing data not available.';
-    }
-}
-
-window.addEventListener('load', () => {
-    displayLoadTime();
-    displayResourceLoadTimes();
-    displayNavigationTimings();
-});
-```
 
 ### **References:**
 - **[The Flash (2023) - Wikipedia](https://en.wikipedia.org/wiki/The_Flash_(film))**

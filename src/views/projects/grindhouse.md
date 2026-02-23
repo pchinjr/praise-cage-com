@@ -14,15 +14,14 @@ In this project, we blend the gritty and intense atmosphere of *Grindhouse* with
 #### Starting Code:
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
 Here's a basic setup to get you started. This includes the initial HTML, CSS, and JavaScript to integrate the Media Session API and create an interactive media control experience.
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -30,13 +29,45 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grindhouse Audio Experience</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #ff6347;
+    }
+
+    audio {
+        width: 100%;
+        max-width: 600px;
+        margin-top: 20px;
+    }
+
+    #controls {
+        margin-top: 20px;
+    }
+
+    button {
+        background-color: #ff6347;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 5px;
+    }
+</style>
 </head>
 <body>
     <h1>Grindhouse Audio Experience</h1>
     <p>Control your audio experience with custom media controls!</p>
     <audio id="audioPlayer" controls>
-        <source src="audio/grindhouse-track.mp3" type="audio/mpeg">
+        <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
 
@@ -45,84 +76,47 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
         <button id="pauseBtn">Pause</button>
         <button id="skipBtn">Skip</button>
     </div>
+<script>
+    const audioPlayer = document.getElementById('audioPlayer');
+    const playBtn = document.getElementById('playBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const skipBtn = document.getElementById('skipBtn');
 
-    <script src="main.js"></script>
+    playBtn.addEventListener('click', () => {
+        audioPlayer.play();
+    });
+
+    pauseBtn.addEventListener('click', () => {
+        audioPlayer.pause();
+    });
+
+    skipBtn.addEventListener('click', () => {
+        audioPlayer.currentTime += 10; // Skip forward 10 seconds
+    });
+
+    if ('mediaSession' in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: 'Grindhouse Track',
+            artist: 'Various Artists',
+            album: 'Grindhouse Soundtrack',
+            artwork: [
+                { src: 'https://upload.wikimedia.org/wikipedia/en/7/7b/Grindhouse_%282007%29.png', sizes: '512x512', type: 'image/png' }
+            ]
+        });
+
+        navigator.mediaSession.setActionHandler('play', () => { audioPlayer.play(); });
+        navigator.mediaSession.setActionHandler('pause', () => { audioPlayer.pause(); });
+        navigator.mediaSession.setActionHandler('seekforward', () => { audioPlayer.currentTime += 10; });
+        navigator.mediaSession.setActionHandler('seekbackward', () => { audioPlayer.currentTime -= 10; });
+        navigator.mediaSession.setActionHandler('previoustrack', () => { audioPlayer.currentTime = 0; });
+        navigator.mediaSession.setActionHandler('nexttrack', () => { audioPlayer.currentTime = audioPlayer.duration; });
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
-}
 
-h1 {
-    color: #ff6347;
-}
-
-audio {
-    width: 100%;
-    max-width: 600px;
-    margin-top: 20px;
-}
-
-#controls {
-    margin-top: 20px;
-}
-
-button {
-    background-color: #ff6347;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    margin: 5px;
-}
-```
-
-**main.js**:
-```javascript
-const audioPlayer = document.getElementById('audioPlayer');
-const playBtn = document.getElementById('playBtn');
-const pauseBtn = document.getElementById('pauseBtn');
-const skipBtn = document.getElementById('skipBtn');
-
-playBtn.addEventListener('click', () => {
-    audioPlayer.play();
-});
-
-pauseBtn.addEventListener('click', () => {
-    audioPlayer.pause();
-});
-
-skipBtn.addEventListener('click', () => {
-    audioPlayer.currentTime += 10; // Skip forward 10 seconds
-});
-
-if ('mediaSession' in navigator) {
-    navigator.mediaSession.metadata = new MediaMetadata({
-        title: 'Grindhouse Track',
-        artist: 'Various Artists',
-        album: 'Grindhouse Soundtrack',
-        artwork: [
-            { src: 'images/grindhouse.jpg', sizes: '512x512', type: 'image/jpg' }
-        ]
-    });
-
-    navigator.mediaSession.setActionHandler('play', () => { audioPlayer.play(); });
-    navigator.mediaSession.setActionHandler('pause', () => { audioPlayer.pause(); });
-    navigator.mediaSession.setActionHandler('seekforward', () => { audioPlayer.currentTime += 10; });
-    navigator.mediaSession.setActionHandler('seekbackward', () => { audioPlayer.currentTime -= 10; });
-    navigator.mediaSession.setActionHandler('previoustrack', () => { audioPlayer.currentTime = 0; });
-    navigator.mediaSession.setActionHandler('nexttrack', () => { audioPlayer.currentTime = audioPlayer.duration; });
-}
-```
 
 #### References:
 - **Grindhouse (2007)**:

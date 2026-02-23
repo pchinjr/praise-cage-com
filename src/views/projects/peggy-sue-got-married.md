@@ -11,15 +11,14 @@ This web application allows users to enter dates and details of past events, and
 ### Starting Code
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
 Here's how you might set up a simple version of "Nostalgic Notifications":
 
-#### HTML (index.html)
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -27,55 +26,51 @@ Here's how you might set up a simple version of "Nostalgic Notifications":
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nostalgic Notifications</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
+</style>
 </head>
 <body>
     <h1>Enter a past event to remember:</h1>
     <input type="text" id="event" placeholder="Event description">
     <input type="datetime-local" id="time">
     <button onclick="scheduleNotification()">Set Reminder</button>
-    <script src="script.js"></script>
+<script>
+    function scheduleNotification() {
+        const eventDescription = document.getElementById('event').value;
+        const eventTime = document.getElementById('time').value;
+        const timeDelay = new Date(eventTime) - new Date(); // Calculate delay until the event time
+
+        if (timeDelay > 0) {
+            setTimeout(() => {
+                if (Notification.permission === "granted") {
+                    new Notification("Remember this?", {
+                        body: eventDescription,
+                        icon: 'https://placehold.co/64x64.png?text=PS'
+                    });
+                }
+            }, timeDelay);
+        }
+    }
+
+    // Request permission to send notifications
+    document.addEventListener('DOMContentLoaded', () => {
+        if (!("Notification" in window)) {
+            alert("This browser does not support desktop notification");
+        } else if (Notification.permission !== "denied") {
+            Notification.requestPermission();
+        }
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-}
-```
 
-**script.js**:
-```javascript
-function scheduleNotification() {
-    const eventDescription = document.getElementById('event').value;
-    const eventTime = document.getElementById('time').value;
-    const timeDelay = new Date(eventTime) - new Date(); // Calculate delay until the event time
-
-    if (timeDelay > 0) {
-        setTimeout(() => {
-            if (Notification.permission === "granted") {
-                new Notification("Remember this?", {
-                    body: eventDescription,
-                    icon: 'path_to_a_relevant_icon.png'
-                });
-            }
-        }, timeDelay);
-    }
-}
-
-// Request permission to send notifications
-document.addEventListener('DOMContentLoaded', () => {
-    if (!("Notification" in window)) {
-        alert("This browser does not support desktop notification");
-    } else if (Notification.permission !== "denied") {
-        Notification.requestPermission();
-    }
-});
-```
 
 ### References
 - For more about **Peggy Sue Got Married**, explore [Wikipedia: Peggy Sue Got Married](https://en.wikipedia.org/wiki/Peggy_Sue_Got_Married).

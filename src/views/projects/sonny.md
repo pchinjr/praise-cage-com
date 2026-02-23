@@ -11,8 +11,8 @@ In the film "Sonny" (2002), directed by Nicolas Cage, the story follows Sonny (p
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -25,7 +25,56 @@ In the film "Sonny" (2002), directed by Nicolas Cage, the story follows Sonny (p
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sonny's Sonic Reflections</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    h1 {
+        font-size: 2em;
+        margin-bottom: 0.5em;
+    }
+
+    textarea {
+        width: 100%;
+        height: 100px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    #result {
+        margin-top: 20px;
+        font-size: 1.2em;
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -35,71 +84,18 @@ In the film "Sonny" (2002), directed by Nicolas Cage, the story follows Sonny (p
         <button onclick="playText()">Play Text</button>
         <div id="result"></div>
     </div>
-    <script src="script.js"></script>
+<script>
+    function playText() {
+        const userInput = document.getElementById('userInput').value;
+        const utterance = new SpeechSynthesisUtterance(userInput);
+        speechSynthesis.speak(utterance);
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-.container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-h1 {
-    font-size: 2em;
-    margin-bottom: 0.5em;
-}
-
-textarea {
-    width: 100%;
-    height: 100px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 20px;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-#result {
-    margin-top: 20px;
-    font-size: 1.2em;
-}
-```
-
-**script.js**:
-```javascript
-function playText() {
-    const userInput = document.getElementById('userInput').value;
-    const utterance = new SpeechSynthesisUtterance(userInput);
-    speechSynthesis.speak(utterance);
-}
-```
 
 ### References
 - **Film: "Sonny" (2002)**

@@ -16,9 +16,9 @@ Inspired by Nicolas Cage's intense and vengeful role in *Arsenal*, this project 
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
-- Run a local server (for example `python -m http.server`) and open `http://localhost:8000`. Some APIs do not work from `file://`.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
@@ -29,8 +29,50 @@ Inspired by Nicolas Cage's intense and vengeful role in *Arsenal*, this project 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Record of Revenge with Arsenal and MediaStream Recording API</title>
-    
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #1c1c1c;
+        color: #f0f0f0;
+        text-align: center;
+        padding: 50px;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #2e2e2e;
+        border: 1px solid #444;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+        margin-bottom: 20px;
+        color: #ff6347;
+    }
+    video {
+        width: 100%;
+        max-width: 600px;
+        border-radius: 10px;
+        border: 2px solid #444;
+    }
+    button {
+        padding: 10px 20px;
+        margin: 20px 10px;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    .controls {
+        margin-top: 20px;
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -46,112 +88,63 @@ Inspired by Nicolas Cage's intense and vengeful role in *Arsenal*, this project 
             <button id="downloadButton" disabled>Download</button>
         </div>
     </div>
+<script>
+    let mediaRecorder;
+    let recordedBlobs;
+    const video = document.getElementById('video');
+    const startButton = document.getElementById('startButton');
+    const stopButton = document.getElementById('stopButton');
+    const playButton = document.getElementById('playButton');
+    const downloadButton = document.getElementById('downloadButton');
 
-    
-    <script src="script.js"></script>
+    startButton.addEventListener('click', async () => {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        video.srcObject = stream;
+        recordedBlobs = [];
+        mediaRecorder = new MediaRecorder(stream);
+
+        mediaRecorder.ondataavailable = (event) => {
+            if (event.data.size > 0) {
+                recordedBlobs.push(event.data);
+            }
+        };
+
+        mediaRecorder.start();
+        startButton.disabled = true;
+        stopButton.disabled = false;
+    });
+
+    stopButton.addEventListener('click', () => {
+        mediaRecorder.stop();
+        stopButton.disabled = true;
+        playButton.disabled = false;
+        downloadButton.disabled = false;
+    });
+
+    playButton.addEventListener('click', () => {
+        const superBuffer = new Blob(recordedBlobs, { type: 'video/webm' });
+        video.src = window.URL.createObjectURL(superBuffer);
+        video.controls = true;
+        video.play();
+    });
+
+    downloadButton.addEventListener('click', () => {
+        const blob = new Blob(recordedBlobs, { type: 'video/webm' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'recording.webm';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #1c1c1c;
-    color: #f0f0f0;
-    text-align: center;
-    padding: 50px;
-}
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #2e2e2e;
-    border: 1px solid #444;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-h1 {
-    margin-bottom: 20px;
-    color: #ff6347;
-}
-video {
-    width: 100%;
-    max-width: 600px;
-    border-radius: 10px;
-    border: 2px solid #444;
-}
-button {
-    padding: 10px 20px;
-    margin: 20px 10px;
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-}
-button:hover {
-    background-color: #0056b3;
-}
-.controls {
-    margin-top: 20px;
-}
-```
 
-**script.js**:
-```javascript
-let mediaRecorder;
-let recordedBlobs;
-const video = document.getElementById('video');
-const startButton = document.getElementById('startButton');
-const stopButton = document.getElementById('stopButton');
-const playButton = document.getElementById('playButton');
-const downloadButton = document.getElementById('downloadButton');
-
-startButton.addEventListener('click', async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-    video.srcObject = stream;
-    recordedBlobs = [];
-    mediaRecorder = new MediaRecorder(stream);
-
-    mediaRecorder.ondataavailable = (event) => {
-        if (event.data.size > 0) {
-            recordedBlobs.push(event.data);
-        }
-    };
-
-    mediaRecorder.start();
-    startButton.disabled = true;
-    stopButton.disabled = false;
-});
-
-stopButton.addEventListener('click', () => {
-    mediaRecorder.stop();
-    stopButton.disabled = true;
-    playButton.disabled = false;
-    downloadButton.disabled = false;
-});
-
-playButton.addEventListener('click', () => {
-    const superBuffer = new Blob(recordedBlobs, { type: 'video/webm' });
-    video.src = window.URL.createObjectURL(superBuffer);
-    video.controls = true;
-    video.play();
-});
-
-downloadButton.addEventListener('click', () => {
-    const blob = new Blob(recordedBlobs, { type: 'video/webm' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.style.display = 'none';
-    a.href = url;
-    a.download = 'recording.webm';
-    document.body.appendChild(a);
-    a.click();
-    window.URL.revokeObjectURL(url);
-});
-```
 
 ### **References:**
 - **[Arsenal (2017) - Wikipedia](https://en.wikipedia.org/wiki/Arsenal_(2017_film))**

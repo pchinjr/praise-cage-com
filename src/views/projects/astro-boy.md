@@ -14,15 +14,14 @@ In this project, we integrate the futuristic and high-tech world of *Astro Boy* 
 #### Starting Code:
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
 Here's a basic setup to get you started. This includes the initial HTML, CSS, and JavaScript to integrate the Storage Access API and create a secure data storage system.
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +29,36 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Astro Boy: Secure Data Storage</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #111;
+        color: #fff;
+        text-align: center;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #ff4500;
+    }
+
+    button {
+        background-color: #ff4500;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 5px;
+    }
+
+    #output {
+        margin-top: 20px;
+        font-size: 18px;
+        white-space: pre-wrap;
+        text-align: left;
+    }
+</style>
 </head>
 <body>
     <h1>Astro Boy: Secure Data Storage</h1>
@@ -38,77 +66,43 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
     <button id="requestAccessBtn">Request Storage Access</button>
     <button id="checkAccessBtn">Check Storage Access</button>
     <div id="output"></div>
+<script>
+    document.getElementById('requestAccessBtn').addEventListener('click', async () => {
+        if ('hasStorageAccess' in document && 'requestStorageAccess' in document) {
+            try {
+                const hasAccess = await document.hasStorageAccess();
+                if (hasAccess) {
+                    document.getElementById('output').innerText = 'You already have storage access.';
+                } else {
+                    await document.requestStorageAccess();
+                    document.getElementById('output').innerText = 'Storage access granted!';
+                }
+            } catch (error) {
+                document.getElementById('output').innerText = `Storage access request failed: ${error.message}`;
+            }
+        } else {
+            document.getElementById('output').innerText = 'Storage Access API is not supported in this browser.';
+        }
+    });
 
-    <script src="main.js"></script>
+    document.getElementById('checkAccessBtn').addEventListener('click', async () => {
+        if ('hasStorageAccess' in document) {
+            try {
+                const hasAccess = await document.hasStorageAccess();
+                document.getElementById('output').innerText = hasAccess ? 'You have storage access.' : 'You do not have storage access.';
+            } catch (error) {
+                document.getElementById('output').innerText = `Error checking storage access: ${error.message}`;
+            }
+        } else {
+            document.getElementById('output').innerText = 'Storage Access API is not supported in this browser.';
+        }
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #111;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
-}
 
-h1 {
-    color: #ff4500;
-}
-
-button {
-    background-color: #ff4500;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    margin: 5px;
-}
-
-#output {
-    margin-top: 20px;
-    font-size: 18px;
-    white-space: pre-wrap;
-    text-align: left;
-}
-```
-
-**main.js**:
-```javascript
-document.getElementById('requestAccessBtn').addEventListener('click', async () => {
-    if ('hasStorageAccess' in document && 'requestStorageAccess' in document) {
-        try {
-            const hasAccess = await document.hasStorageAccess();
-            if (hasAccess) {
-                document.getElementById('output').innerText = 'You already have storage access.';
-            } else {
-                await document.requestStorageAccess();
-                document.getElementById('output').innerText = 'Storage access granted!';
-            }
-        } catch (error) {
-            document.getElementById('output').innerText = `Storage access request failed: ${error.message}`;
-        }
-    } else {
-        document.getElementById('output').innerText = 'Storage Access API is not supported in this browser.';
-    }
-});
-
-document.getElementById('checkAccessBtn').addEventListener('click', async () => {
-    if ('hasStorageAccess' in document) {
-        try {
-            const hasAccess = await document.hasStorageAccess();
-            document.getElementById('output').innerText = hasAccess ? 'You have storage access.' : 'You do not have storage access.';
-        } catch (error) {
-            document.getElementById('output').innerText = `Error checking storage access: ${error.message}`;
-        }
-    } else {
-        document.getElementById('output').innerText = 'Storage Access API is not supported in this browser.';
-    }
-});
-```
 
 #### References:
 - **Astro Boy (2009)**:

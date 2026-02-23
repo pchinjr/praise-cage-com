@@ -14,15 +14,14 @@ In this project, we merge the suspenseful and mysterious elements of *Knowing* w
 #### Starting Code:
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
 Here's a basic setup to get you started. This includes the initial HTML, CSS, and JavaScript to integrate the Console API and create an interactive data exploration experience.
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -30,73 +29,69 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Knowing the Console</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #111;
+        color: #fff;
+        text-align: center;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #ff4500;
+    }
+
+    button {
+        background-color: #ff4500;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 5px;
+    }
+
+    #output {
+        margin-top: 20px;
+        font-size: 18px;
+        white-space: pre-wrap;
+        text-align: left;
+    }
+</style>
 </head>
 <body>
     <h1>Knowing the Console</h1>
     <p>Uncover hidden data and messages using the Console API!</p>
     <button id="revealBtn">Reveal Data</button>
     <div id="output"></div>
+<script>
+    document.getElementById('revealBtn').addEventListener('click', () => {
+        const hiddenData = [
+            "42", "The Answer to the Ultimate Question of Life, the Universe, and Everything",
+            "19.99", "Price of the prophecy book at the old bookstore",
+            "3.14", "Approximate value of Pi"
+        ];
 
-    <script src="main.js"></script>
+        console.group('Hidden Data Revealed');
+        hiddenData.forEach((item, index) => {
+            if (index % 2 === 0) {
+                console.log(`Value: ${item}`);
+            } else {
+                console.log(`Description: ${item}`);
+            }
+        });
+        console.groupEnd();
+
+        document.getElementById('output').innerText = hiddenData.join('
+');
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #111;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
-}
 
-h1 {
-    color: #ff4500;
-}
-
-button {
-    background-color: #ff4500;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    margin: 5px;
-}
-
-#output {
-    margin-top: 20px;
-    font-size: 18px;
-    white-space: pre-wrap;
-    text-align: left;
-}
-```
-
-**main.js**:
-```javascript
-document.getElementById('revealBtn').addEventListener('click', () => {
-    const hiddenData = [
-        "42", "The Answer to the Ultimate Question of Life, the Universe, and Everything",
-        "19.99", "Price of the prophecy book at the old bookstore",
-        "3.14", "Approximate value of Pi"
-    ];
-
-    console.group('Hidden Data Revealed');
-    hiddenData.forEach((item, index) => {
-        if (index % 2 === 0) {
-            console.log(`Value: ${item}`);
-        } else {
-            console.log(`Description: ${item}`);
-        }
-    });
-    console.groupEnd();
-
-    document.getElementById('output').innerText = hiddenData.join('\n');
-});
-```
 
 #### References:
 - **Knowing (2009)**:

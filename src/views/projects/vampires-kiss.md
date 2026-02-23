@@ -14,13 +14,12 @@ Leveraging the Media Capture and Streams API, this application allows users to c
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
-- Run a local server (for example `python -m http.server`) and open `http://localhost:8000`. Some APIs do not work from `file://`.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -28,60 +27,56 @@ Leveraging the Media Capture and Streams API, this application allows users to c
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nightly Narratives: A Vampire's Stream</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Gothic A1', sans-serif;
+        background-color: #0a0b0e;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .video-container {
+        text-align: center;
+    }
+
+    button {
+        background-color: #720026;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        margin-top: 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+</style>
 </head>
 <body>
     <div class="video-container">
         <video id="video" autoplay></video>
         <button id="startButton">Start Your Transformation</button>
     </div>
-    <script src="stream.js"></script>
+<script>
+    document.getElementById('startButton').addEventListener('click', async function() {
+        const video = document.getElementById('video');
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            video.srcObject = stream;
+        } catch (error) {
+            console.error('Error accessing the camera: ', error);
+        }
+    });
+
+    // Placeholder for adding video effects - additional library or custom shaders could be used here
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: 'Gothic A1', sans-serif;
-    background-color: #0a0b0e;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
 
-.video-container {
-    text-align: center;
-}
-
-button {
-    background-color: #720026;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    margin-top: 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-```
-
-**stream.js**:
-```javascript
-document.getElementById('startButton').addEventListener('click', async function() {
-    const video = document.getElementById('video');
-    try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        video.srcObject = stream;
-    } catch (error) {
-        console.error('Error accessing the camera: ', error);
-    }
-});
-
-// Placeholder for adding video effects - additional library or custom shaders could be used here
-```
 
 ### References:
 - **Film**: [Vampire's Kiss (1988)](https://en.wikipedia.org/wiki/Vampire%27s_Kiss)

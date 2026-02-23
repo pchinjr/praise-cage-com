@@ -15,8 +15,8 @@ Inspired by Nicolas Cage's intense and vengeful role in *Rage*, this project lev
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -28,8 +28,53 @@ Inspired by Nicolas Cage's intense and vengeful role in *Rage*, this project lev
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Furious Popovers with Rage</title>
-    
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #2c3e50;
+        color: #ecf0f1;
+        text-align: center;
+        padding: 20px;
+    }
+    .popover-button {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 16px;
+        margin: 20px;
+        position: relative;
+    }
+    .popover-button:hover {
+        background-color: #c0392b;
+    }
+    .popover-content {
+        display: none;
+        position: absolute;
+        background-color: #34495e;
+        color: #ecf0f1;
+        border: 1px solid #7f8c8d;
+        border-radius: 5px;
+        padding: 10px;
+        width: 200px;
+        z-index: 1;
+        top: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .popover-content::after {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent #34495e transparent;
+    }
+</style>
 </head>
 <body>
     <h1>Furious Popovers with Rage</h1>
@@ -44,85 +89,33 @@ Inspired by Nicolas Cage's intense and vengeful role in *Rage*, this project lev
     <div class="popover-content" id="popover2">
         <p>Here, users can find additional context and insights related to specific elements, mimicking the unfolding tension in Rage.</p>
     </div>
+<script>
+    document.querySelectorAll('.popover-button').forEach(button => {
+        button.addEventListener('click', () => {
+            const popoverId = button.getAttribute('data-popover');
+            const popover = document.getElementById(popoverId);
+            if (popover.style.display === 'block') {
+                popover.style.display = 'none';
+            } else {
+                document.querySelectorAll('.popover-content').forEach(pop => pop.style.display = 'none');
+                popover.style.display = 'block';
+            }
+        });
+    });
 
-    
-    <script src="script.js"></script>
+    document.addEventListener('click', (event) => {
+        if (!event.target.classList.contains('popover-button')) {
+            document.querySelectorAll('.popover-content').forEach(popover => {
+                popover.style.display = 'none';
+            });
+        }
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #2c3e50;
-    color: #ecf0f1;
-    text-align: center;
-    padding: 20px;
-}
-.popover-button {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-    margin: 20px;
-    position: relative;
-}
-.popover-button:hover {
-    background-color: #c0392b;
-}
-.popover-content {
-    display: none;
-    position: absolute;
-    background-color: #34495e;
-    color: #ecf0f1;
-    border: 1px solid #7f8c8d;
-    border-radius: 5px;
-    padding: 10px;
-    width: 200px;
-    z-index: 1;
-    top: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-.popover-content::after {
-    content: "";
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent #34495e transparent;
-}
-```
 
-**script.js**:
-```javascript
-document.querySelectorAll('.popover-button').forEach(button => {
-    button.addEventListener('click', () => {
-        const popoverId = button.getAttribute('data-popover');
-        const popover = document.getElementById(popoverId);
-        if (popover.style.display === 'block') {
-            popover.style.display = 'none';
-        } else {
-            document.querySelectorAll('.popover-content').forEach(pop => pop.style.display = 'none');
-            popover.style.display = 'block';
-        }
-    });
-});
-
-document.addEventListener('click', (event) => {
-    if (!event.target.classList.contains('popover-button')) {
-        document.querySelectorAll('.popover-content').forEach(popover => {
-            popover.style.display = 'none';
-        });
-    }
-});
-```
 
 ### **References:**
 - **[Rage (2014) - Wikipedia](https://en.wikipedia.org/wiki/Rage_(2014_film))**

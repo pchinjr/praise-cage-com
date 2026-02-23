@@ -13,9 +13,9 @@ imageUrl: "https://upload.wikimedia.org/wikipedia/en/c/cb/Weather_man.jpg"
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
-- Run a local server (for example `python -m http.server`) and open `http://localhost:8000`. Some APIs do not work from `file://`.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
@@ -27,7 +27,51 @@ imageUrl: "https://upload.wikimedia.org/wikipedia/en/c/cb/Weather_man.jpg"
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Weather Man's Interactive Forecast</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    h1 {
+        font-size: 2em;
+        margin-bottom: 0.5em;
+    }
+
+    button {
+        padding: 10px 20px;
+        margin: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:disabled {
+        background-color: #ccc;
+    }
+
+    button:hover:not(:disabled) {
+        background-color: #0056b3;
+    }
+
+    #recordingsList {
+        margin-top: 20px;
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -36,128 +80,80 @@ imageUrl: "https://upload.wikimedia.org/wikipedia/en/c/cb/Weather_man.jpg"
         <button id="startButton">Start Recording</button>
         <button id="stopButton" disabled>Stop Recording</button>
         <div id="recordingsList"></div>
-        <script src="script.js"></script>
-    </div>
+</div>
+<script>
+    let mediaRecorder;
+    let recordedChunks = [];
+
+    const startButton = document.getElementById('startButton');
+    const stopButton = document.getElementById('stopButton');
+    const recordingsList = document.getElementById('recordingsList');
+
+    startButton.addEventListener('click', async () => {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+        if (!('MediaStreamTrackProcessor' in window) || !('MediaStreamTrackGenerator' in window)) {
+            alert('Insertable Streams API not supported in this browser.');
+            return;
+        }
+
+        const audioTrack = stream.getAudioTracks()[0];
+        const processor = new MediaStreamTrackProcessor({ track: audioTrack });
+        const generator = new MediaStreamTrackGenerator({ kind: 'audio' });
+
+        const source = processor.readable;
+        const sink = generator.writable;
+
+        const transformer = new TransformStream({
+            start() {
+                console.log('Transformer started');
+            },
+            transform(chunk, controller) {
+                // Process audio data here (e.g., apply filters or effects)
+                controller.enqueue(chunk);
+            },
+            flush() {
+                console.log('Transformer flush');
+            }
+        });
+
+        source.pipeThrough(transformer).pipeTo(sink);
+
+        const processedStream = new MediaStream([generator]);
+        mediaRecorder = new MediaRecorder(processedStream, { mimeType: 'audio/webm' });
+
+        mediaRecorder.ondataavailable = (event) => {
+            if (event.data.size > 0) {
+                recordedChunks.push(event.data);
+            }
+        };
+
+        mediaRecorder.onstop = () => {
+            const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+            const url = URL.createObjectURL(blob);
+            const audio = document.createElement('audio');
+            audio.src = url;
+            audio.controls = true;
+            recordingsList.appendChild(audio);
+            recordedChunks = [];
+        };
+
+        mediaRecorder.start();
+        startButton.disabled = true;
+        stopButton.disabled = false;
+    });
+
+    stopButton.addEventListener('click', () => {
+        mediaRecorder.stop();
+        startButton.disabled = false;
+        stopButton.disabled = true;
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-.container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-h1 {
-    font-size: 2em;
-    margin-bottom: 0.5em;
-}
-
-button {
-    padding: 10px 20px;
-    margin: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button:disabled {
-    background-color: #ccc;
-}
-
-button:hover:not(:disabled) {
-    background-color: #0056b3;
-}
-
-#recordingsList {
-    margin-top: 20px;
-}
-```
-
-**script.js**:
-```javascript
-let mediaRecorder;
-let recordedChunks = [];
-
-const startButton = document.getElementById('startButton');
-const stopButton = document.getElementById('stopButton');
-const recordingsList = document.getElementById('recordingsList');
-
-startButton.addEventListener('click', async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-
-    if (!('MediaStreamTrackProcessor' in window) || !('MediaStreamTrackGenerator' in window)) {
-        alert('Insertable Streams API not supported in this browser.');
-        return;
-    }
-
-    const audioTrack = stream.getAudioTracks()[0];
-    const processor = new MediaStreamTrackProcessor({ track: audioTrack });
-    const generator = new MediaStreamTrackGenerator({ kind: 'audio' });
-
-    const source = processor.readable;
-    const sink = generator.writable;
-
-    const transformer = new TransformStream({
-        start() {
-            console.log('Transformer started');
-        },
-        transform(chunk, controller) {
-            // Process audio data here (e.g., apply filters or effects)
-            controller.enqueue(chunk);
-        },
-        flush() {
-            console.log('Transformer flush');
-        }
-    });
-
-    source.pipeThrough(transformer).pipeTo(sink);
-
-    const processedStream = new MediaStream([generator]);
-    mediaRecorder = new MediaRecorder(processedStream, { mimeType: 'audio/webm' });
-
-    mediaRecorder.ondataavailable = (event) => {
-        if (event.data.size > 0) {
-            recordedChunks.push(event.data);
-        }
-    };
-
-    mediaRecorder.onstop = () => {
-        const blob = new Blob(recordedChunks, { type: 'audio/webm' });
-        const url = URL.createObjectURL(blob);
-        const audio = document.createElement('audio');
-        audio.src = url;
-        audio.controls = true;
-        recordingsList.appendChild(audio);
-        recordedChunks = [];
-    };
-
-    mediaRecorder.start();
-    startButton.disabled = true;
-    stopButton.disabled = false;
-});
-
-stopButton.addEventListener('click', () => {
-    mediaRecorder.stop();
-    startButton.disabled = false;
-    stopButton.disabled = true;
-});
-```
 
 ### References
 - **Film: "The Weather Man" (2005)**

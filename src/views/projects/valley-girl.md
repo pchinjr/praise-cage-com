@@ -11,8 +11,8 @@ In the movie "Valley Girl," Julie Richman navigates her teenage years filled wit
 ### Starting Code:
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -24,97 +24,91 @@ In the movie "Valley Girl," Julie Richman navigates her teenage years filled wit
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memory Lane: 80s Memories</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
+</style>
 </head>
 <body>
     <h1>Memory Lane: Store Your 80s Memories</h1>
     <input type="text" id="memoryInput" placeholder="Enter your memory here">
     <button onclick="addMemory()">Save Memory</button>
     <div id="memoryList"></div>
+<script>
+    let db;
 
-    
-    <script src="script.js"></script>
+    window.onload = function() {
+        let request = window.indexedDB.open('MemoriesDB', 1);
+
+        request.onerror = function(event) {
+            console.error('Database failed to open');
+        };
+
+        request.onsuccess = function(event) {
+            console.log('Database opened successfully');
+            db = request.result;
+            displayMemories();
+        };
+
+        request.onupgradeneeded = function(event) {
+            let db = event.target.result;
+            let objectStore = db.createObjectStore('memories', { keyPath: 'id', autoIncrement:true });
+            objectStore.createIndex('memory', 'memory', { unique: false });
+            console.log('Database setup complete');
+        };
+    };
+
+    function addMemory() {
+        let newMemory = document.getElementById('memoryInput').value;
+        let transaction = db.transaction(['memories'], 'readwrite');
+        let store = transaction.objectStore('memories');
+
+        let memory = { memory: newMemory };
+        store.add(memory);
+
+        transaction.oncomplete = function() {
+            console.log('Memory added');
+            document.getElementById('memoryInput').value = '';
+            displayMemories();
+        };
+
+        transaction.onerror = function() {
+            console.error('Error adding memory');
+        };
+    }
+
+    function displayMemories() {
+        while (memoryList.firstChild) {
+            memoryList.removeChild(memoryList.firstChild);
+        }
+
+        let objectStore = db.transaction('memories').objectStore('memories');
+        objectStore.openCursor().onsuccess = function(event) {
+            let cursor = event.target.result;
+            if(cursor) {
+                const memoryItem = document.createElement('p');
+                memoryItem.textContent = cursor.value.memory;
+                document.getElementById('memoryList').appendChild(memoryItem);
+                cursor.continue();
+            } else {
+                if(!memoryList.firstChild) {
+                    const listItem = document.createElement('p');
+                    listItem.textContent = 'No memories stored yet.';
+                    memoryList.appendChild(listItem);
+                }
+                console.log('Memories all displayed');
+            }
+        };
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-}
-```
 
-**script.js**:
-```javascript
-let db;
-
-window.onload = function() {
-    let request = window.indexedDB.open('MemoriesDB', 1);
-
-    request.onerror = function(event) {
-        console.error('Database failed to open');
-    };
-
-    request.onsuccess = function(event) {
-        console.log('Database opened successfully');
-        db = request.result;
-        displayMemories();
-    };
-
-    request.onupgradeneeded = function(event) {
-        let db = event.target.result;
-        let objectStore = db.createObjectStore('memories', { keyPath: 'id', autoIncrement:true });
-        objectStore.createIndex('memory', 'memory', { unique: false });
-        console.log('Database setup complete');
-    };
-};
-
-function addMemory() {
-    let newMemory = document.getElementById('memoryInput').value;
-    let transaction = db.transaction(['memories'], 'readwrite');
-    let store = transaction.objectStore('memories');
-
-    let memory = { memory: newMemory };
-    store.add(memory);
-
-    transaction.oncomplete = function() {
-        console.log('Memory added');
-        document.getElementById('memoryInput').value = '';
-        displayMemories();
-    };
-
-    transaction.onerror = function() {
-        console.error('Error adding memory');
-    };
-}
-
-function displayMemories() {
-    while (memoryList.firstChild) {
-        memoryList.removeChild(memoryList.firstChild);
-    }
-
-    let objectStore = db.transaction('memories').objectStore('memories');
-    objectStore.openCursor().onsuccess = function(event) {
-        let cursor = event.target.result;
-        if(cursor) {
-            const memoryItem = document.createElement('p');
-            memoryItem.textContent = cursor.value.memory;
-            document.getElementById('memoryList').appendChild(memoryItem);
-            cursor.continue();
-        } else {
-            if(!memoryList.firstChild) {
-                const listItem = document.createElement('p');
-                listItem.textContent = 'No memories stored yet.';
-                memoryList.appendChild(listItem);
-            }
-            console.log('Memories all displayed');
-        }
-    };
-}
-```
 
 ### References:
 - **"Valley Girl" Film Details:** [Valley Girl on Wikipedia](https://en.wikipedia.org/wiki/Valley_Girl_(1983_film))

@@ -14,15 +14,14 @@ In this project, we blend the mystical and adventurous elements of *Season of th
 #### Starting Code:
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
 Here's a basic setup to get you started. This includes the initial HTML, CSS, and JavaScript to integrate the Houdini API and create enchanted web animations.
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +29,59 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Season of the Witch: Enchanted Web Animations</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #111;
+        color: #fff;
+        text-align: center;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #ff4500;
+    }
+
+    #animationContainer {
+        position: relative;
+        width: 300px;
+        height: 300px;
+        margin: 20px auto;
+        border: 1px solid #ff4500;
+    }
+
+    .animated-box {
+        width: 50px;
+        height: 50px;
+        background-color: #ff4500;
+        position: absolute;
+    }
+
+    button {
+        background-color: #ff4500;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 5px;
+    }
+
+    @keyframes moveBox {
+        from {
+            transform: translate(0, 0);
+        }
+        to {
+            transform: translate(250px, 250px);
+        }
+    }
+
+    .animated-box {
+        animation: moveBox 5s infinite alternate;
+        paint: boxPainter;
+        --box-color: #ff4500;
+    }
+</style>
 </head>
 <body>
     <h1>Season of the Witch: Enchanted Web Animations</h1>
@@ -39,100 +90,37 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
         <div class="animated-box"></div>
     </div>
     <button id="toggleAnimationBtn">Toggle Animation</button>
-    <script src="main.js"></script>
+<script>
+    const houdiniWorklet = `class BoxPainter {
+        static get inputProperties() {
+            return ['--box-color'];
+        }
+
+        paint(ctx, geom, properties) {
+            const color = properties.get('--box-color').toString() || 'red';
+            ctx.fillStyle = color;
+            ctx.fillRect(0, 0, geom.width, geom.height);
+        }
+    }
+
+    registerPaint('boxPainter', BoxPainter);`;
+
+    if ('paintWorklet' in CSS) {
+        const workletBlob = new Blob([houdiniWorklet], { type: 'application/javascript' });
+        CSS.paintWorklet.addModule(URL.createObjectURL(workletBlob));
+    }
+
+    document.getElementById('toggleAnimationBtn').addEventListener('click', () => {
+        const box = document.querySelector('.animated-box');
+        if (box.style.animation) {
+            box.style.animation = '';
+        } else {
+            box.style.animation = 'moveBox 5s infinite alternate';
+        }
+    });
+</script>
 </body>
 </html>
-```
-
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #111;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
-}
-
-h1 {
-    color: #ff4500;
-}
-
-#animationContainer {
-    position: relative;
-    width: 300px;
-    height: 300px;
-    margin: 20px auto;
-    border: 1px solid #ff4500;
-}
-
-.animated-box {
-    width: 50px;
-    height: 50px;
-    background-color: #ff4500;
-    position: absolute;
-}
-
-button {
-    background-color: #ff4500;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    margin: 5px;
-}
-```
-
-**main.js**:
-```javascript
-if (CSS.paintWorklet) {
-    CSS.paintWorklet.addModule('houdini.js');
-}
-
-document.getElementById('toggleAnimationBtn').addEventListener('click', () => {
-    const box = document.querySelector('.animated-box');
-    if (box.style.animation) {
-        box.style.animation = '';
-    } else {
-        box.style.animation = 'moveBox 5s infinite alternate';
-    }
-});
-```
-
-**houdini.js**:
-```javascript
-class BoxPainter {
-    static get inputProperties() {
-        return ['--box-color'];
-    }
-
-    paint(ctx, geom, properties) {
-        const color = properties.get('--box-color').toString() || 'red';
-        ctx.fillStyle = color;
-        ctx.fillRect(0, 0, geom.width, geom.height);
-    }
-}
-
-registerPaint('boxPainter', BoxPainter);
-```
-
-**CSS Custom Properties and Houdini Integration**:
-```css
-@keyframes moveBox {
-    from {
-        transform: translate(0, 0);
-    }
-    to {
-        transform: translate(250px, 250px);
-    }
-}
-
-.animated-box {
-    animation: moveBox 5s infinite alternate;
-    paint: boxPainter;
-    --box-color: #ff4500;
-}
 ```
 
 #### References:

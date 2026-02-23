@@ -12,8 +12,8 @@ imageUrl: "https://upload.wikimedia.org/wikipedia/en/9/92/Lordofwar.jpg"
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -26,7 +26,34 @@ imageUrl: "https://upload.wikimedia.org/wikipedia/en/9/92/Lordofwar.jpg"
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Global Network Insights</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    h1 {
+        font-size: 2em;
+        margin-bottom: 0.5em;
+    }
+
+    #networkInfo {
+        margin-top: 20px;
+        font-size: 1.2em;
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -37,62 +64,31 @@ imageUrl: "https://upload.wikimedia.org/wikipedia/en/9/92/Lordofwar.jpg"
             <p>Effective Bandwidth: <span id="effectiveBandwidth">N/A</span></p>
         </div>
     </div>
-    <script src="script.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        const connectionType = document.getElementById('connectionType');
+        const effectiveBandwidth = document.getElementById('effectiveBandwidth');
+
+        function updateNetworkInfo() {
+            connectionType.innerText = connection.type || 'unknown';
+            effectiveBandwidth.innerText = connection.downlink + ' Mbps' || 'unknown';
+        }
+
+        if (connection) {
+            updateNetworkInfo();
+            connection.addEventListener('change', updateNetworkInfo);
+        } else {
+            connectionType.innerText = 'Not supported';
+            effectiveBandwidth.innerText = 'Not supported';
+        }
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-.container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-h1 {
-    font-size: 2em;
-    margin-bottom: 0.5em;
-}
-
-#networkInfo {
-    margin-top: 20px;
-    font-size: 1.2em;
-}
-```
-
-**script.js**:
-```javascript
-document.addEventListener('DOMContentLoaded', () => {
-    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    const connectionType = document.getElementById('connectionType');
-    const effectiveBandwidth = document.getElementById('effectiveBandwidth');
-
-    function updateNetworkInfo() {
-        connectionType.innerText = connection.type || 'unknown';
-        effectiveBandwidth.innerText = connection.downlink + ' Mbps' || 'unknown';
-    }
-
-    if (connection) {
-        updateNetworkInfo();
-        connection.addEventListener('change', updateNetworkInfo);
-    } else {
-        connectionType.innerText = 'Not supported';
-        effectiveBandwidth.innerText = 'Not supported';
-    }
-});
-```
 
 ### References
 - **Film: "Lord of War" (2005)**

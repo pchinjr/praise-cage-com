@@ -13,13 +13,12 @@ This app uses the Accelerometer and Gyroscope features of the Sensor API to dete
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -27,57 +26,53 @@ This app uses the Accelerometer and Gyroscope features of the Sensor API to dete
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Misunderstood Movements</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    #gameCanvas {
+        margin-top: 20px;
+        width: 300px;
+        height: 200px;
+        border: 2px solid #000;
+        background-color: #fff;
+    }
+</style>
 </head>
 <body>
     <h1>Misunderstood Movements</h1>
     <div id="gameCanvas">Move your device to navigate the story...</div>
-    <script src="script.js"></script>
+<script>
+    if ('Accelerometer' in window && 'Gyroscope' in window) {
+        const accelerometer = new Accelerometer({frequency: 60});
+        const gyroscope = new Gyroscope({frequency: 60});
+
+        accelerometer.addEventListener('reading', e => {
+            console.log(`Acceleration along the X-axis ${accelerometer.x}`);
+            console.log(`Acceleration along the Y-axis ${accelerometer.y}`);
+        });
+
+        gyroscope.addEventListener('reading', e => {
+            console.log(`Angular velocity along the X-axis ${gyroscope.x}`);
+            console.log(`Angular velocity along the Y-axis ${gyroscope.y}`);
+        });
+
+        accelerometer.start();
+        gyroscope.start();
+    } else {
+        document.getElementById('gameCanvas').textContent = 'Sensor API not supported on your device.';
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-#gameCanvas {
-    margin-top: 20px;
-    width: 300px;
-    height: 200px;
-    border: 2px solid #000;
-    background-color: #fff;
-}
-```
-
-**script.js**:
-```javascript
-if ('Accelerometer' in window && 'Gyroscope' in window) {
-    const accelerometer = new Accelerometer({frequency: 60});
-    const gyroscope = new Gyroscope({frequency: 60});
-
-    accelerometer.addEventListener('reading', e => {
-        console.log(`Acceleration along the X-axis ${accelerometer.x}`);
-        console.log(`Acceleration along the Y-axis ${accelerometer.y}`);
-    });
-
-    gyroscope.addEventListener('reading', e => {
-        console.log(`Angular velocity along the X-axis ${gyroscope.x}`);
-        console.log(`Angular velocity along the Y-axis ${gyroscope.y}`);
-    });
-
-    accelerometer.start();
-    gyroscope.start();
-} else {
-    document.getElementById('gameCanvas').textContent = 'Sensor API not supported on your device.';
-}
-```
 
 ### References:
 - **Film**: [Amos & Andrew (1993)](https://en.wikipedia.org/wiki/Amos_%26_Andrew)

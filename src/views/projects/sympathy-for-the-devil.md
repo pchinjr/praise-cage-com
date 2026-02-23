@@ -16,8 +16,8 @@ Inspired by the intense and psychological themes of *Sympathy for the Devil*, th
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -29,8 +29,55 @@ Inspired by the intense and psychological themes of *Sympathy for the Devil*, th
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sharing Secrets with Sympathy for the Devil and Web Share API</title>
-    
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #2d2d2d;
+        color: #f0f0f0;
+        text-align: center;
+        padding: 50px;
+    }
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #3c3c3c;
+        border: 1px solid #444;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+        margin-bottom: 20px;
+        color: #e74c3c;
+    }
+    textarea {
+        width: 100%;
+        height: 100px;
+        border: 1px solid #555;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 20px;
+        background-color: #444;
+        color: #f0f0f0;
+    }
+    button {
+        padding: 10px 20px;
+        margin: 10px;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        background-color: #e74c3c;
+        color: white;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #c0392b;
+    }
+    .feedback {
+        margin-top: 20px;
+        font-size: 18px;
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -43,90 +90,36 @@ Inspired by the intense and psychological themes of *Sympathy for the Devil*, th
         </div>
         <div id="feedback" class="feedback"></div>
     </div>
+<script>
+    const shareButton = document.getElementById('shareButton');
+    const messageInput = document.getElementById('messageInput');
+    const feedback = document.getElementById('feedback');
 
-    
-    <script src="script.js"></script>
+    shareButton.addEventListener('click', () => {
+        const message = messageInput.value;
+        if (navigator.share) {
+            navigator.share({
+                title: 'Secret Message',
+                text: message,
+                url: document.location.href
+            }).then(() => {
+                feedback.textContent = 'Message shared successfully!';
+                feedback.style.color = 'lightgreen';
+            }).catch(error => {
+                feedback.textContent = 'Error sharing message: ' + error;
+                feedback.style.color = 'red';
+            });
+        } else {
+            feedback.textContent = 'Web Share API is not supported in this browser.';
+            feedback.style.color = 'yellow';
+        }
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #2d2d2d;
-    color: #f0f0f0;
-    text-align: center;
-    padding: 50px;
-}
-.container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #3c3c3c;
-    border: 1px solid #444;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-h1 {
-    margin-bottom: 20px;
-    color: #e74c3c;
-}
-textarea {
-    width: 100%;
-    height: 100px;
-    border: 1px solid #555;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 20px;
-    background-color: #444;
-    color: #f0f0f0;
-}
-button {
-    padding: 10px 20px;
-    margin: 10px;
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
-    background-color: #e74c3c;
-    color: white;
-    cursor: pointer;
-}
-button:hover {
-    background-color: #c0392b;
-}
-.feedback {
-    margin-top: 20px;
-    font-size: 18px;
-}
-```
 
-**script.js**:
-```javascript
-const shareButton = document.getElementById('shareButton');
-const messageInput = document.getElementById('messageInput');
-const feedback = document.getElementById('feedback');
-
-shareButton.addEventListener('click', () => {
-    const message = messageInput.value;
-    if (navigator.share) {
-        navigator.share({
-            title: 'Secret Message',
-            text: message,
-            url: document.location.href
-        }).then(() => {
-            feedback.textContent = 'Message shared successfully!';
-            feedback.style.color = 'lightgreen';
-        }).catch(error => {
-            feedback.textContent = 'Error sharing message: ' + error;
-            feedback.style.color = 'red';
-        });
-    } else {
-        feedback.textContent = 'Web Share API is not supported in this browser.';
-        feedback.style.color = 'yellow';
-    }
-});
-```
 
 ### **References:**
 - **[Sympathy for the Devil (2023) - Wikipedia](https://en.wikipedia.org/wiki/Sympathy_for_the_Devil_(2023_film))**

@@ -13,13 +13,12 @@ Using the Battery API, this app monitors the user's device battery status and en
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -27,64 +26,60 @@ Using the Battery API, this app monitors the user's device battery status and en
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Combat Charge: Tactical Energy Management</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f3f4f6;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    #batteryStatus {
+        border: 2px solid #007BFF;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+</style>
 </head>
 <body>
     <div id="batteryStatus">
         <h1>Battery Status: <span id="batteryLevel">--</span>%</h1>
         <p>Energy Saving Tips will appear here...</p>
     </div>
-    <script src="energy.js"></script>
+<script>
+    navigator.getBattery().then(function(battery) {
+        function updateBatteryInfo() {
+            document.getElementById('batteryLevel').textContent = (battery.level * 100).toFixed(0);
+        }
+
+        // Update battery level display when it changes
+        battery.addEventListener('levelchange', updateBatteryInfo);
+
+        // Initial display update
+        updateBatteryInfo();
+
+        // Example of managing energy
+        battery.addEventListener('chargingchange', function() {
+            let energyTips = document.getElementById('batteryStatus').getElementsByTagName('p')[0];
+            if (battery.charging) {
+                energyTips.textContent = 'Device is charging. High-performance mode enabled.';
+            } else {
+                energyTips.textContent = 'Device not charging. Consider closing heavy applications to save energy.';
+            }
+        });
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f3f4f6;
-    color: #333;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
 
-#batteryStatus {
-    border: 2px solid #007BFF;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-```
-
-**energy.js**:
-```javascript
-navigator.getBattery().then(function(battery) {
-    function updateBatteryInfo() {
-        document.getElementById('batteryLevel').textContent = (battery.level * 100).toFixed(0);
-    }
-
-    // Update battery level display when it changes
-    battery.addEventListener('levelchange', updateBatteryInfo);
-
-    // Initial display update
-    updateBatteryInfo();
-
-    // Example of managing energy
-    battery.addEventListener('chargingchange', function() {
-        let energyTips = document.getElementById('batteryStatus').getElementsByTagName('p')[0];
-        if (battery.charging) {
-            energyTips.textContent = 'Device is charging. High-performance mode enabled.';
-        } else {
-            energyTips.textContent = 'Device not charging. Consider closing heavy applications to save energy.';
-        }
-    });
-});
-```
 
 ### References:
 - **Film**: [Fire Birds (1990)](https://en.wikipedia.org/wiki/Fire_Birds)

@@ -13,13 +13,12 @@ This app would be ideal for team-building activities, educational purposes in mu
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -27,64 +26,60 @@ This app would be ideal for team-building activities, educational purposes in mu
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Synth Heist: Musical Codes</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    #synthInterface {
+        margin-top: 20px;
+        padding: 10px;
+        width: 300px;
+        height: 200px;
+        border: 2px solid #000;
+        background-color: #fff;
+    }
+
+    #messageOutput {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        min-height: 50px;
+    }
+</style>
 </head>
 <body>
     <h1>Synth Heist</h1>
     <div id="synthInterface"></div>
     <div id="messageOutput">Your decoded message will appear here.</div>
-    <script src="script.js"></script>
+<script>
+    navigator.requestMIDIAccess().then(function(midiAccess) {
+        const outputs = midiAccess.outputs;
+        const input = midiAccess.inputs.values().next().value;
+
+        input.onmidimessage = function(message) {
+            decodeMessage(message.data);
+        };
+    });
+
+    function decodeMessage(midiData) {
+        const note = midiData[1]; // MIDI note number
+        const velocity = midiData[2]; // Velocity of note press
+        if (velocity > 0) {
+            const decodedChar = String.fromCharCode((note - 60) + 65); // A simple decryption example
+            document.getElementById('messageOutput').textContent += decodedChar;
+        }
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-#synthInterface {
-    margin-top: 20px;
-    padding: 10px;
-    width: 300px;
-    height: 200px;
-    border: 2px solid #000;
-    background-color: #fff;
-}
-
-#messageOutput {
-    margin-top: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    min-height: 50px;
-}
-```
-
-**script.js**:
-```javascript
-navigator.requestMIDIAccess().then(function(midiAccess) {
-    const outputs = midiAccess.outputs;
-    const input = midiAccess.inputs.values().next().value;
-
-    input.onmidimessage = function(message) {
-        decodeMessage(message.data);
-    };
-});
-
-function decodeMessage(midiData) {
-    const note = midiData[1]; // MIDI note number
-    const velocity = midiData[2]; // Velocity of note press
-    if (velocity > 0) {
-        const decodedChar = String.fromCharCode((note - 60) + 65); // A simple decryption example
-        document.getElementById('messageOutput').textContent += decodedChar;
-    }
-}
-```
 
 ### References:
 - **Film**: [Deadfall (1993)](https://en.wikipedia.org/wiki/Deadfall_(1993_film))

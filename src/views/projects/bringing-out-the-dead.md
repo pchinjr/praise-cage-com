@@ -13,13 +13,12 @@ Drawing inspiration from "Bringing Out the Dead," where the protagonist navigate
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -27,95 +26,91 @@ Drawing inspiration from "Bringing Out the Dead," where the protagonist navigate
     <meta charset="UTF-8">
     <meta viewport="width=device-width, initial-scale=1.0">
     <title>Night Shift Navigator: Emergency Route Tracker</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    button {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    #status {
+        margin-top: 20px;
+    }
+</style>
 </head>
 <body>
     <h1>Track Your Emergency Route</h1>
     <button id="startTracking">Start Tracking</button>
     <button id="stopTracking" disabled>Stop Tracking</button>
     <div id="status">Waiting to start...</div>
-    <script src="script.js"></script>
+<script>
+    let trackingId = null;
+
+    document.getElementById('startTracking').addEventListener('click', () => {
+        if (navigator.geolocation) {
+            trackingId = navigator.geolocation.watchPosition(showPosition, showError, {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 0
+            });
+            document.getElementById('startTracking').disabled = true;
+            document.getElementById('stopTracking').disabled = false;
+            document.getElementById('status').textContent = "Tracking started...";
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    });
+
+    document.getElementById('stopTracking').addEventListener('click', () => {
+        if (trackingId) {
+            navigator.geolocation.clearWatch(trackingId);
+            document.getElementById('startTracking').disabled = false;
+            document.getElementById('stopTracking').disabled = true;
+            document.getElementById('status').textContent = "Tracking stopped.";
+        }
+    });
+
+    function showPosition(position) {
+        const status = document.getElementById('status');
+        status.innerHTML = `Current Position: Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}<br>
+                            Timestamp: ${new Date(position.timestamp).toLocaleTimeString()}`;
+    }
+
+    function showError(error) {
+        switch(error.code) {
+            case error.PERMISSION_DENIED:
+                alert("User denied the request for Geolocation.");
+                break;
+            case error.POSITION_UNAVAILABLE:
+                alert("Location information is unavailable.");
+                break;
+            case error.TIMEOUT:
+                alert("The request to get user location timed out.");
+                break;
+            case error.UNKNOWN_ERROR:
+                alert("An unknown error occurred.");
+                break;
+        }
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-button {
-    margin: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-#status {
-    margin-top: 20px;
-}
-```
-
-**script.js**:
-```javascript
-let trackingId = null;
-
-document.getElementById('startTracking').addEventListener('click', () => {
-    if (navigator.geolocation) {
-        trackingId = navigator.geolocation.watchPosition(showPosition, showError, {
-            enableHighAccuracy: true,
-            timeout: 5000,
-            maximumAge: 0
-        });
-        document.getElementById('startTracking').disabled = true;
-        document.getElementById('stopTracking').disabled = false;
-        document.getElementById('status').textContent = "Tracking started...";
-    } else {
-        alert("Geolocation is not supported by this browser.");
-    }
-});
-
-document.getElementById('stopTracking').addEventListener('click', () => {
-    if (trackingId) {
-        navigator.geolocation.clearWatch(trackingId);
-        document.getElementById('startTracking').disabled = false;
-        document.getElementById('stopTracking').disabled = true;
-        document.getElementById('status').textContent = "Tracking stopped.";
-    }
-});
-
-function showPosition(position) {
-    const status = document.getElementById('status');
-    status.innerHTML = `Current Position: Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}<br>
-                        Timestamp: ${new Date(position.timestamp).toLocaleTimeString()}`;
-}
-
-function showError(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            alert("User denied the request for Geolocation.");
-            break;
-        case error.POSITION_UNAVAILABLE:
-            alert("Location information is unavailable.");
-            break;
-        case error.TIMEOUT:
-            alert("The request to get user location timed out.");
-            break;
-        case error.UNKNOWN_ERROR:
-            alert("An unknown error occurred.");
-            break;
-    }
-}
-```
 
 ### References:
 - **Film**: [Bringing Out the Dead (1999)](https://en.wikipedia.org/wiki/Bringing_Out_the_Dead)

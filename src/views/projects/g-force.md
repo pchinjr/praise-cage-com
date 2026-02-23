@@ -27,12 +27,11 @@ Here is a more detailed look at the code with comments to clarify these steps:
 ### Starting Code:
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
-- Run a local server (for example `python -m http.server`) and open `http://localhost:8000`. Some APIs do not work from `file://`.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +39,38 @@ Here is a more detailed look at the code with comments to clarify these steps:
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>G-Force: Compression Lab</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    textarea {
+        width: 90%;
+        max-width: 640px;
+        height: 120px;
+        margin: 10px auto;
+        display: block;
+        padding: 10px;
+    }
+
+    .controls {
+        margin: 10px 0;
+    }
+
+    button {
+        padding: 10px 16px;
+        margin: 0 5px;
+    }
+
+    #output {
+        margin-top: 10px;
+        min-height: 24px;
+    }
+</style>
 </head>
 <body>
     <h1>G-Force: Compression Lab</h1>
@@ -50,130 +80,94 @@ Here is a more detailed look at the code with comments to clarify these steps:
         <button id="decompressBtn" disabled>Decompress</button>
     </div>
     <div id="output"></div>
+<script>
+    const output = document.getElementById('output');
+    const compressBtn = document.getElementById('compressBtn');
+    const decompressBtn = document.getElementById('decompressBtn');
+    const compressionSupported = 'CompressionStream' in window && 'DecompressionStream' in window;
 
-    <script src="main.js"></script>
+    if (!compressionSupported) {
+        output.innerText = 'CompressionStream API is not supported in this browser.';
+        compressBtn.disabled = true;
+        decompressBtn.disabled = true;
+    }
+
+    async function compressData(data) {
+        const encoder = new TextEncoder();
+        const input = encoder.encode(data);
+        const stream = new CompressionStream('gzip');
+        const writer = stream.writable.getWriter();
+        writer.write(input);
+        writer.close();
+
+        const compressedStream = stream.readable;
+        const reader = compressedStream.getReader();
+        const chunks = [];
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            chunks.push(value);
+        }
+
+        return new Blob(chunks);
+    }
+
+    async function decompressData(blob) {
+        const stream = blob.stream().pipeThrough(new DecompressionStream('gzip'));
+        const reader = stream.getReader();
+        const chunks = [];
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            chunks.push(value);
+        }
+
+        const decompressed = new Uint8Array(chunks.reduce((acc, val) => acc.concat(Array.from(val)), []));
+        const decoder = new TextDecoder();
+        return decoder.decode(decompressed);
+    }
+
+    if (compressionSupported) {
+    document.getElementById('compressBtn').addEventListener('click', async () => {
+        const inputData = document.getElementById('inputData').value;
+        if (inputData) {
+            const compressedBlob = await compressData(inputData);
+            document.getElementById('output').innerText = 'Data compressed successfully!';
+
+            // Store the compressed data URL in the button's dataset
+            document.getElementById('decompressBtn').dataset.blobUrl = URL.createObjectURL(compressedBlob);
+            document.getElementById('compressBtn').disabled = true;
+            document.getElementById('decompressBtn').disabled = false;
+        } else {
+            document.getElementById('output').innerText = 'Please enter some data to compress.';
+        }
+    });
+
+    document.getElementById('decompressBtn').addEventListener('click', async () => {
+        const blobUrl = document.getElementById('decompressBtn').dataset.blobUrl;
+        if (blobUrl) {
+            const response = await fetch(blobUrl);
+            const blob = await response.blob();
+            const decompressedData = await decompressData(blob);
+            document.getElementById('output').innerText = `Decompressed Data: ${decompressedData}`;
+
+            // Clean up by revoking the object URL
+            URL.revokeObjectURL(blobUrl);
+            document.getElementById('compressBtn').disabled = false;
+            document.getElementById('decompressBtn').disabled = true;
+        } else {
+            document.getElementById('output').innerText = 'No compressed data found.';
+        }
+    });
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-textarea {
-    width: 90%;
-    max-width: 640px;
-    height: 120px;
-    margin: 10px auto;
-    display: block;
-    padding: 10px;
-}
-
-.controls {
-    margin: 10px 0;
-}
-
-button {
-    padding: 10px 16px;
-    margin: 0 5px;
-}
-
-#output {
-    margin-top: 10px;
-    min-height: 24px;
-}
-```
-
-**main.js**:
-```javascript
-const output = document.getElementById('output');
-const compressBtn = document.getElementById('compressBtn');
-const decompressBtn = document.getElementById('decompressBtn');
-const compressionSupported = 'CompressionStream' in window && 'DecompressionStream' in window;
-
-if (!compressionSupported) {
-    output.innerText = 'CompressionStream API is not supported in this browser.';
-    compressBtn.disabled = true;
-    decompressBtn.disabled = true;
-}
-
-async function compressData(data) {
-    const encoder = new TextEncoder();
-    const input = encoder.encode(data);
-    const stream = new CompressionStream('gzip');
-    const writer = stream.writable.getWriter();
-    writer.write(input);
-    writer.close();
-
-    const compressedStream = stream.readable;
-    const reader = compressedStream.getReader();
-    const chunks = [];
-
-    while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        chunks.push(value);
-    }
-
-    return new Blob(chunks);
-}
-
-async function decompressData(blob) {
-    const stream = blob.stream().pipeThrough(new DecompressionStream('gzip'));
-    const reader = stream.getReader();
-    const chunks = [];
-
-    while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        chunks.push(value);
-    }
-
-    const decompressed = new Uint8Array(chunks.reduce((acc, val) => acc.concat(Array.from(val)), []));
-    const decoder = new TextDecoder();
-    return decoder.decode(decompressed);
-}
-
-if (compressionSupported) {
-document.getElementById('compressBtn').addEventListener('click', async () => {
-    const inputData = document.getElementById('inputData').value;
-    if (inputData) {
-        const compressedBlob = await compressData(inputData);
-        document.getElementById('output').innerText = 'Data compressed successfully!';
-
-        // Store the compressed data URL in the button's dataset
-        document.getElementById('decompressBtn').dataset.blobUrl = URL.createObjectURL(compressedBlob);
-        document.getElementById('compressBtn').disabled = true;
-        document.getElementById('decompressBtn').disabled = false;
-    } else {
-        document.getElementById('output').innerText = 'Please enter some data to compress.';
-    }
-});
-
-document.getElementById('decompressBtn').addEventListener('click', async () => {
-    const blobUrl = document.getElementById('decompressBtn').dataset.blobUrl;
-    if (blobUrl) {
-        const response = await fetch(blobUrl);
-        const blob = await response.blob();
-        const decompressedData = await decompressData(blob);
-        document.getElementById('output').innerText = `Decompressed Data: ${decompressedData}`;
-
-        // Clean up by revoking the object URL
-        URL.revokeObjectURL(blobUrl);
-        document.getElementById('compressBtn').disabled = false;
-        document.getElementById('decompressBtn').disabled = true;
-    } else {
-        document.getElementById('output').innerText = 'No compressed data found.';
-    }
-});
-}
-```
 
 ### Key Points:
 - **Compression**: The data is converted to a `Uint8Array`, compressed using `CompressionStream`, and stored in a `Blob`.

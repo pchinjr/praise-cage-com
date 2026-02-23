@@ -13,13 +13,12 @@ The app serves as both an educational tool about music during wartime and a func
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +26,26 @@ The app serves as both an educational tool about music during wartime and a func
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Melodies of War: Interactive Mandolin Composer</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    #midiControls {
+        margin-top: 20px;
+    }
+
+    #musicNotes {
+        margin-top: 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        min-height: 100px;
+    }
+</style>
 </head>
 <body>
     <h1>Compose Your Mandolin Melody</h1>
@@ -35,78 +53,57 @@ The app serves as both an educational tool about music during wartime and a func
         <button onclick="startMidi()">Connect MIDI Device</button>
     </div>
     <div id="musicNotes">Play notes here...</div>
-    <script src="script.js"></script>
+<script>
+    function startMidi() {
+        if (navigator.requestMIDIAccess) {
+            navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
+        } else {
+            alert("Web MIDI API not supported in your browser.");
+        }
+    }
+
+    function onMIDISuccess(midiAccess) {
+        console.log('MIDI Access Object', midiAccess);
+        midiAccess.inputs.forEach(function(input) {
+            input.onmidimessage = getMIDIMessage;
+        });
+    }
+
+    function onMIDIFailure() {
+        alert("Failed to get MIDI access - please ensure your device is connected properly.");
+    }
+
+    function getMIDIMessage(midiMessage) {
+        let command = midiMessage.data[0];
+        let note = midiMessage.data[1];
+        let velocity = (midiMessage.data.length > 2) ? midiMessage.data[2] : 0;
+
+        if (command === 144) { // Note on
+            if (velocity > 0) {
+                noteOn(note, velocity);
+            } else {
+                noteOff(note);
+            }
+        } else if (command === 128) { // Note off
+            noteOff(note);
+        }
+    }
+
+    function noteOn(note, velocity) {
+        document.getElementById('musicNotes').textContent += `Note ${note} played at velocity ${velocity}
+`;
+    }
+
+    function noteOff(note) {
+        document.getElementById('musicNotes').textContent += `Note ${note} released
+`;
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-#midiControls {
-    margin-top: 20px;
-}
-
-#musicNotes {
-    margin-top: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    min-height: 100px;
-}
-```
-
-**script.js**:
-```javascript
-function startMidi() {
-    if (navigator.requestMIDIAccess) {
-        navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
-    } else {
-        alert("Web MIDI API not supported in your browser.");
-    }
-}
-
-function onMIDISuccess(midiAccess) {
-    console.log('MIDI Access Object', midiAccess);
-    midiAccess.inputs.forEach(function(input) {
-        input.onmidimessage = getMIDIMessage;
-    });
-}
-
-function onMIDIFailure() {
-    alert("Failed to get MIDI access - please ensure your device is connected properly.");
-}
-
-function getMIDIMessage(midiMessage) {
-    let command = midiMessage.data[0];
-    let note = midiMessage.data[1];
-    let velocity = (midiMessage.data.length > 2) ? midiMessage.data[2] : 0;
-
-    if (command === 144) { // Note on
-        if (velocity > 0) {
-            noteOn(note, velocity);
-        } else {
-            noteOff(note);
-        }
-    } else if (command === 128) { // Note off
-        noteOff(note);
-    }
-}
-
-function noteOn(note, velocity) {
-    document.getElementById('musicNotes').textContent += `Note ${note} played at velocity ${velocity}\n`;
-}
-
-function noteOff(note) {
-    document.getElementById('musicNotes').textContent += `Note ${note} released\n`;
-}
-```
 
 ### References:
 - **Film**: [Captain Corelli's Mandolin (2001)](https://en.wikipedia.org/wiki/Captain_Corelli%27s_Mandolin_(film))

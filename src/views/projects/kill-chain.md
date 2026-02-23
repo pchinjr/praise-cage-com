@@ -16,9 +16,9 @@ Inspired by Nicolas Cage's intense and gritty role in *Kill Chain*, this project
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
-- Run a local server (for example `python -m http.server`) and open `http://localhost:8000`. Some APIs do not work from `file://`.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
@@ -29,8 +29,60 @@ Inspired by Nicolas Cage's intense and gritty role in *Kill Chain*, this project
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Silent Sync with Kill Chain and Background Sync API</title>
-    
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #1c1c1c;
+        color: #f0f0f0;
+        text-align: center;
+        padding: 50px;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #2e2e2e;
+        border: 1px solid #444;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+        margin-bottom: 20px;
+        color: #ff6347;
+    }
+    .task {
+        margin: 20px 0;
+        padding: 10px;
+        background-color: #3e3e3e;
+        border: 1px solid #555;
+        border-radius: 5px;
+    }
+    .controls {
+        margin-top: 20px;
+    }
+    button {
+        padding: 10px 20px;
+        margin: 10px;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    input[type="text"] {
+        width: calc(100% - 22px);
+        padding: 10px;
+        margin-top: 10px;
+        border: 1px solid #555;
+        border-radius: 5px;
+        background-color: #3e3e3e;
+        color: #f0f0f0;
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -43,138 +95,34 @@ Inspired by Nicolas Cage's intense and gritty role in *Kill Chain*, this project
         </div>
         <div id="taskList" class="task">Your tasks will appear here.</div>
     </div>
+<script>
+    const taskInput = document.getElementById('taskInput');
+    const addButton = document.getElementById('addButton');
+    const taskList = document.getElementById('taskList');
 
-    
-    <script src="script.js"></script>
+    function displayTasks() {
+        const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        taskList.innerHTML = '';
+        tasks.forEach((task, index) => {
+            const taskElement = document.createElement('div');
+            taskElement.className = 'task';
+            taskElement.textContent = task;
+            taskList.appendChild(taskElement);
+        });
+    }
+
+    addButton.addEventListener('click', () => {
+        const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        tasks.push(taskInput.value);
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        taskInput.value = '';
+        displayTasks();
+    });
+
+    displayTasks();
+</script>
 </body>
 </html>
-```
-
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #1c1c1c;
-    color: #f0f0f0;
-    text-align: center;
-    padding: 50px;
-}
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #2e2e2e;
-    border: 1px solid #444;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-h1 {
-    margin-bottom: 20px;
-    color: #ff6347;
-}
-.task {
-    margin: 20px 0;
-    padding: 10px;
-    background-color: #3e3e3e;
-    border: 1px solid #555;
-    border-radius: 5px;
-}
-.controls {
-    margin-top: 20px;
-}
-button {
-    padding: 10px 20px;
-    margin: 10px;
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-}
-button:hover {
-    background-color: #0056b3;
-}
-input[type="text"] {
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-top: 10px;
-    border: 1px solid #555;
-    border-radius: 5px;
-    background-color: #3e3e3e;
-    color: #f0f0f0;
-}
-```
-
-**script.js**:
-```javascript
-const taskInput = document.getElementById('taskInput');
-const addButton = document.getElementById('addButton');
-const taskList = document.getElementById('taskList');
-
-function displayTasks() {
-    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    taskList.innerHTML = '';
-    tasks.forEach((task, index) => {
-        const taskElement = document.createElement('div');
-        taskElement.className = 'task';
-        taskElement.textContent = task;
-        taskList.appendChild(taskElement);
-    });
-}
-
-addButton.addEventListener('click', () => {
-    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    tasks.push(taskInput.value);
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-    taskInput.value = '';
-    displayTasks();
-
-    // Register sync event
-    if ('serviceWorker' in navigator && 'SyncManager' in window) {
-        navigator.serviceWorker.ready.then(registration => {
-            return registration.sync.register('sync-tasks');
-        }).then(() => {
-            console.log('Sync registered');
-        }).catch(err => {
-            console.error('Sync registration failed:', err);
-        });
-    } else {
-        console.warn('Background Sync not supported');
-    }
-});
-
-displayTasks();
-```
-
-### **Service Worker (service-worker.js):**
-
-```javascript
-self.addEventListener('install', event => {
-    console.log('Service worker installed');
-    self.skipWaiting();
-});
-
-self.addEventListener('activate', event => {
-    console.log('Service worker activated');
-});
-
-self.addEventListener('sync', event => {
-    if (event.tag === 'sync-tasks') {
-        event.waitUntil(syncTasks());
-    }
-});
-
-async function syncTasks() {
-    // TODO: Read tasks from IndexedDB for real offline storage.
-    const tasks = [];
-    if (tasks.length === 0) {
-        console.log('No tasks to sync yet.');
-        return;
-    }
-
-    console.log('Syncing tasks:', tasks);
-}
 ```
 
 ### **References:**

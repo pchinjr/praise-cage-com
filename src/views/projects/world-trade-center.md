@@ -9,8 +9,8 @@ Inspired by Nicolas Cage's heroic portrayal of John McLoughlin in "World Trade C
 ### Starting Code:
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -25,7 +25,49 @@ This project will use HTML, JavaScript, and the Storage API to log and retrieve 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rescue Operations Log: Tribute to World Trade Center</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    header {
+        margin-bottom: 20px;
+    }
+
+    form {
+        margin-bottom: 20px;
+    }
+
+    #rescueTask {
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    #logContainer {
+        margin-top: 20px;
+    }
+
+    .task {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        margin: 10px;
+        padding: 20px;
+        width: 300px;
+        display: inline-block;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+</style>
 </head>
 <body>
     <header>
@@ -39,93 +81,47 @@ This project will use HTML, JavaScript, and the Storage API to log and retrieve 
         </form>
         <div id="logContainer"></div>
     </main>
-    <script src="script.js"></script>
+<script>
+    document.getElementById('rescueForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        logRescueTask();
+    });
+
+    function logRescueTask() {
+        const taskInput = document.getElementById('rescueTask');
+        const task = taskInput.value.trim();
+
+        if (task) {
+            const tasks = JSON.parse(localStorage.getItem('rescueTasks')) || [];
+            tasks.push(task);
+            localStorage.setItem('rescueTasks', JSON.stringify(tasks));
+            taskInput.value = '';
+            displayTasks();
+        }
+    }
+
+    function displayTasks() {
+        const logContainer = document.getElementById('logContainer');
+        logContainer.innerHTML = ''; // Clear previous tasks
+
+        const tasks = JSON.parse(localStorage.getItem('rescueTasks')) || [];
+
+        tasks.forEach((task, index) => {
+            const taskDiv = document.createElement('div');
+            taskDiv.classList.add('task');
+            taskDiv.textContent = `Task ${index + 1}: ${task}`;
+            logContainer.appendChild(taskDiv);
+        });
+    }
+
+    // Display tasks on page load
+    document.addEventListener('DOMContentLoaded', displayTasks);
+</script>
 </body>
 </html>
 ```
 
-**script.js**:
-```javascript
-document.getElementById('rescueForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    logRescueTask();
-});
 
-function logRescueTask() {
-    const taskInput = document.getElementById('rescueTask');
-    const task = taskInput.value.trim();
-
-    if (task) {
-        const tasks = JSON.parse(localStorage.getItem('rescueTasks')) || [];
-        tasks.push(task);
-        localStorage.setItem('rescueTasks', JSON.stringify(tasks));
-        taskInput.value = '';
-        displayTasks();
-    }
-}
-
-function displayTasks() {
-    const logContainer = document.getElementById('logContainer');
-    logContainer.innerHTML = ''; // Clear previous tasks
-
-    const tasks = JSON.parse(localStorage.getItem('rescueTasks')) || [];
-
-    tasks.forEach((task, index) => {
-        const taskDiv = document.createElement('div');
-        taskDiv.classList.add('task');
-        taskDiv.textContent = `Task ${index + 1}: ${task}`;
-        logContainer.appendChild(taskDiv);
-    });
-}
-
-// Display tasks on page load
-document.addEventListener('DOMContentLoaded', displayTasks);
-```
-
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
-
-header {
-    margin-bottom: 20px;
-}
-
-form {
-    margin-bottom: 20px;
-}
-
-#rescueTask {
-    padding: 10px;
-    font-size: 16px;
-}
-
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-#logContainer {
-    margin-top: 20px;
-}
-
-.task {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    margin: 10px;
-    padding: 20px;
-    width: 300px;
-    display: inline-block;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-```
 
 ### References:
 - **Film Reference:** [World Trade Center (2006) - Nicolas Cage as John McLoughlin](https://en.wikipedia.org/wiki/World_Trade_Center_(film))

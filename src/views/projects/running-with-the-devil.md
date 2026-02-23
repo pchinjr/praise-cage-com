@@ -16,9 +16,9 @@ Inspired by Nicolas Cage's intense and gritty role in *Running with the Devil*, 
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
-- Run a local server (for example `python -m http.server`) and open `http://localhost:8000`. Some APIs do not work from `file://`.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
@@ -29,8 +29,44 @@ Inspired by Nicolas Cage's intense and gritty role in *Running with the Devil*, 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Criminal Alerts with Running with the Devil and Web Notifications API</title>
-    
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #1c1c1c;
+        color: #f0f0f0;
+        text-align: center;
+        padding: 50px;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #2e2e2e;
+        border: 1px solid #444;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+        margin-bottom: 20px;
+        color: #ff6347;
+    }
+    .controls {
+        margin-top: 20px;
+    }
+    button {
+        padding: 10px 20px;
+        margin: 10px;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -41,103 +77,54 @@ Inspired by Nicolas Cage's intense and gritty role in *Running with the Devil*, 
             <button id="notifyButton">Send Notification</button>
         </div>
     </div>
+<script>
+    document.getElementById('notifyButton').addEventListener('click', () => {
+        if (Notification.permission === 'granted') {
+            sendNotification();
+        } else if (Notification.permission !== 'denied') {
+            Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                    sendNotification();
+                }
+            });
+        }
+    });
 
-    
-    <script src="script.js"></script>
+    function sendNotification() {
+        const options = {
+            body: 'A new criminal activity has been reported. Stay alert!',
+            icon: 'https://via.placeholder.com/128', // Example icon URL
+            vibrate: [200, 100, 200],
+            tag: 'criminal-alert',
+            actions: [
+                { action: 'view', title: 'View Details' }
+            ]
+        };
+
+        if (!('Notification' in window)) {
+            alert('Notifications are not supported in this browser.');
+            return;
+        }
+
+        if (Notification.permission === 'granted') {
+            new Notification('Criminal Alert', options);
+            return;
+        }
+
+        if (Notification.permission !== 'denied') {
+            Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                    new Notification('Criminal Alert', options);
+                }
+            });
+            return;
+        }
+
+        alert('Notifications are blocked in this browser.');
+    }
+</script>
 </body>
 </html>
-```
-
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #1c1c1c;
-    color: #f0f0f0;
-    text-align: center;
-    padding: 50px;
-}
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #2e2e2e;
-    border: 1px solid #444;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-h1 {
-    margin-bottom: 20px;
-    color: #ff6347;
-}
-.controls {
-    margin-top: 20px;
-}
-button {
-    padding: 10px 20px;
-    margin: 10px;
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-}
-button:hover {
-    background-color: #0056b3;
-}
-```
-
-**script.js**:
-```javascript
-document.getElementById('notifyButton').addEventListener('click', () => {
-    if (Notification.permission === 'granted') {
-        sendNotification();
-    } else if (Notification.permission !== 'denied') {
-        Notification.requestPermission().then(permission => {
-            if (permission === 'granted') {
-                sendNotification();
-            }
-        });
-    }
-});
-
-function sendNotification() {
-    const options = {
-        body: 'A new criminal activity has been reported. Stay alert!',
-        icon: 'https://via.placeholder.com/128', // Example icon URL
-        vibrate: [200, 100, 200],
-        tag: 'criminal-alert',
-        actions: [
-            { action: 'view', title: 'View Details' }
-        ]
-    };
-
-    navigator.serviceWorker.ready.then(registration => {
-        registration.showNotification('Criminal Alert', options);
-    });
-}
-
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js').then(registration => {
-        console.log('Service Worker registered with scope:', registration.scope);
-    }).catch(error => {
-        console.error('Service Worker registration failed:', error);
-    });
-}
-```
-
-### **Service Worker (service-worker.js):**
-
-```javascript
-self.addEventListener('notificationclick', event => {
-    event.notification.close();
-    if (event.action === 'view') {
-        clients.openWindow('https://www.imdb.com/title/tt5792656/'); // IMDb link to Running with the Devil
-    } else {
-        clients.openWindow('/');
-    }
-});
 ```
 
 ### **References:**

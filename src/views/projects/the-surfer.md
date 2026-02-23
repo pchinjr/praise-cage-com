@@ -15,8 +15,8 @@ Inspired by Nicolas Cage's role in *The Surfer*, this project uses the Remote Pl
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -28,8 +28,49 @@ Inspired by Nicolas Cage's role in *The Surfer*, this project uses the Remote Pl
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Remote Surfing with The Surfer and Remote Playback API</title>
-    
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #87ceeb;
+        color: #333;
+        text-align: center;
+        padding: 50px;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        margin-bottom: 20px;
+        color: #2c3e50;
+    }
+    video {
+        width: 100%;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+    .controls {
+        margin-top: 20px;
+    }
+    .controls button {
+        padding: 10px 20px;
+        margin: 5px;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        background-color: #2c3e50;
+        color: #fff;
+        cursor: pointer;
+    }
+    .controls button:hover {
+        background-color: #34495e;
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -37,7 +78,7 @@ Inspired by Nicolas Cage's role in *The Surfer*, this project uses the Remote Pl
         <p>Stream your favorite surfing videos inspired by The Surfer.</p>
 
         <video id="video" controls>
-            <source src="sample-video.mp4" type="video/mp4">
+            <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
 
@@ -47,95 +88,47 @@ Inspired by Nicolas Cage's role in *The Surfer*, this project uses the Remote Pl
             <button id="stopRemotePlayback">Stop Remote Playback</button>
         </div>
     </div>
+<script>
+    const video = document.getElementById('video');
+    const startRemotePlaybackButton = document.getElementById('startRemotePlayback');
+    const pauseRemotePlaybackButton = document.getElementById('pauseRemotePlayback');
+    const stopRemotePlaybackButton = document.getElementById('stopRemotePlayback');
 
-    
-    <script src="script.js"></script>
+    startRemotePlaybackButton.addEventListener('click', async () => {
+        if ('remote' in video) {
+            try {
+                await video.remote.watchAvailability(available => {
+                    console.log('Remote playback available:', available);
+                });
+                await video.remote.start();
+                console.log('Remote playback started');
+            } catch (error) {
+                console.error('Error starting remote playback:', error);
+            }
+        } else {
+            console.warn('Remote Playback API is not supported in this browser.');
+        }
+    });
+
+    pauseRemotePlaybackButton.addEventListener('click', () => {
+        if (video.remote && video.remote.state === 'connected') {
+            video.pause();
+            console.log('Remote playback paused');
+        }
+    });
+
+    stopRemotePlaybackButton.addEventListener('click', () => {
+        if (video.remote && video.remote.state === 'connected') {
+            video.remote.stop();
+            console.log('Remote playback stopped');
+        }
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #87ceeb;
-    color: #333;
-    text-align: center;
-    padding: 50px;
-}
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-h1 {
-    margin-bottom: 20px;
-    color: #2c3e50;
-}
-video {
-    width: 100%;
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
-.controls {
-    margin-top: 20px;
-}
-.controls button {
-    padding: 10px 20px;
-    margin: 5px;
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
-    background-color: #2c3e50;
-    color: #fff;
-    cursor: pointer;
-}
-.controls button:hover {
-    background-color: #34495e;
-}
-```
 
-**script.js**:
-```javascript
-const video = document.getElementById('video');
-const startRemotePlaybackButton = document.getElementById('startRemotePlayback');
-const pauseRemotePlaybackButton = document.getElementById('pauseRemotePlayback');
-const stopRemotePlaybackButton = document.getElementById('stopRemotePlayback');
-
-startRemotePlaybackButton.addEventListener('click', async () => {
-    if ('remote' in video) {
-        try {
-            await video.remote.watchAvailability(available => {
-                console.log('Remote playback available:', available);
-            });
-            await video.remote.start();
-            console.log('Remote playback started');
-        } catch (error) {
-            console.error('Error starting remote playback:', error);
-        }
-    } else {
-        console.warn('Remote Playback API is not supported in this browser.');
-    }
-});
-
-pauseRemotePlaybackButton.addEventListener('click', () => {
-    if (video.remote && video.remote.state === 'connected') {
-        video.pause();
-        console.log('Remote playback paused');
-    }
-});
-
-stopRemotePlaybackButton.addEventListener('click', () => {
-    if (video.remote && video.remote.state === 'connected') {
-        video.remote.stop();
-        console.log('Remote playback stopped');
-    }
-});
-```
 
 ### **References:**
 - **[The Surfer (2024) - Wikipedia](https://en.wikipedia.org/wiki/The_Surfer_(2024_film))**

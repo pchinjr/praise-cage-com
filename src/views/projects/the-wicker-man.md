@@ -17,15 +17,14 @@ In this unique project, we blend the eerie and mysterious atmosphere of Nicolas 
 #### Starting Code:
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
-- Run a local server (for example `python -m http.server`) and open `http://localhost:8000`. Some APIs do not work from `file://`.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
 Here's a basic setup to get you started. This includes the initial HTML, CSS, and JavaScript to register a Service Worker and enable offline functionality.
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -33,93 +32,44 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Wicker Worker</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #d9534f;
+    }
+
+    button {
+        background-color: #d9534f;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+</style>
 </head>
 <body>
     <h1>Welcome to The Wicker Worker</h1>
     <p>Can you uncover the mystery of the island?</p>
     <button id="startBtn">Start Your Journey</button>
 
-    <script src="main.js"></script>
+<script>
+    document.getElementById('startBtn').addEventListener('click', () => {
+        alert('Your journey begins...');
+        // Add interactive story logic here
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
-
-h1 {
-    color: #d9534f;
-}
-
-button {
-    background-color: #d9534f;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-}
-```
-
-**main.js**:
-```javascript
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
-            .then(registration => {
-                console.log('ServiceWorker registration successful with scope: ', registration.scope);
-            }, error => {
-                console.log('ServiceWorker registration failed: ', error);
-            });
-    });
-}
-
-document.getElementById('startBtn').addEventListener('click', () => {
-    alert('Your journey begins...');
-    // Add interactive story logic here
-});
-```
-
-**service-worker.js**:
-```javascript
-const CACHE_NAME = 'wicker-worker-cache-v1';
-const urlsToCache = [
-    '/',
-    '/index.html',
-    '/styles.css',
-    '/main.js'
-];
-
-self.addEventListener('install', event => {
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(cache => {
-                console.log('Opened cache');
-                return cache.addAll(urlsToCache);
-            })
-    );
-});
-
-self.addEventListener('fetch', event => {
-    event.respondWith(
-        caches.match(event.request)
-            .then(response => {
-                if (response) {
-                    return response;
-                }
-                return fetch(event.request);
-            })
-    );
-});
-```
 
 #### References:
 - **The Wicker Man (2006)**:

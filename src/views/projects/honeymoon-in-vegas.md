@@ -13,13 +13,12 @@ Certainly! Let's develop a fresh project concept that combines themes from "Hone
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +26,52 @@ Certainly! Let's develop a fresh project concept that combines themes from "Hone
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vegas Love Odds</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        text-align: center;
+        padding: 20px;
+        background-color: #ffecd1;
+    }
+
+    #roulette {
+        margin-top: 20px;
+        position: relative;
+        width: 300px;
+        height: 300px;
+        border: 10px solid #f3a683;
+        border-radius: 50%;
+        margin: 0 auto;
+    }
+
+    .spinner {
+        width: 100%;
+        height: 100%;
+        background-image: repeating-conic-gradient(
+            #f78fb3 0deg 30deg,
+            #f3a683 30deg 60deg
+        );
+        background-size: cover;
+        transition: transform 4s ease-out;
+    }
+
+    button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 18px;
+        background-color: #f78fb3;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    #result {
+        font-size: 24px;
+        color: #6a2c70;
+        margin-top: 20px;
+    }
+</style>
 </head>
 <body>
     <h1>Matchmaker Roulette</h1>
@@ -36,71 +80,25 @@ Certainly! Let's develop a fresh project concept that combines themes from "Hone
         <button onclick="spin()">Spin for Love!</button>
     </div>
     <div id="result">Spin to see your match!</div>
-    <script src="script.js"></script>
+<script>
+    function spin() {
+        const spinner = document.getElementById('spinner');
+        const result = document.getElementById('result');
+        const degrees = Math.floor(Math.random() * 360) + 1440; // Spin at least 4 full rotations
+        spinner.style.transform = `rotate(${degrees}deg)`;
+
+        setTimeout(() => {
+            const outcomes = ['Perfect Match!', 'Try Again!', 'Almost There!', 'New Love Found!', 'Unexpected Twist!'];
+            const outcome = outcomes[Math.floor(Math.random() * outcomes.length)];
+            result.textContent = outcome;
+        }, 4000); // Update result after spin animation
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: 'Arial', sans-serif;
-    text-align: center;
-    padding: 20px;
-    background-color: #ffecd1;
-}
 
-#roulette {
-    margin-top: 20px;
-    position: relative;
-    width: 300px;
-    height: 300px;
-    border: 10px solid #f3a683;
-    border-radius: 50%;
-    margin: 0 auto;
-}
-
-.spinner {
-    width: 100%;
-    height: 100%;
-    background-image: url('spinner-background.png'); /* A custom roulette-style image */
-    background-size: cover;
-    transition: transform 4s ease-out;
-}
-
-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 18px;
-    background-color: #f78fb3;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#result {
-    font-size: 24px;
-    color: #6a2c70;
-    margin-top: 20px;
-}
-```
-
-**script.js**:
-```javascript
-function spin() {
-    const spinner = document.getElementById('spinner');
-    const result = document.getElementById('result');
-    const degrees = Math.floor(Math.random() * 360) + 1440; // Spin at least 4 full rotations
-    spinner.style.transform = `rotate(${degrees}deg)`;
-
-    setTimeout(() => {
-        const outcomes = ['Perfect Match!', 'Try Again!', 'Almost There!', 'New Love Found!', 'Unexpected Twist!'];
-        const outcome = outcomes[Math.floor(Math.random() * outcomes.length)];
-        result.textContent = outcome;
-    }, 4000); // Update result after spin animation
-}
-```
 
 ### References:
 - **Film**: [Honeymoon in Vegas (1992)](https://en.wikipedia.org/wiki/Honeymoon_in_Vegas)

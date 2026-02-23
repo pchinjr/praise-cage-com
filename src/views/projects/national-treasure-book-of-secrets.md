@@ -15,15 +15,14 @@ In this project, we combine the adventurous spirit of *National Treasure: Book o
 #### Starting Code:
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
-- Run a local server (for example `python -m http.server`) and open `http://localhost:8000`. Some APIs do not work from `file://`.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
 Here's a basic setup to get you started. This includes the initial HTML, CSS, and JavaScript to integrate the WebOTP API and create a simple interactive treasure hunt.
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +30,39 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Treasure Hunt</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #d9534f;
+    }
+
+    input {
+        padding: 10px;
+        font-size: 16px;
+        margin: 10px 0;
+    }
+
+    button {
+        background-color: #d9534f;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    #clue {
+        margin-top: 20px;
+        font-size: 18px;
+    }
+</style>
 </head>
 <body>
     <h1>Treasure Hunt: Unlock Secrets</h1>
@@ -40,85 +71,48 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
     <button id="submitBtn">Submit</button>
     <div id="status"></div>
     <div id="clue"></div>
+<script>
+    document.getElementById('submitBtn').addEventListener('click', async () => {
+        const otpInput = document.getElementById('otpInput').value;
+        if (otpInput) {
+            const isValid = await verifyOTP(otpInput); // Replace with actual OTP verification logic
+            if (isValid) {
+                document.getElementById('status').innerText = 'OTP verified! Here is your clue:';
+                displayNextClue();
+            } else {
+                document.getElementById('status').innerText = 'Invalid OTP. Please try again.';
+            }
+        } else {
+            document.getElementById('status').innerText = 'Please enter the OTP.';
+        }
+    });
 
-    <script src="main.js"></script>
+    async function verifyOTP(otp) {
+        // Simulate OTP verification
+        return otp === '123456'; // Replace with actual verification logic
+    }
+
+    function displayNextClue() {
+        const clueElement = document.getElementById('clue');
+        clueElement.innerText = 'Clue: The next location is where history and mystery meet. Seek the hidden library!';
+    }
+
+    if ('OTPCredential' in window) {
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const content = await navigator.credentials.get({ otp: { transport: ['sms'] } });
+                document.getElementById('otpInput').value = content.code;
+            } catch (err) {
+                console.error('Error: ' + err);
+            }
+        });
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-h1 {
-    color: #d9534f;
-}
-
-input {
-    padding: 10px;
-    font-size: 16px;
-    margin: 10px 0;
-}
-
-button {
-    background-color: #d9534f;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-#clue {
-    margin-top: 20px;
-    font-size: 18px;
-}
-```
-
-**main.js**:
-```javascript
-document.getElementById('submitBtn').addEventListener('click', async () => {
-    const otpInput = document.getElementById('otpInput').value;
-    if (otpInput) {
-        const isValid = await verifyOTP(otpInput); // Replace with actual OTP verification logic
-        if (isValid) {
-            document.getElementById('status').innerText = 'OTP verified! Here is your clue:';
-            displayNextClue();
-        } else {
-            document.getElementById('status').innerText = 'Invalid OTP. Please try again.';
-        }
-    } else {
-        document.getElementById('status').innerText = 'Please enter the OTP.';
-    }
-});
-
-async function verifyOTP(otp) {
-    // Simulate OTP verification
-    return otp === '123456'; // Replace with actual verification logic
-}
-
-function displayNextClue() {
-    const clueElement = document.getElementById('clue');
-    clueElement.innerText = 'Clue: The next location is where history and mystery meet. Seek the hidden library!';
-}
-
-if ('OTPCredential' in window) {
-    window.addEventListener('DOMContentLoaded', async () => {
-        try {
-            const content = await navigator.credentials.get({ otp: { transport: ['sms'] } });
-            document.getElementById('otpInput').value = content.code;
-        } catch (err) {
-            console.error('Error: ' + err);
-        }
-    });
-}
-```
 
 #### References:
 - **National Treasure: Book of Secrets (2007)**:

@@ -13,13 +13,12 @@ This application is particularly aimed at those who want to keep their personal 
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -27,56 +26,52 @@ This application is particularly aimed at those who want to keep their personal 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Echoes of Vegas: Memory Box</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f2f2f2;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    #memoryContainer {
+        margin-top: 20px;
+        width: 80%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+    }
+</style>
 </head>
 <body>
     <h1>Memory Box</h1>
     <div id="memoryContainer"></div>
     <button onclick="storeMemory()">Store New Memory</button>
-    <script src="script.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        if (await document.hasStorageAccess()) {
+            console.log('Storage access granted');
+        } else {
+            console.log('Storage access not granted');
+        }
+    });
+
+    async function storeMemory() {
+        if (await document.requestStorageAccess()) {
+            const memory = prompt("Enter your memory:");
+            localStorage.setItem('latestMemory', memory);
+            document.getElementById('memoryContainer').textContent = 'Memory stored successfully!';
+        } else {
+            alert("Storage access denied.");
+        }
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f2f2f2;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-#memoryContainer {
-    margin-top: 20px;
-    width: 80%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-}
-```
-
-**script.js**:
-```javascript
-document.addEventListener('DOMContentLoaded', async () => {
-    if (await document.hasStorageAccess()) {
-        console.log('Storage access granted');
-    } else {
-        console.log('Storage access not granted');
-    }
-});
-
-async function storeMemory() {
-    if (await document.requestStorageAccess()) {
-        const memory = prompt("Enter your memory:");
-        localStorage.setItem('latestMemory', memory);
-        document.getElementById('memoryContainer').textContent = 'Memory stored successfully!';
-    } else {
-        alert("Storage access denied.");
-    }
-}
-```
 
 ### References:
 - **Film**: [Leaving Las Vegas (1995)](https://en.wikipedia.org/wiki/Leaving_Las_Vegas)

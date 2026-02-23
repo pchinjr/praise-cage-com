@@ -13,13 +13,12 @@ The application serves as a tool for students, enthusiasts, and aspiring profess
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -27,61 +26,57 @@ The application serves as a tool for students, enthusiasts, and aspiring profess
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Criminal Clues: Interactive Crime Scene</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    #crimeScene {
+        position: relative;
+        width: 300px;
+        margin: auto;
+    }
+
+    #details {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+    }
+</style>
 </head>
 <body>
     <h1>Interactive Crime Scene Investigation</h1>
     <div id="crimeScene">
-        <img src="crime-scene.jpg" alt="Crime Scene" usemap="#crime-scene-map">
+        <img src="https://placehold.co/300x400.jpg?text=Crime+Scene" alt="Crime Scene" usemap="#crime-scene-map">
         <map name="crime-scene-map">
             <area shape="rect" coords="34,44,270,350" alt="Blood Sample" href="#" onclick="displayDetail('Blood Sample');">
             <area shape="circle" coords="130,300,40" alt="Footprint" href="#" onclick="displayDetail('Footprint');">
         </map>
     </div>
     <div id="details"></div>
-    <script src="script.js"></script>
+<script>
+    function displayDetail(item) {
+        const detailsDiv = document.getElementById('details');
+        detailsDiv.textContent = `Detail about ${item}: This is where information about the ${item.toLowerCase()} will be displayed. For example, analysis results, possible suspects, or related forensic data.`;
+    }
+
+    document.querySelectorAll('area').forEach(area => {
+        area.addEventListener('click', function(event) {
+            event.preventDefault();
+            displayDetail(this.alt);
+        });
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-#crimeScene {
-    position: relative;
-    width: 300px;
-    margin: auto;
-}
-
-#details {
-    margin-top: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-}
-```
-
-**script.js**:
-```javascript
-function displayDetail(item) {
-    const detailsDiv = document.getElementById('details');
-    detailsDiv.textContent = `Detail about ${item}: This is where information about the ${item.toLowerCase()} will be displayed. For example, analysis results, possible suspects, or related forensic data.`;
-}
-
-document.querySelectorAll('area').forEach(area => {
-    area.addEventListener('click', function(event) {
-        event.preventDefault();
-        displayDetail(this.alt);
-    });
-});
-```
 
 ### References:
 - **Film**: [Kiss of Death (1995)](https://en.wikipedia.org/wiki/Kiss_of_Death_(1995_film))

@@ -13,13 +13,12 @@ This tool aims to engage readers more deeply with the narrative, adding a layer 
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +26,35 @@ This tool aims to engage readers more deeply with the narrative, adding a layer 
     <meta charset="UTF-8">
     <meta viewport="width=device-width, initial-scale=1.0">
     <title>Spirit Popovers: Interactive Christmas Carol</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .info {
+        cursor: pointer;
+        color: blue;
+        text-decoration: underline;
+    }
+
+    #popover {
+        position: absolute;
+        width: 200px;
+        border: 1px solid black;
+        padding: 10px;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>
 </head>
 <body>
     <h1>Read "A Christmas Carol" with Interactive Spirits</h1>
@@ -38,62 +65,30 @@ This tool aims to engage readers more deeply with the narrative, adding a layer 
     <div id="popover" class="hidden">
         Jacob Marley, Scrooge’s former business partner, is now a spirit visiting Scrooge to warn him.
     </div>
-    <script src="script.js"></script>
+<script>
+    document.getElementById('marleyInfo').addEventListener('click', function() {
+        const popover = document.getElementById('popover');
+        if (popover.classList.contains('hidden')) {
+            popover.style.top = `${this.offsetTop + this.offsetHeight}px`;
+            popover.style.left = `${this.offsetLeft}px`;
+            popover.classList.remove('hidden');
+        } else {
+            popover.classList.add('hidden');
+        }
+    });
+
+    window.addEventListener('click', function(e) {
+        const popover = document.getElementById('popover');
+        if (!popover.contains(e.target) && !document.getElementById('marleyInfo').contains(e.target)) {
+            popover.classList.add('hidden');
+        }
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-.info {
-    cursor: pointer;
-    color: blue;
-    text-decoration: underline;
-}
-
-#popover {
-    position: absolute;
-    width: 200px;
-    border: 1px solid black;
-    padding: 10px;
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-}
-
-.hidden {
-    display: none;
-}
-```
-
-**script.js**:
-```javascript
-document.getElementById('marleyInfo').addEventListener('click', function() {
-    const popover = document.getElementById('popover');
-    if (popover.classList.contains('hidden')) {
-        popover.style.top = `${this.offsetTop + this.offsetHeight}px`;
-        popover.style.left = `${this.offsetLeft}px`;
-        popover.classList.remove('hidden');
-    } else {
-        popover.classList.add('hidden');
-    }
-});
-
-window.addEventListener('click', function(e) {
-    const popover = document.getElementById('popover');
-    if (!popover.contains(e.target) && !document.getElementById('marleyInfo').contains(e.target)) {
-        popover.classList.add('hidden');
-    }
-});
-```
 
 ### References:
 - **Film**: [Christmas Carol: The Movie (2001)](https://en.wikipedia.org/wiki/Christmas_Carol:_The_Movie)

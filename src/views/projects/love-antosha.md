@@ -15,8 +15,8 @@ Inspired by the heartfelt documentary *Love, Antosha*, this project uses the Con
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -28,8 +28,54 @@ Inspired by the heartfelt documentary *Love, Antosha*, this project uses the Con
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loving Memories with Love, Antosha and Console API</title>
-    
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #1c1c1c;
+        color: #f0f0f0;
+        text-align: center;
+        padding: 50px;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #2e2e2e;
+        border: 1px solid #444;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+        margin-bottom: 20px;
+        color: #ff6347;
+    }
+    .controls {
+        margin-top: 20px;
+    }
+    button {
+        padding: 10px 20px;
+        margin: 10px;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    textarea {
+        width: 100%;
+        height: 100px;
+        border: 1px solid #555;
+        border-radius: 5px;
+        padding: 10px;
+        margin-top: 10px;
+        background-color: #3e3e3e;
+        color: #f0f0f0;
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -42,85 +88,32 @@ Inspired by the heartfelt documentary *Love, Antosha*, this project uses the Con
             <button id="viewButton">View Messages</button>
         </div>
     </div>
+<script>
+    const messageInput = document.getElementById('messageInput');
+    const logButton = document.getElementById('logButton');
+    const viewButton = document.getElementById('viewButton');
 
-    
-    <script src="script.js"></script>
+    logButton.addEventListener('click', () => {
+        const message = messageInput.value;
+        if (message) {
+            console.log(`Logged Message: ${message}`);
+            messageInput.value = '';
+            alert('Message logged to console!');
+        } else {
+            alert('Please enter a message to log.');
+        }
+    });
+
+    viewButton.addEventListener('click', () => {
+        console.log('View logged messages in the browser console.');
+        alert('Open the console to view logged messages.');
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #1c1c1c;
-    color: #f0f0f0;
-    text-align: center;
-    padding: 50px;
-}
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #2e2e2e;
-    border: 1px solid #444;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-h1 {
-    margin-bottom: 20px;
-    color: #ff6347;
-}
-.controls {
-    margin-top: 20px;
-}
-button {
-    padding: 10px 20px;
-    margin: 10px;
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-}
-button:hover {
-    background-color: #0056b3;
-}
-textarea {
-    width: 100%;
-    height: 100px;
-    border: 1px solid #555;
-    border-radius: 5px;
-    padding: 10px;
-    margin-top: 10px;
-    background-color: #3e3e3e;
-    color: #f0f0f0;
-}
-```
 
-**script.js**:
-```javascript
-const messageInput = document.getElementById('messageInput');
-const logButton = document.getElementById('logButton');
-const viewButton = document.getElementById('viewButton');
-
-logButton.addEventListener('click', () => {
-    const message = messageInput.value;
-    if (message) {
-        console.log(`Logged Message: ${message}`);
-        messageInput.value = '';
-        alert('Message logged to console!');
-    } else {
-        alert('Please enter a message to log.');
-    }
-});
-
-viewButton.addEventListener('click', () => {
-    console.log('View logged messages in the browser console.');
-    alert('Open the console to view logged messages.');
-});
-```
 
 ### **References:**
 - **[Love, Antosha (2019) - Wikipedia](https://en.wikipedia.org/wiki/Love,_Antosha)**

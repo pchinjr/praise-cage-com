@@ -15,15 +15,14 @@ In this project, we combine the adventurous and imaginative world of *The Ant Bu
 #### Starting Code:
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
 Here's a basic setup to get you started. This includes the initial HTML, CSS, and JavaScript to integrate the Web Speech API and create a simple ant colony simulation.
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +30,37 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Ant Whisperer</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #d9534f;
+    }
+
+    button {
+        background-color: #d9534f;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    #colony {
+        margin-top: 20px;
+        border: 1px solid #ccc;
+        height: 400px;
+        width: 600px;
+        background-color: #fff;
+        position: relative;
+    }
+</style>
 </head>
 <body>
     <h1>The Ant Whisperer</h1>
@@ -41,95 +70,60 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
     <div id="colony">
         <!-- Ant simulation will be displayed here -->
     </div>
+<script>
+    document.getElementById('startBtn').addEventListener('click', () => {
+        if ('webkitSpeechRecognition' in window) {
+            const recognition = new webkitSpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
 
-    <script src="main.js"></script>
+            recognition.onstart = () => {
+                document.getElementById('status').innerText = 'Listening...';
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[event.results.length - 1][0].transcript.trim();
+                handleCommand(transcript);
+            };
+
+            recognition.onerror = (event) => {
+                console.error('Speech recognition error', event.error);
+            };
+
+            recognition.onend = () => {
+                document.getElementById('status').innerText = 'Not listening. Click "Start Listening" to try again.';
+            };
+
+            recognition.start();
+        } else {
+            alert('Web Speech API is not supported in this browser.');
+        }
+    });
+
+    function handleCommand(command) {
+        const colony = document.getElementById('colony');
+        switch(command.toLowerCase()) {
+            case 'gather food':
+                colony.innerHTML = '<p>Ants are gathering food!</p>';
+                break;
+            case 'build tunnels':
+                colony.innerHTML = '<p>Ants are building tunnels!</p>';
+                break;
+            case 'defend the colony':
+                colony.innerHTML = '<p>Ants are defending the colony!</p>';
+                break;
+            default:
+                colony.innerHTML = `<p>Command not recognized: ${command}</p>`;
+                break;
+        }
+    }
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
 
-h1 {
-    color: #d9534f;
-}
-
-button {
-    background-color: #d9534f;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-#colony {
-    margin-top: 20px;
-    border: 1px solid #ccc;
-    height: 400px;
-    width: 600px;
-    background-color: #fff;
-    position: relative;
-}
-```
-
-**main.js**:
-```javascript
-document.getElementById('startBtn').addEventListener('click', () => {
-    if ('webkitSpeechRecognition' in window) {
-        const recognition = new webkitSpeechRecognition();
-        recognition.continuous = true;
-        recognition.interimResults = false;
-        recognition.lang = 'en-US';
-
-        recognition.onstart = () => {
-            document.getElementById('status').innerText = 'Listening...';
-        };
-
-        recognition.onresult = (event) => {
-            const transcript = event.results[event.results.length - 1][0].transcript.trim();
-            handleCommand(transcript);
-        };
-
-        recognition.onerror = (event) => {
-            console.error('Speech recognition error', event.error);
-        };
-
-        recognition.onend = () => {
-            document.getElementById('status').innerText = 'Not listening. Click "Start Listening" to try again.';
-        };
-
-        recognition.start();
-    } else {
-        alert('Web Speech API is not supported in this browser.');
-    }
-});
-
-function handleCommand(command) {
-    const colony = document.getElementById('colony');
-    switch(command.toLowerCase()) {
-        case 'gather food':
-            colony.innerHTML = '<p>Ants are gathering food!</p>';
-            break;
-        case 'build tunnels':
-            colony.innerHTML = '<p>Ants are building tunnels!</p>';
-            break;
-        case 'defend the colony':
-            colony.innerHTML = '<p>Ants are defending the colony!</p>';
-            break;
-        default:
-            colony.innerHTML = `<p>Command not recognized: ${command}</p>`;
-            break;
-    }
-}
-```
 
 #### References:
 - **The Ant Bully (2006)**:

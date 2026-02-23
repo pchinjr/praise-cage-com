@@ -15,8 +15,8 @@ Inspired by Nicolas Cage's surreal and introspective role in *Dream Scenario*, t
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -28,8 +28,36 @@ Inspired by Nicolas Cage's surreal and introspective role in *Dream Scenario*, t
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visual Narration with Dream Scenario and WebVTT</title>
-    
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #121212;
+        color: #f0f0f0;
+        text-align: center;
+        padding: 50px;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #1d1d1d;
+        border: 1px solid #444;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+        margin-bottom: 20px;
+        color: #ff6347;
+    }
+    video {
+        width: 100%;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+    .controls {
+        margin-top: 20px;
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -37,8 +65,8 @@ Inspired by Nicolas Cage's surreal and introspective role in *Dream Scenario*, t
         <p>Watch the video with subtitles inspired by Dream Scenario.</p>
 
         <video id="video" controls>
-            <source src="sample-video.mp4" type="video/mp4">
-            <track label="English" kind="subtitles" srclang="en" src="subtitles.vtt" default>
+            <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+            <track id="subtitles" label="English" kind="subtitles" srclang="en" default>
             Your browser does not support the video tag.
         </video>
 
@@ -49,63 +77,8 @@ Inspired by Nicolas Cage's surreal and introspective role in *Dream Scenario*, t
             <button onclick="document.getElementById('video').currentTime += 10">Forward 10s</button>
         </div>
     </div>
-
-    
-    <script src="script.js"></script>
-</body>
-</html>
-```
-
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #121212;
-    color: #f0f0f0;
-    text-align: center;
-    padding: 50px;
-}
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #1d1d1d;
-    border: 1px solid #444;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-h1 {
-    margin-bottom: 20px;
-    color: #ff6347;
-}
-video {
-    width: 100%;
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
-.controls {
-    margin-top: 20px;
-}
-```
-
-**script.js**:
-```javascript
-const video = document.getElementById('video');
-video.addEventListener('play', () => {
-    console.log('Video started playing');
-});
-video.addEventListener('pause', () => {
-    console.log('Video paused');
-});
-video.addEventListener('seeked', () => {
-    console.log('Video seeked to ' + video.currentTime);
-});
-```
-
-### **Sample WebVTT File (subtitles.vtt):**
-
-```vtt
-WEBVTT
+<script>
+    const vtt = `WEBVTT
 
 00:00:00.000 --> 00:00:05.000
 [Narrator] Welcome to the dream scenario.
@@ -117,7 +90,25 @@ WEBVTT
 [Narrator] Follow the journey and uncover the hidden truths.
 
 00:00:15.001 --> 00:00:20.000
-[Narrator] What you see might not be what it seems.
+[Narrator] What you see might not be what it seems.`;
+
+    const track = document.getElementById('subtitles');
+    const vttBlob = new Blob([vtt.trim()], { type: 'text/vtt' });
+    track.src = URL.createObjectURL(vttBlob);
+
+    const video = document.getElementById('video');
+    video.addEventListener('play', () => {
+        console.log('Video started playing');
+    });
+    video.addEventListener('pause', () => {
+        console.log('Video paused');
+    });
+    video.addEventListener('seeked', () => {
+        console.log('Video seeked to ' + video.currentTime);
+    });
+</script>
+</body>
+</html>
 ```
 
 ### **References:**

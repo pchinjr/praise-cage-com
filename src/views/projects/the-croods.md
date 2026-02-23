@@ -15,8 +15,8 @@ Inspired by Nicolas Cage's adventurous role in *The Croods*, this project uses t
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -28,100 +28,93 @@ Inspired by Nicolas Cage's adventurous role in *The Croods*, this project uses t
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prehistoric Play with The Croods</title>
-    
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #a2d5c6;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+    }
+    #scene {
+        border: 2px solid #333;
+        width: 80%;
+        height: 400px;
+        margin: 0 auto;
+        position: relative;
+        background: #f5f5f5;
+    }
+    .draggable {
+        width: 100px;
+        height: 100px;
+        cursor: grab;
+        position: absolute;
+    }
+    .draggable:active {
+        cursor: grabbing;
+    }
+    #characters, #plants, #animals {
+        display: flex;
+        justify-content: center;
+        margin: 20px;
+    }
+    img {
+        width: 100px;
+        height: 100px;
+        margin: 10px;
+    }
+</style>
 </head>
 <body>
     <h1>Prehistoric Play with The Croods</h1>
     <p>Build your own prehistoric scene with drag and drop elements!</p>
 
     <div id="characters">
-        <img src="https://example.com/crood1.png" alt="Crood Character 1" draggable="true" class="draggable" id="crood1">
-        <img src="https://example.com/crood2.png" alt="Crood Character 2" draggable="true" class="draggable" id="crood2">
+        <img src="https://placehold.co/100x100.png?text=Crood+1" alt="Crood Character 1" draggable="true" class="draggable" id="crood1">
+        <img src="https://placehold.co/100x100.png?text=Crood+2" alt="Crood Character 2" draggable="true" class="draggable" id="crood2">
     </div>
     <div id="plants">
-        <img src="https://example.com/plant1.png" alt="Prehistoric Plant 1" draggable="true" class="draggable" id="plant1">
-        <img src="https://example.com/plant2.png" alt="Prehistoric Plant 2" draggable="true" class="draggable" id="plant2">
+        <img src="https://placehold.co/100x100.png?text=Plant+1" alt="Prehistoric Plant 1" draggable="true" class="draggable" id="plant1">
+        <img src="https://placehold.co/100x100.png?text=Plant+2" alt="Prehistoric Plant 2" draggable="true" class="draggable" id="plant2">
     </div>
     <div id="animals">
-        <img src="https://example.com/animal1.png" alt="Prehistoric Animal 1" draggable="true" class="draggable" id="animal1">
-        <img src="https://example.com/animal2.png" alt="Prehistoric Animal 2" draggable="true" class="draggable" id="animal2">
+        <img src="https://placehold.co/100x100.png?text=Animal+1" alt="Prehistoric Animal 1" draggable="true" class="draggable" id="animal1">
+        <img src="https://placehold.co/100x100.png?text=Animal+2" alt="Prehistoric Animal 2" draggable="true" class="draggable" id="animal2">
     </div>
 
     <div id="scene"></div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const draggables = document.querySelectorAll('.draggable');
+        const scene = document.getElementById('scene');
 
-    
-    <script src="script.js"></script>
+        draggables.forEach(draggable => {
+            draggable.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', draggable.id);
+            });
+        });
+
+        scene.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+
+        scene.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const id = e.dataTransfer.getData('text/plain');
+            const element = document.getElementById(id);
+            const x = e.clientX - scene.getBoundingClientRect().left - element.clientWidth / 2;
+            const y = e.clientY - scene.getBoundingClientRect().top - element.clientHeight / 2;
+            element.style.left = `${x}px`;
+            element.style.top = `${y}px`;
+            scene.appendChild(element);
+        });
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #a2d5c6;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-}
-#scene {
-    border: 2px solid #333;
-    width: 80%;
-    height: 400px;
-    margin: 0 auto;
-    position: relative;
-    background: #f5f5f5;
-}
-.draggable {
-    width: 100px;
-    height: 100px;
-    cursor: grab;
-    position: absolute;
-}
-.draggable:active {
-    cursor: grabbing;
-}
-#characters, #plants, #animals {
-    display: flex;
-    justify-content: center;
-    margin: 20px;
-}
-img {
-    width: 100px;
-    height: 100px;
-    margin: 10px;
-}
-```
 
-**script.js**:
-```javascript
-document.addEventListener('DOMContentLoaded', () => {
-    const draggables = document.querySelectorAll('.draggable');
-    const scene = document.getElementById('scene');
-
-    draggables.forEach(draggable => {
-        draggable.addEventListener('dragstart', (e) => {
-            e.dataTransfer.setData('text/plain', draggable.id);
-        });
-    });
-
-    scene.addEventListener('dragover', (e) => {
-        e.preventDefault();
-    });
-
-    scene.addEventListener('drop', (e) => {
-        e.preventDefault();
-        const id = e.dataTransfer.getData('text/plain');
-        const element = document.getElementById(id);
-        const x = e.clientX - scene.getBoundingClientRect().left - element.clientWidth / 2;
-        const y = e.clientY - scene.getBoundingClientRect().top - element.clientHeight / 2;
-        element.style.left = `${x}px`;
-        element.style.top = `${y}px`;
-        scene.appendChild(element);
-    });
-});
-```
 
 ### **References:**
 - **[The Croods (2013) - Wikipedia](https://en.wikipedia.org/wiki/The_Croods)**

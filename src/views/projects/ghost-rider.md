@@ -14,15 +14,14 @@ In this project, we blend the fiery and supernatural elements of *Ghost Rider* w
 #### Starting Code:
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
 Here's a basic setup to get you started. This includes the initial HTML, CSS, and JavaScript to integrate the Device Memory API and create a dynamic web experience.
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +29,37 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ghost Rider: Memory on Fire</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #111;
+        color: #fff;
+        text-align: center;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #ff4500;
+    }
+
+    #content {
+        margin-top: 20px;
+    }
+
+    .low-memory {
+        background-image: url('https://upload.wikimedia.org/wikipedia/en/thumb/7/71/GhostRiderBigPoster.jpg/220px-GhostRiderBigPoster.jpg');
+        background-size: cover;
+        height: 300px;
+        width: 100%;
+    }
+
+    .high-memory {
+        background-image: url('https://upload.wikimedia.org/wikipedia/en/7/71/GhostRiderBigPoster.jpg');
+        background-size: cover;
+        height: 300px;
+        width: 100%;
+    }
+</style>
 </head>
 <body>
     <h1>Ghost Rider: Memory on Fire</h1>
@@ -38,62 +67,27 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
     <div id="content">
         <!-- Dynamic content will be displayed here -->
     </div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const deviceMemory = navigator.deviceMemory || 4; // Default to 4 if the API is not supported
+        const content = document.getElementById('content');
 
-    <script src="main.js"></script>
+        if (deviceMemory <= 2) {
+            // Low memory device
+            content.innerHTML = '<p>Optimized for low memory devices.</p>';
+            content.classList.add('low-memory');
+        } else {
+            // High memory device
+            content.innerHTML = '<p>Enjoy the full Ghost Rider experience!</p>';
+            content.classList.add('high-memory');
+        }
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #111;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
-}
 
-h1 {
-    color: #ff4500;
-}
-
-#content {
-    margin-top: 20px;
-}
-
-.low-memory {
-    background-image: url('images/ghost_rider_low.jpg');
-    background-size: cover;
-    height: 300px;
-    width: 100%;
-}
-
-.high-memory {
-    background-image: url('images/ghost_rider_high.gif');
-    background-size: cover;
-    height: 300px;
-    width: 100%;
-}
-```
-
-**main.js**:
-```javascript
-document.addEventListener('DOMContentLoaded', () => {
-    const deviceMemory = navigator.deviceMemory || 4; // Default to 4 if the API is not supported
-    const content = document.getElementById('content');
-
-    if (deviceMemory <= 2) {
-        // Low memory device
-        content.innerHTML = '<p>Optimized for low memory devices.</p>';
-        content.classList.add('low-memory');
-    } else {
-        // High memory device
-        content.innerHTML = '<p>Enjoy the full Ghost Rider experience!</p>';
-        content.classList.add('high-memory');
-    }
-});
-```
 
 #### References:
 - **Ghost Rider (2007)**:

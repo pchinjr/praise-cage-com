@@ -15,8 +15,8 @@ Inspired by the meta-comedic and self-referential role of Nicolas Cage in *The U
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
@@ -28,8 +28,48 @@ Inspired by the meta-comedic and self-referential role of Nicolas Cage in *The U
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Talent Tracker with The Unbearable Weight of Massive Talent and Cookie Store API</title>
-    
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #121212;
+        color: #ffffff;
+        text-align: center;
+        padding: 50px;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #1f1f1f;
+        border: 1px solid #333;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+        margin-bottom: 20px;
+        color: #f39c12;
+    }
+    .controls {
+        margin-top: 20px;
+    }
+    button {
+        padding: 10px 20px;
+        margin: 10px;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        background-color: #2980b9;
+        color: white;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #1abc9c;
+    }
+    .feedback {
+        margin-top: 20px;
+        font-size: 18px;
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -42,90 +82,43 @@ Inspired by the meta-comedic and self-referential role of Nicolas Cage in *The U
         </div>
         <div id="feedback" class="feedback"></div>
     </div>
+<script>
+    const savePrefButton = document.getElementById('savePrefButton');
+    const loadPrefButton = document.getElementById('loadPrefButton');
+    const feedback = document.getElementById('feedback');
 
-    
-    <script src="script.js"></script>
+    savePrefButton.addEventListener('click', async () => {
+        try {
+            await cookieStore.set('favoriteCharacter', 'Nicolas Cage');
+            feedback.textContent = 'Preference saved: Nicolas Cage is your favorite character!';
+            console.log('Preference saved.');
+        } catch (err) {
+            feedback.textContent = 'Failed to save preference.';
+            console.error('Failed to save preference:', err);
+        }
+    });
+
+    loadPrefButton.addEventListener('click', async () => {
+        try {
+            const cookie = await cookieStore.get('favoriteCharacter');
+            if (cookie) {
+                feedback.textContent = `Loaded preference: ${cookie.value} is your favorite character!`;
+                console.log('Preference loaded:', cookie.value);
+            } else {
+                feedback.textContent = 'No preference found.';
+                console.log('No preference found.');
+            }
+        } catch (err) {
+            feedback.textContent = 'Failed to load preference.';
+            console.error('Failed to load preference:', err);
+        }
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #121212;
-    color: #ffffff;
-    text-align: center;
-    padding: 50px;
-}
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #1f1f1f;
-    border: 1px solid #333;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-h1 {
-    margin-bottom: 20px;
-    color: #f39c12;
-}
-.controls {
-    margin-top: 20px;
-}
-button {
-    padding: 10px 20px;
-    margin: 10px;
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
-    background-color: #2980b9;
-    color: white;
-    cursor: pointer;
-}
-button:hover {
-    background-color: #1abc9c;
-}
-.feedback {
-    margin-top: 20px;
-    font-size: 18px;
-}
-```
 
-**script.js**:
-```javascript
-const savePrefButton = document.getElementById('savePrefButton');
-const loadPrefButton = document.getElementById('loadPrefButton');
-const feedback = document.getElementById('feedback');
-
-savePrefButton.addEventListener('click', async () => {
-    try {
-        await cookieStore.set('favoriteCharacter', 'Nicolas Cage');
-        feedback.textContent = 'Preference saved: Nicolas Cage is your favorite character!';
-        console.log('Preference saved.');
-    } catch (err) {
-        feedback.textContent = 'Failed to save preference.';
-        console.error('Failed to save preference:', err);
-    }
-});
-
-loadPrefButton.addEventListener('click', async () => {
-    try {
-        const cookie = await cookieStore.get('favoriteCharacter');
-        if (cookie) {
-            feedback.textContent = `Loaded preference: ${cookie.value} is your favorite character!`;
-            console.log('Preference loaded:', cookie.value);
-        } else {
-            feedback.textContent = 'No preference found.';
-            console.log('No preference found.');
-        }
-    } catch (err) {
-        feedback.textContent = 'Failed to load preference.';
-        console.error('Failed to load preference:', err);
-    }
-});
-```
 
 ### **References:**
 - **[The Unbearable Weight of Massive Talent (2022) - Wikipedia](https://en.wikipedia.org/wiki/The_Unbearable_Weight_of_Massive_Talent)**

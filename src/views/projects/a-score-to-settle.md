@@ -16,9 +16,9 @@ Inspired by Nicolas Cage's intense and determined role in *A Score to Settle*, t
 
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
-- Run a local server (for example `python -m http.server`) and open `http://localhost:8000`. Some APIs do not work from `file://`.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
+- Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
@@ -29,8 +29,61 @@ Inspired by Nicolas Cage's intense and determined role in *A Score to Settle*, t
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vengeful Notes with A Score to Settle and Clipboard API</title>
-    
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #1c1c1c;
+        color: #f0f0f0;
+        text-align: center;
+        padding: 50px;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #2e2e2e;
+        border: 1px solid #444;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+        margin-bottom: 20px;
+        color: #ff6347;
+    }
+    .note {
+        margin: 20px 0;
+        padding: 10px;
+        background-color: #3e3e3e;
+        border: 1px solid #555;
+        border-radius: 5px;
+    }
+    .controls {
+        margin-top: 20px;
+    }
+    button {
+        padding: 10px 20px;
+        margin: 10px;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    textarea {
+        width: 100%;
+        height: 100px;
+        border: 1px solid #555;
+        border-radius: 5px;
+        padding: 10px;
+        margin-top: 10px;
+        background-color: #3e3e3e;
+        color: #f0f0f0;
+    }
+</style>
 </head>
 <body>
     <div class="container">
@@ -44,99 +97,39 @@ Inspired by Nicolas Cage's intense and determined role in *A Score to Settle*, t
         </div>
         <div class="note" id="noteDisplay">Your pasted note will appear here.</div>
     </div>
+<script>
+    const noteInput = document.getElementById('noteInput');
+    const copyButton = document.getElementById('copyButton');
+    const pasteButton = document.getElementById('pasteButton');
+    const noteDisplay = document.getElementById('noteDisplay');
 
-    
-    <script src="script.js"></script>
+    copyButton.addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(noteInput.value);
+            alert('Note copied to clipboard!');
+        } catch (err) {
+            console.error('Failed to copy: ', err);
+        }
+    });
+
+    pasteButton.addEventListener('click', async () => {
+        try {
+            const text = await navigator.clipboard.readText();
+            noteDisplay.textContent = text;
+            alert('Note pasted from clipboard!');
+        } catch (err) {
+            console.error('Failed to read clipboard contents: ', err);
+        }
+    });
+
+    // Example: Pre-fill the note with a plot-related theme
+    noteInput.value = "Remember to uncover the truth behind the betrayal and seek revenge meticulously.";
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #1c1c1c;
-    color: #f0f0f0;
-    text-align: center;
-    padding: 50px;
-}
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #2e2e2e;
-    border: 1px solid #444;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-h1 {
-    margin-bottom: 20px;
-    color: #ff6347;
-}
-.note {
-    margin: 20px 0;
-    padding: 10px;
-    background-color: #3e3e3e;
-    border: 1px solid #555;
-    border-radius: 5px;
-}
-.controls {
-    margin-top: 20px;
-}
-button {
-    padding: 10px 20px;
-    margin: 10px;
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-}
-button:hover {
-    background-color: #0056b3;
-}
-textarea {
-    width: 100%;
-    height: 100px;
-    border: 1px solid #555;
-    border-radius: 5px;
-    padding: 10px;
-    margin-top: 10px;
-    background-color: #3e3e3e;
-    color: #f0f0f0;
-}
-```
 
-**script.js**:
-```javascript
-const noteInput = document.getElementById('noteInput');
-const copyButton = document.getElementById('copyButton');
-const pasteButton = document.getElementById('pasteButton');
-const noteDisplay = document.getElementById('noteDisplay');
-
-copyButton.addEventListener('click', async () => {
-    try {
-        await navigator.clipboard.writeText(noteInput.value);
-        alert('Note copied to clipboard!');
-    } catch (err) {
-        console.error('Failed to copy: ', err);
-    }
-});
-
-pasteButton.addEventListener('click', async () => {
-    try {
-        const text = await navigator.clipboard.readText();
-        noteDisplay.textContent = text;
-        alert('Note pasted from clipboard!');
-    } catch (err) {
-        console.error('Failed to read clipboard contents: ', err);
-    }
-});
-
-// Example: Pre-fill the note with a plot-related theme
-noteInput.value = "Remember to uncover the truth behind the betrayal and seek revenge meticulously.";
-```
 
 ### **References:**
 - **[A Score to Settle (2019) - Wikipedia](https://en.wikipedia.org/wiki/A_Score_to_Settle)**

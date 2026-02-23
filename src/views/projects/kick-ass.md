@@ -14,15 +14,14 @@ In this project, we integrate the action-packed and energetic world of *Kick-Ass
 #### Starting Code:
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
 Here's a basic setup to get you started. This includes the initial HTML, CSS, and JavaScript to integrate the Screen Wake Lock API and create a power-boosted user experience.
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +29,36 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kick-Ass: Power-Boosted Experience</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #111;
+        color: #fff;
+        text-align: center;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #ff4500;
+    }
+
+    button {
+        background-color: #ff4500;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 5px;
+    }
+
+    #output {
+        margin-top: 20px;
+        font-size: 18px;
+        white-space: pre-wrap;
+        text-align: left;
+    }
+</style>
 </head>
 <body>
     <h1>Kick-Ass: Power-Boosted Experience</h1>
@@ -38,73 +66,39 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
     <button id="activateBtn">Activate Wake Lock</button>
     <button id="deactivateBtn" disabled>Deactivate Wake Lock</button>
     <div id="output"></div>
+<script>
+    let wakeLock = null;
 
-    <script src="main.js"></script>
+    async function requestWakeLock() {
+        try {
+            wakeLock = await navigator.wakeLock.request('screen');
+            document.getElementById('output').innerText = 'Wake lock is active.';
+            document.getElementById('activateBtn').disabled = true;
+            document.getElementById('deactivateBtn').disabled = false;
+        } catch (err) {
+            document.getElementById('output').innerText = `Error: ${err.name}, ${err.message}`;
+        }
+    }
+
+    function releaseWakeLock() {
+        if (wakeLock !== null) {
+            wakeLock.release().then(() => {
+                wakeLock = null;
+                document.getElementById('output').innerText = 'Wake lock is released.';
+                document.getElementById('activateBtn').disabled = false;
+                document.getElementById('deactivateBtn').disabled = true;
+            });
+        }
+    }
+
+    document.getElementById('activateBtn').addEventListener('click', requestWakeLock);
+    document.getElementById('deactivateBtn').addEventListener('click', releaseWakeLock);
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: #111;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
-}
 
-h1 {
-    color: #ff4500;
-}
-
-button {
-    background-color: #ff4500;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    margin: 5px;
-}
-
-#output {
-    margin-top: 20px;
-    font-size: 18px;
-    white-space: pre-wrap;
-    text-align: left;
-}
-```
-
-**main.js**:
-```javascript
-let wakeLock = null;
-
-async function requestWakeLock() {
-    try {
-        wakeLock = await navigator.wakeLock.request('screen');
-        document.getElementById('output').innerText = 'Wake lock is active.';
-        document.getElementById('activateBtn').disabled = true;
-        document.getElementById('deactivateBtn').disabled = false;
-    } catch (err) {
-        document.getElementById('output').innerText = `Error: ${err.name}, ${err.message}`;
-    }
-}
-
-function releaseWakeLock() {
-    if (wakeLock !== null) {
-        wakeLock.release().then(() => {
-            wakeLock = null;
-            document.getElementById('output').innerText = 'Wake lock is released.';
-            document.getElementById('activateBtn').disabled = false;
-            document.getElementById('deactivateBtn').disabled = true;
-        });
-    }
-}
-
-document.getElementById('activateBtn').addEventListener('click', requestWakeLock);
-document.getElementById('deactivateBtn').addEventListener('click', releaseWakeLock);
-```
 
 #### References:
 - **Kick-Ass (2010)**:

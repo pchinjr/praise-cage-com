@@ -14,15 +14,14 @@ In this project, we combine the action-packed and atmospheric elements of *Bangk
 #### Starting Code:
 
 ### Beginner Hints:
-- Create `index.html`, `styles.css`, and `script.js` in the same folder.
-- Copy each code block into the matching file.
+- Create a single `index.html` file.
+- Copy the full HTML code block into that file.
 - Open `index.html` in your browser. If something doesn't work, try a local server like `python -m http.server`.
 - Open DevTools Console to spot errors and typos quickly.
 
 
 Here's a basic setup to get you started. This includes the initial HTML, CSS, and JavaScript to integrate the CSS Properties and Values API and create a dynamic styling experience.
 
-**index.html**:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +29,44 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bangkok Dangerous: Dynamic Styles</title>
-    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: var(--background-color, #111);
+        color: var(--text-color, #fff);
+        text-align: center;
+        padding: 20px;
+    }
+
+    h1 {
+        color: var(--accent-color, #ff4500);
+    }
+
+    button {
+        background-color: var(--button-bg-color, #ff4500);
+        color: var(--button-text-color, white);
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .dark-theme {
+        --background-color: #111;
+        --text-color: #fff;
+        --accent-color: #ff4500;
+        --button-bg-color: #ff4500;
+        --button-text-color: white;
+    }
+
+    .light-theme {
+        --background-color: #f0f0f0;
+        --text-color: #333;
+        --accent-color: #d9534f;
+        --button-bg-color: #d9534f;
+        --button-text-color: white;
+    }
+</style>
 </head>
 <body>
     <h1>Bangkok Dangerous</h1>
@@ -38,70 +74,28 @@ Here's a basic setup to get you started. This includes the initial HTML, CSS, an
     <div id="content">
         <button id="toggleThemeBtn">Toggle Theme</button>
     </div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const content = document.getElementById('content');
+        const toggleThemeBtn = document.getElementById('toggleThemeBtn');
 
-    <script src="main.js"></script>
+        toggleThemeBtn.addEventListener('click', () => {
+            if (document.body.classList.contains('dark-theme')) {
+                document.body.classList.replace('dark-theme', 'light-theme');
+            } else {
+                document.body.classList.replace('light-theme', 'dark-theme');
+            }
+        });
+
+        // Initially set the theme to dark
+        document.body.classList.add('dark-theme');
+    });
+</script>
 </body>
 </html>
 ```
 
-**styles.css**:
-```css
-body {
-    font-family: Arial, sans-serif;
-    background-color: var(--background-color, #111);
-    color: var(--text-color, #fff);
-    text-align: center;
-    padding: 20px;
-}
 
-h1 {
-    color: var(--accent-color, #ff4500);
-}
-
-button {
-    background-color: var(--button-bg-color, #ff4500);
-    color: var(--button-text-color, white);
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.dark-theme {
-    --background-color: #111;
-    --text-color: #fff;
-    --accent-color: #ff4500;
-    --button-bg-color: #ff4500;
-    --button-text-color: white;
-}
-
-.light-theme {
-    --background-color: #f0f0f0;
-    --text-color: #333;
-    --accent-color: #d9534f;
-    --button-bg-color: #d9534f;
-    --button-text-color: white;
-}
-```
-
-**main.js**:
-```javascript
-document.addEventListener('DOMContentLoaded', () => {
-    const content = document.getElementById('content');
-    const toggleThemeBtn = document.getElementById('toggleThemeBtn');
-
-    toggleThemeBtn.addEventListener('click', () => {
-        if (document.body.classList.contains('dark-theme')) {
-            document.body.classList.replace('dark-theme', 'light-theme');
-        } else {
-            document.body.classList.replace('light-theme', 'dark-theme');
-        }
-    });
-
-    // Initially set the theme to dark
-    document.body.classList.add('dark-theme');
-});
-```
 
 #### References:
 - **Bangkok Dangerous (2008)**:
