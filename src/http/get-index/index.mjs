@@ -1,5 +1,6 @@
-import { readdir } from "fs/promises";
+import { readdir, readFile } from "fs/promises";
 import { join } from "path";
+import matter from "gray-matter";
 import layout from "@architect/views/layout/layout.mjs";
 
 // Function to convert file name to a human-readable title
@@ -21,27 +22,79 @@ export async function handler(req) {
     "projects",
   );
 
-  // Function to generate project links
-  async function generateProjectLinks() {
+  function getSynopsis(markdown = "") {
+    const clean = markdown
+      .replace(/```[\s\S]*?```/g, "")
+      .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
+      .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+      .replace(/[#>*_`-]/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    if (!clean) {
+      return "Tap in to explore the full brief, starter code, and references.";
+    }
+
+    return clean.length > 140 ? `${clean.slice(0, 137).trim()}…` : clean;
+  }
+
+  function buildCard({ title, fileName, imageUrl, synopsis }) {
+    const hasImage = Boolean(imageUrl);
+    const posterContent = hasImage
+      ? `<img src="${imageUrl}" alt="${title} poster" loading="lazy">`
+      : `<div class="placeholder-poster" role="img" aria-label="Coming soon placeholder for ${title}">
+          <span>Coming Soon</span>
+        </div>`;
+    return `
+      <article class="movie-card${hasImage ? "" : " placeholder"}">
+        <a href="/project/${fileName}" class="movie-card-link">
+          <div class="poster">
+            ${posterContent}
+          </div>
+          <div class="movie-info">
+            <h2>${title}</h2>
+            <p>${synopsis}</p>
+            <span class="cta">View Project</span>
+          </div>
+        </a>
+      </article>
+    `;
+  }
+
+  // Function to generate project cards
+  async function generateProjectCards() {
     try {
       const files = await readdir(filePath);
-      let links = "";
+      const projects = await Promise.all(
+        files
+          .filter((file) => file.endsWith(".md"))
+          .map(async (file) => {
+            const fullPath = join(filePath, file);
+            const source = await readFile(fullPath, "utf8");
+            const { data, content } = matter(source);
+            const title = data.title || convertToTitle(file);
+            const synopsis = getSynopsis(content);
+            return {
+              title,
+              fileName: file,
+              imageUrl: data.imageUrl,
+              synopsis,
+            };
+          })
+      );
 
-      files.forEach((file) => {
-        if (file.endsWith(".md")) {
-          const project = convertToTitle(file)
-          links += `<a href="/project/${file}">${project}</a><br>`;
-        }
-      });
+      const sortedCards = projects
+        .sort((a, b) => a.title.localeCompare(b.title))
+        .map(buildCard);
 
-      return `<ul class="project-list">${links}</ul>`;
+      return `<section class="movie-gallery" aria-label="Movie project list">${sortedCards.join("")}</section>`;
     } catch (error) {
       console.error("Error reading project files:", error);
       return "<p>Error loading projects</p>";
     }
   }
 
-  const links = await generateProjectLinks();
+  const links = await generateProjectCards();
 
   return {
     statusCode: 200,
