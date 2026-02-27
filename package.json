@@ -8,7 +8,8 @@
   "devDependencies": {
     "axios": "^1.7.2",
     "cheerio": "^1.0.0-rc.12",
-    "gray-matter": "^4.0.3"
+    "gray-matter": "^4.0.3",
+    "playwright": "^1.58.2"
   },
   "dependencies": {
     "@architect/architect": "^12.0.0",
